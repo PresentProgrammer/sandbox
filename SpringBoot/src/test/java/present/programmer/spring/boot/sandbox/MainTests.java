@@ -1,4 +1,4 @@
-package lv.sandbox.conferenceschedule;
+package present.programmer.spring.boot.sandbox;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

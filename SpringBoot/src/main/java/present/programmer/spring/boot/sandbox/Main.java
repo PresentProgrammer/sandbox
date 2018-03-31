@@ -1,4 +1,4 @@
-package lv.sandbox.conferenceschedule;
+package present.programmer.spring.boot.sandbox;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

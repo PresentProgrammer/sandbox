@@ -1,4 +1,4 @@
-package lv.sandbox.conferenceschedule.controller;
+package present.programmer.spring.boot.sandbox.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
