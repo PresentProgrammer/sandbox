@@ -1,0 +1,6 @@
+### Built files ###
+**/target/
+
+### IntelliJ IDEA ###
+.idea
+*.iml

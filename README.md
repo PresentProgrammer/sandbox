@@ -1,2 +1,2 @@
-# sandbox
-Try out technlogies
+# PresentProgrammer's Sandbox
+Repository for trying out technologies.
