@@ -16,7 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 class ContactController {
 
     private static final String CONTACTS = "contacts";
-    private static final String CONTACTS_VIEW = "contacts";
+    private static final String CONTACTS_VIEW = "Contacts";
     private static final String REDIRECT_TO_SHOW_ALL_CONTACTS = "redirect:/contacts";
 
     private final ContactRepository repository;
