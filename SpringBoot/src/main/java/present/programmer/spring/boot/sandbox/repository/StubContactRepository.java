@@ -6,7 +6,7 @@ import present.programmer.spring.boot.sandbox.domain.Contact;
 import java.util.List;
 
 @Repository
-public class StubContactRepository implements ContactRepository {
+class StubContactRepository implements ContactRepository {
 
     @Override
     public List<Contact> readAll() {
