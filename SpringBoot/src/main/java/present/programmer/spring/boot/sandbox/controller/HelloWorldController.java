@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @SuppressWarnings("unused")
-public class HelloWorldController {
+class HelloWorldController {
 
     private static final String HTML = "<html><body><a href=\"/artur\">Pipka</a></body></html>";
 
