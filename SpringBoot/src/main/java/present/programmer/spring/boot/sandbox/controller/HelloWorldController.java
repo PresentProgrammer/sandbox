@@ -11,18 +11,7 @@ public class HelloWorldController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return "Hello World!";
+        return "Hello, Big Boss!";
     }
 
-    @RequestMapping("/dimon")
-    @ResponseBody
-    String dimon() {
-        return "Dimon Limon!";
-    }
-
-    @RequestMapping("/artur")
-    @ResponseBody
-    String artur() {
-        return "Artur Perdun!";
-    }
 }
