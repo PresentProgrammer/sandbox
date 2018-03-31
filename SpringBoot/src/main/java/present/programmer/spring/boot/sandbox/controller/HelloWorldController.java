@@ -8,10 +8,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @SuppressWarnings("unused")
 public class HelloWorldController {
 
+    private static final String HTML = "<html><body><a href=\"/artur\">Pipka</a></body></html>";
+
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return "Hello, Big Boss!";
+        return HTML;
     }
 
+    @RequestMapping("/artur")
+    @ResponseBody
+    String artur() {
+        return "Hello, Big Boss!";
+    }
 }
