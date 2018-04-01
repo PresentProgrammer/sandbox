@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Spring Boot Contacts</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/style.css" />" />
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/main.css" />" />
 </head>
 <body>
     <%@ include file="NewContactForm.jsp" %>

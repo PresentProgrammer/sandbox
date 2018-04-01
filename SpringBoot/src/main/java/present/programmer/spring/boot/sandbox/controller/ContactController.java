@@ -13,6 +13,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/contacts")
+@SuppressWarnings("unused")
 class ContactController {
 
     private static final String CONTACTS = "contacts";
@@ -22,18 +23,18 @@ class ContactController {
     private final ContactRepository repository;
 
     @Autowired
-    public ContactController(final ContactRepository repository) {
+    ContactController(final ContactRepository repository) {
         this.repository = repository;
     }
 
     @RequestMapping(method = GET)
-    public String showAll(Map<String, Object> model) {
+    String showAll(Map<String, Object> model) {
         model.put(CONTACTS, repository.readAll());
         return CONTACTS_VIEW;
     }
 
     @RequestMapping(method = POST)
-    public String submit(final Contact contact) {
+    String submit(final Contact contact) {
         repository.create(contact);
         return REDIRECT_TO_SHOW_ALL_CONTACTS;
     }
