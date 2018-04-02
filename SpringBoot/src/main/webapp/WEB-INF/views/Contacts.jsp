@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/main.css" />" />
 </head>
 <body>
-    <%@ include file="NewContactForm.jsp" %>
-    <%@ include file="AllContacts.jsp" %>
+    <%@ include file="elements/NewContactForm.jsp" %>
+    <%@ include file="elements/AllContacts.jsp" %>
 </body>
 </html>
