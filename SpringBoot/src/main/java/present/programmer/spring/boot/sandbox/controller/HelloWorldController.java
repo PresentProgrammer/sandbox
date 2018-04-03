@@ -1,6 +1,7 @@
 package present.programmer.spring.boot.sandbox.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,9 +17,15 @@ class HelloWorldController {
         return HTML;
     }
 
-    @RequestMapping("/artur")
+    @RequestMapping("/name/{userName}")
     @ResponseBody
-    String artur() {
-        return "Hello, Big Boss!";
+    String greetUser(@PathVariable final String userName) {
+        return "Hello, " + userName + "!";
+    }
+
+    @RequestMapping("/name/peppa")
+    @ResponseBody
+    String greetBigBoss() {
+        return "Hello, Peppa Pig!";
     }
 }
