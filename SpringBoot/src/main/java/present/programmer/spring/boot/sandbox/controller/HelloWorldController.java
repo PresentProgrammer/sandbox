@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @SuppressWarnings("unused")
 class HelloWorldController {
 
-    private static final String HTML = "<html><body><a href=\"/artur\">Pipka</a></body></html>";
+    private static final String HTML = "<html><body><a href=\"/name/peppa\">Pipka</a></body></html>";
 
     @RequestMapping("/")
     @ResponseBody
