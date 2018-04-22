@@ -8,41 +8,45 @@ public class PercolationStats {
     private static final double CONFIDENCE_95 = 1.96;
 
     private double[] thresholds;
+    private double mean;
+    private double stddev;
+    private double confidenceLo;
+    private double confidenceHi;
 
     public PercolationStats(int n, int trials) {
-        mustBePositive(n);
-        mustBePositive(trials);
+        validateInputs(n, trials);
         thresholds = new double[trials];
         runExperiments(n, trials);
+        produceStats();
     }
 
     public double mean() {
-        return StdStats.mean(thresholds);
+        return mean;
     }
 
     public double stddev() {
-        return StdStats.stddev(thresholds);
+        return stddev;
     }
 
     public double confidenceLo() {
-        return mean() - CONFIDENCE_95 * stddev() / Math.sqrt(thresholds.length);
+        return confidenceLo;
     }
 
     public double confidenceHi() {
-        return mean() + CONFIDENCE_95 * stddev() / Math.sqrt(thresholds.length);
+        return confidenceHi;
     }
 
     public static void main(String[] args) {
         final PercolationStats stats = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-        System.out.println("mean \t\t = " + stats.mean());
-        System.out.println("stddev \t\t = " + stats.stddev());
+        System.out.println("mean = " + stats.mean());
+        System.out.println("stddev = " + stats.stddev());
         System.out.printf("95%% confidence interval = [%f, %f]", stats.confidenceLo(), stats.confidenceHi());
     }
 
     // Auxiliary Methods
 
-    private static void mustBePositive(final int n) {
-        if (n < 1) {
+    private static void validateInputs(final int gridSize, final int trials) {
+        if (gridSize < 1 || trials < 1) {
             throw new IllegalArgumentException("grid size and trial number must be positive numbers");
         }
     }
@@ -59,5 +63,13 @@ public class PercolationStats {
 
     private static int randomFrom1To(final int n) {
         return StdRandom.uniform(n) + 1;
+    }
+
+    private void produceStats() {
+        mean = StdStats.mean(thresholds);
+        stddev = StdStats.stddev(thresholds);
+        final double halfDifference = CONFIDENCE_95 * stddev() / Math.sqrt(thresholds.length);
+        confidenceLo = mean - halfDifference;
+        confidenceHi = mean + halfDifference;
     }
 }

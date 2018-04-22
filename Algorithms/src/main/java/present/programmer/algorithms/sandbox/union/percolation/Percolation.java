@@ -2,14 +2,18 @@ package present.programmer.algorithms.sandbox.union.percolation;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
+/**
+ * Note: To get Percolation vizualizer classes, join the course Algorithms, Part 1 at Coursera.
+ * See https://www.coursera.org/learn/algorithms-part1
+ */
 public class Percolation {
 
     /**
      * true — open; false — blocked.
      */
     private final boolean[][] sites;
-    private int openSiteCount;
 
+    private int openSiteCount;
     private final PercolationWeightedQuickUnion weightedQuickUnion;
 
     public Percolation(final int n) {
@@ -24,10 +28,14 @@ public class Percolation {
         if (!isOpen(row, col)) {
             sites[asIndex(row)][asIndex(col)] = true;
             openSiteCount++;
-            tryUnionAboveSite(row, col);
-            tryUnionBelowSite(row, col);
-            tryUnionLeftSite(row, col);
-            tryUnionRightSite(row, col);
+            final boolean belowSiteRootReachedBottom = tryUnionBelowSite(row, col);
+            final boolean aboveSiteRootReachedBottom = tryUnionAboveSite(row, col);
+            final boolean leftSiteRootReachedBottom = tryUnionLeftSite(row, col);
+            final boolean rightSiteRootReachedBottom = tryUnionRightSite(row, col);
+            if (belowSiteRootReachedBottom || aboveSiteRootReachedBottom ||
+                    leftSiteRootReachedBottom || rightSiteRootReachedBottom) {
+                weightedQuickUnion.makeRootReachBottom(row, col);
+            }
         }
     }
 
@@ -77,43 +85,48 @@ public class Percolation {
         return index < 1 || index > (sites.length);
     }
 
-    private void tryUnionAboveSite(final int row, final int col) {
+    private boolean tryUnionBelowSite(final int row, final int col) {
         try {
-            if (isOpen(row - 1, col)) {
-                weightedQuickUnion.union(row, col, row - 1, col);
-            }
+            return unionIfSecondIsOpen(row, col, row + 1, col);
         } catch (final IllegalArgumentException e) {
+            weightedQuickUnion.unionWithBottom(col);
+            return true;
+        }
+    }
+
+    private boolean tryUnionAboveSite(final int row, final int col) {
+        try {
+            return unionIfSecondIsOpen(row, col, row - 1, col);
+        } catch (final IllegalArgumentException e) {
+            final boolean previousRootReachedBottom = weightedQuickUnion.topVirtualRootReachesBottom();
             weightedQuickUnion.unionWithTopVirtual(col);
+            return previousRootReachedBottom;
         }
     }
 
-    private void tryUnionBelowSite(final int row, final int col) {
+    private boolean tryUnionLeftSite(final int row, final int col) {
         try {
-            if (isOpen(row + 1, col)) {
-                weightedQuickUnion.union(row, col, row + 1, col);
-            }
+            return unionIfSecondIsOpen(row, col, row, col - 1);
         } catch (final IllegalArgumentException e) {
-            weightedQuickUnion.unionWithBottomVirtual(col);
+            return false;
         }
     }
 
-    private void tryUnionLeftSite(final int row, final int col) {
+    private boolean tryUnionRightSite(final int row, final int col) {
         try {
-            if (isOpen(row, col - 1)) {
-                weightedQuickUnion.union(row, col, row, col - 1);
-            }
+            return unionIfSecondIsOpen(row, col, row, col + 1);
         } catch (final IllegalArgumentException e) {
-            // Happens when left site is blocked.
+            return false;
         }
     }
 
-    private void tryUnionRightSite(final int row, final int col) {
-        try {
-            if (isOpen(row, col + 1)) {
-                weightedQuickUnion.union(row, col, row, col + 1);
-            }
-        } catch (final IllegalArgumentException e) {
-            // Happens when right site is blocked.
+    private boolean unionIfSecondIsOpen(final int pRow, final int pCol, final int qRow, final int qCol) {
+        if (isOpen(qRow, qCol)) {
+            final boolean previousRootReachedBottom = weightedQuickUnion.rootReachesBottom(qRow, qCol);
+            weightedQuickUnion.union(pRow, pCol, qRow, qCol);
+            return previousRootReachedBottom;
+        } else {
+            return false;
         }
     }
 
@@ -123,18 +136,21 @@ public class Percolation {
 
     /**
      * Wrapper of WeightedQuickUnionUF, provides convenient API for solving Percolation task.
-     * Tracks not only all grid sites, but also 2 virtual sites at the top and at the bootm of the grid.
-     * Objects from 0 through n - 1 are considered grid sites, n-th is the top virtual site,
-     * and (n + 1)-th is the bottom virtual site.
+     * Tracks not only all grid sites, but also 1 virtual site at the top of the grid.
+     * Objects from 0 through n - 1 are considered grid sites, n-th is the top virtual site.
+     * Field {@link PercolationWeightedQuickUnion#rootReachesBottom} is added to keep track whether root
+     * belongs to the tree which reaches bottom.
      */
     private static class PercolationWeightedQuickUnion {
 
         private final WeightedQuickUnionUF target;
+        private final boolean[] rootReachesBottom;
         private final int gridSize;
 
-        PercolationWeightedQuickUnion(final int gridSize) {
-            target = new WeightedQuickUnionUF(gridSize * gridSize + 2);
-            this.gridSize = gridSize;
+        PercolationWeightedQuickUnion(final int size) {
+            target = new WeightedQuickUnionUF(gridPlusVirtual(size));
+            this.gridSize = size;
+            this.rootReachesBottom = new boolean[gridPlusVirtual(size)];
         }
 
         boolean connectedToTop(final int row, final int col) {
@@ -142,7 +158,19 @@ public class Percolation {
         }
 
         boolean isPercolate() {
-            return target.connected(topVirtual(), bottomVirtual());
+            return topVirtualRootReachesBottom();
+        }
+
+        boolean topVirtualRootReachesBottom() {
+            return rootReachesBottom[rootOf(topVirtual())];
+        }
+
+        boolean rootReachesBottom(final int row, final int col) {
+            return rootReachesBottom[rootOf(row, col)];
+        }
+
+        void makeRootReachBottom(final int row, final int col) {
+            rootReachesBottom[rootOf(row, col)] = true;
         }
 
         void union(final int pRow, final int pCol, final int qRow, final int qCol) {
@@ -153,11 +181,23 @@ public class Percolation {
             target.union(asIndex(1, col), topVirtual());
         }
 
-        void unionWithBottomVirtual(final int col) {
-            target.union(asIndex(gridSize, col), bottomVirtual());
+        void unionWithBottom(final int col) {
+            rootReachesBottom[rootOf(gridSize, col)] = true;
         }
 
         // Auxiliary Methods
+
+        private static int gridPlusVirtual(final int gridSize) {
+            return gridSize * gridSize + 1;
+        }
+
+        private int rootOf(final int row, final int col) {
+            return target.find(asIndex(row, col));
+        }
+
+        private int rootOf(final int index) {
+            return target.find(index);
+        }
 
         private int asIndex(final int row, final int col) {
             return (row - 1) * gridSize + (col - 1);
@@ -165,10 +205,6 @@ public class Percolation {
 
         private int topVirtual() {
             return gridSize * gridSize;
-        }
-
-        private int bottomVirtual() {
-            return gridSize * gridSize + 1;
         }
     }
 }
