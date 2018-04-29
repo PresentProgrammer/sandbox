@@ -1,13 +1,14 @@
 package present.programmer.algorithms.sandbox.collection.stack;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class FixedCapacityStack<T> {
 
-    private Object[] elements;
+    private T[] elements;
     private int currentSize;
 
+    @SuppressWarnings("unchecked")
     public FixedCapacityStack(final int size) {
-        elements = new Object[size];
+        elements = (T[]) new Object[size];
         currentSize = 0;
     }
 
@@ -15,9 +16,8 @@ public class FixedCapacityStack<T> {
         elements[currentSize++] = element;
     }
 
-    @SuppressWarnings("unchecked")
     public T pop() {
-        return (T) elements[--currentSize];
+        return elements[--currentSize];
     }
 
     public boolean isEmpty() {
