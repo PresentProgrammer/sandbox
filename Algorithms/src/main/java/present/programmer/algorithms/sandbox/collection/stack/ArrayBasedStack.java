@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import static java.lang.System.arraycopy;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ArrayBasedStack<E> implements Stack<E> {
 
     private static final int INITIAL_CAPACITY = 4;
