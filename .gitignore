@@ -4,3 +4,7 @@
 ### IntelliJ IDEA ###
 .idea
 *.iml
+
+### Course files, inputs ###
+**/Algorithms/files/
+**/ignore/
