@@ -22,6 +22,10 @@ public class StackClient {
             System.out.println(stack.pop());
         } else if ("print".equals(input)) {
             print(stack);
+        } else if ("size".equals(input)) {
+            System.out.println(stack.size());
+        } else if ("isEmpty".equals(input)) {
+            System.out.println(stack.isEmpty());;
         } else {
             stack.push(input);
         }
