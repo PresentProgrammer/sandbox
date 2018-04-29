@@ -11,6 +11,10 @@ public class StackClient {
                 final String input = scanner.next();
                 if ("-".equals(input)) {
                     System.out.println(stack.pop() + " ");
+                } else if ("print".equals(input)) {
+                    for (final String element : stack) {
+                        System.out.println(element);
+                    }
                 } else {
                     stack.push(input);
                 }
