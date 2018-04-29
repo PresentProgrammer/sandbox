@@ -4,17 +4,17 @@ import java.util.Iterator;
 
 import static java.lang.System.arraycopy;
 
-@SuppressWarnings({"WeakerAccess", "unused"})
-public class ArrayBasedStack<T> implements Iterable<T> {
+@SuppressWarnings("WeakerAccess")
+public class ArrayBasedStack<E> implements Stack<E> {
 
     private static final int INITIAL_CAPACITY = 4;
 
-    private T[] elements;
+    private E[] elements;
     private int currentSize;
 
     @SuppressWarnings("unchecked")
     public ArrayBasedStack(final int size) {
-        elements = (T[]) new Object[size];
+        elements = (E[]) new Object[size];
         currentSize = 0;
     }
 
@@ -22,13 +22,13 @@ public class ArrayBasedStack<T> implements Iterable<T> {
         this(INITIAL_CAPACITY);
     }
 
-    public void push(T element) {
+    public void push(E element) {
         ensureEnoughCapacity();
         elements[currentSize++] = element;
     }
 
-    public T pop() {
-        final T result = elements[--currentSize];
+    public E pop() {
+        final E result = elements[--currentSize];
         avoidLoitering();
         ensureCapacityNotTooBig();
         return result;
@@ -43,7 +43,7 @@ public class ArrayBasedStack<T> implements Iterable<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<E> iterator() {
         return new PrimitiveIterator();
     }
 
@@ -72,7 +72,7 @@ public class ArrayBasedStack<T> implements Iterable<T> {
 
     @SuppressWarnings("unchecked")
     private void resize(final int newSize) {
-        final T[] newArray = (T[]) new Object[newSize];
+        final E[] newArray = (E[]) new Object[newSize];
         arraycopy(elements, 0, newArray, 0, currentSize);
         elements = newArray;
     }
@@ -81,7 +81,7 @@ public class ArrayBasedStack<T> implements Iterable<T> {
         elements[currentSize] = null;
     }
 
-    private class PrimitiveIterator implements Iterator<T> {
+    private class PrimitiveIterator implements Iterator<E> {
 
         private int nextIndex;
 
@@ -95,7 +95,7 @@ public class ArrayBasedStack<T> implements Iterable<T> {
         }
 
         @Override
-        public T next() {
+        public E next() {
             return elements[--nextIndex];
         }
     }

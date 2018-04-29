@@ -1,12 +1,12 @@
 package present.programmer.algorithms.sandbox.union;
 
-public class PrimitiveLinkedList {
+public class ArrayBasedLinkedList {
 
     private boolean[] present;
     private int[] successors;
     private int[] predecessors;
 
-    public PrimitiveLinkedList(final int n) {
+    public ArrayBasedLinkedList(final int n) {
         initializePresent(n);
         initializeSuccessors(n);
         initializePredecessors(n);

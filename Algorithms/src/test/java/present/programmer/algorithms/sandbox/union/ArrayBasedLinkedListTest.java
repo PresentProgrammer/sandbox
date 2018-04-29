@@ -4,13 +4,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class PrimitiveLinkedListTest {
+public class ArrayBasedLinkedListTest {
 
     private static final int N = 10;
 
     @Test
     public void withoutRemoval_successorsAreReturnedCorrectly() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         for (int i = 0; i < N - 2; i++) {
             assertEquals(i + 1, testedObject.successor(i));
         }
@@ -19,7 +19,7 @@ public class PrimitiveLinkedListTest {
 
     @Test
     public void removeMiddleElements_successorsAreReturnedCorrectly() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         testedObject.remove(1);
         testedObject.remove(2);
         testedObject.remove(4);
@@ -31,42 +31,42 @@ public class PrimitiveLinkedListTest {
 
     @Test
     public void removeFirstElement_successorsAreReturnedCorrectly() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         testedObject.remove(0);
         assertEquals(2, testedObject.successor(1));
     }
 
     @Test
     public void removeLastElement_successorOfbeforeLastElement_willBeTheSameElement() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         testedObject.remove(N - 1);
         assertEquals(N - 2, testedObject.successor(N - 2));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removeMiddleElementMultipleTimes_exceptionIsThrown() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         testedObject.remove(2);
         testedObject.remove(2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removeFirstElementMultipleTimes_exceptionIsThrown() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         testedObject.remove(0);
         testedObject.remove(0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removeLastElementMultipleTimes_exceptionIsThrown() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         testedObject.remove(N - 1);
         testedObject.remove(N - 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void queryForSuccessorOfRemovedElement_exceptionIsThrown() {
-        final PrimitiveLinkedList testedObject = new PrimitiveLinkedList(N);
+        final ArrayBasedLinkedList testedObject = new ArrayBasedLinkedList(N);
         testedObject.remove(N - 2);
         testedObject.successor(N - 2);
     }
