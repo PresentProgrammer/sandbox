@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 @SuppressWarnings("WeakerAccess")
-public class RandomizedQueue<Item> implements Iterable<Item> {
+public class RandomizedQueue<Item> implements Queue<Item> {
 
     private static final int INITIAL_CAPACITY = 4;
 
@@ -19,20 +19,24 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         size = 0;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void enqueue(Item item) {
         requireNonNull(item);
         ensureEnoughCapacity();
         items[size++] = item;
     }
 
+    @Override
     public Item dequeue() {
         requireNotEmpty();
         final Item item = items[--size];
@@ -41,13 +45,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return item;
     }
 
+    @Override
+    public Iterator<Item> iterator() {
+        return new RandomizedIterator();
+    }
+
     public Item sample() {
         requireNotEmpty();
         return items[StdRandom.uniform(size)];
-    }
-
-    public Iterator<Item> iterator() {
-        return new RandomizedIterator();
     }
 
     private static <E> void requireNonNull(final E item) {
