@@ -43,11 +43,19 @@ public class FastCollinearPoints {
     }
 
     private void findSegmentsOf4Points(final Point[] points) {
-        for (final Point origin : points) {
+        for (final Point origin : unmodifiableCopyOf(points)) {
             sortNaturally_willHelpFindingSegmentVertices(points);
             Arrays.sort(points, origin.slopeOrder());
             searchForSegments(points, origin);
         }
+    }
+
+    private static Point[] unmodifiableCopyOf(final Point[] points) {
+        final Point[] copy = new Point[points.length];
+        for (int i = 0; i < points.length; i++) {
+            copy[i] = points[i];
+        }
+        return copy;
     }
 
     private void searchForSegments(final Point[] points, final Point origin) {
@@ -64,23 +72,21 @@ public class FastCollinearPoints {
                     lastCollinearPoint = points[i];
                     i++;
                 }
-                segments.push(new Line(min(origin, q), max(origin,lastCollinearPoint)));
+                if (isOriginAtTheBottom(origin, q)) {
+                    segments.push(new Line(origin, lastCollinearPoint));
+                }
             } else {
                 i++;
             }
         }
     }
 
+    private boolean isOriginAtTheBottom(final Point origin, final Point q) {
+        return origin.compareTo(q) < 0;
+    }
+
     private static boolean isNextPointCollinear(final Point nextPoint, final Point origin, final double slope) {
         return slope == origin.slopeTo(nextPoint);
-    }
-
-    private static Point min(final Point p1, final Point p2) {
-        return p1.compareTo(p2) <= 0 ? p1 : p2;
-    }
-
-    private static Point max(final Point p1, final Point p2) {
-        return p1.compareTo(p2) >= 0 ? p1 : p2;
     }
 
     private static void sortNaturally_willHelpFindingSegmentVertices(final Point[] points) {
@@ -109,6 +115,14 @@ public class FastCollinearPoints {
         public int compareTo(final Line that) {
             int comparisonOfFirstPoint = this.first.compareTo(that.first);
             return comparisonOfFirstPoint == 0 ? this.last.compareTo(that.last) : comparisonOfFirstPoint;
+        }
+
+        @Override
+        public String toString() {
+            return "Line{" +
+                    "first=" + first +
+                    ", last=" + last +
+                    '}';
         }
     }
 
@@ -139,6 +153,8 @@ public class FastCollinearPoints {
                 for (int i = 1; i < lines.length; i++) {
                     if (lines[i].compareTo(lines[i - 1]) != 0) {
                         resultStack.push(lines[i]);
+                    } else {
+                        System.out.println("removed duplicate: " + lines[i]);
                     }
                 }
             }
