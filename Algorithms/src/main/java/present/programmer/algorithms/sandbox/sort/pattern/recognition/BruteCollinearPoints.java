@@ -8,11 +8,20 @@ public class BruteCollinearPoints {
     private final LineSegmentStack segments;
 
     public BruteCollinearPoints(Point[] points) {
-        requireNonNullValues(points);
-        Arrays.sort(points);
-        requireNoDuplicates(points);
+        final Point[] sortablePoints = copyOf(points);
+        requireNonNullValues(sortablePoints);
+        Arrays.sort(sortablePoints);
+        requireNoDuplicates(sortablePoints);
         segments = new LineSegmentStack();
-        findLineSegmentsOf4Points(points);
+        findLineSegmentsOf4Points(sortablePoints);
+    }
+
+    private static Point[] copyOf(final Point[] points) {
+        final Point[] copy = new Point[points.length];
+        for (int i = 0; i < points.length; i++) {
+            copy[i] = points[i];
+        }
+        return copy;
     }
 
     public int numberOfSegments() {

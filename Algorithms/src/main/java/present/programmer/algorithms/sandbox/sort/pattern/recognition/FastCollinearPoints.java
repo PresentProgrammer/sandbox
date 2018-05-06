@@ -8,11 +8,12 @@ public class FastCollinearPoints {
     private final LineSegmentStack segments;
 
     public FastCollinearPoints(Point[] points) {
-        requireNonNullValues(points);
-        Arrays.sort(points);
-        requireNoDuplicates(points);
+        final Point[] sortablePoints = copyOf(points);
+        requireNonNullValues(sortablePoints);
+        Arrays.sort(sortablePoints);
+        requireNoDuplicates(sortablePoints);
         segments = new LineSegmentStack();
-        findSegmentsOf4Points(points);
+        findSegmentsOf4Points(sortablePoints);
     }
 
     public int numberOfSegments() {
@@ -42,15 +43,16 @@ public class FastCollinearPoints {
         }
     }
 
-    private void findSegmentsOf4Points(final Point[] points) {
-        for (final Point origin : unmodifiableCopyOf(points)) {
+    private void findSegmentsOf4Points(final Point[] pointsThatShouldNotBeSorted) {
+        final Point[] points = copyOf(pointsThatShouldNotBeSorted);
+        for (final Point origin : pointsThatShouldNotBeSorted) {
             sortNaturally_willHelpFindingSegmentVertices(points);
             Arrays.sort(points, origin.slopeOrder());
             searchForSegments(points, origin);
         }
     }
 
-    private static Point[] unmodifiableCopyOf(final Point[] points) {
+    private static Point[] copyOf(final Point[] points) {
         final Point[] copy = new Point[points.length];
         for (int i = 0; i < points.length; i++) {
             copy[i] = points[i];
