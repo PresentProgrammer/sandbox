@@ -9,8 +9,8 @@ public class BruteCollinearPoints {
     private final Stack<LineSegment> segments;
 
     public BruteCollinearPoints(Point[] points) {
+        requireNonNullValues(points);
         final Point[] sortablePoints = copyOf(points);
-        requireNonNullValues(sortablePoints);
         Arrays.sort(sortablePoints);
         requireNoDuplicates(sortablePoints);
         segments = new Stack<>();
@@ -79,6 +79,11 @@ public class BruteCollinearPoints {
         final double slopePQ = p.slopeTo(q);
         final double slopeQR = q.slopeTo(r);
         final double slopeRS = r.slopeTo(s);
-        return slopePQ == slopeQR && slopeQR == slopeRS;
+        return areFloatEqual(slopePQ, slopeQR) && areFloatEqual(slopeQR, slopeRS);
+    }
+
+    private static boolean areFloatEqual(final double x, final double y) {
+        final double EPSILON = 0.00001;
+        return Math.abs(x - y) < EPSILON;
     }
 }
