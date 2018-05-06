@@ -5,13 +5,13 @@ import java.util.Iterator;
 
 public class FastCollinearPoints {
 
-    private final LineStack segments;
+    private final LineSegmentStack segments;
 
     public FastCollinearPoints(Point[] points) {
         requireNonNullValues(points);
         Arrays.sort(points);
         requireNoDuplicates(points);
-        segments = new LineStack();
+        segments = new LineSegmentStack();
         findSegmentsOf4Points(points);
     }
 
@@ -20,7 +20,7 @@ public class FastCollinearPoints {
     }
 
     public LineSegment[] segments() {
-        return segments.asArrayOfUniqueLineSegments();
+        return segments.asArray();
     }
 
     private static void requireNonNullValues(Point[] points) {
@@ -73,7 +73,7 @@ public class FastCollinearPoints {
                     i++;
                 }
                 if (isOriginAtTheBottom(origin, q)) {
-                    segments.push(new Line(origin, lastCollinearPoint));
+                    segments.push(new LineSegment(origin, lastCollinearPoint));
                 }
             } else {
                 i++;
@@ -93,45 +93,12 @@ public class FastCollinearPoints {
         Arrays.sort(points);
     }
 
-    private static class Line implements Comparable<Line> {
-
-        private final Point first;
-        private final Point last;
-
-        private Line(final Point first, final Point last) {
-            this.first = first;
-            this.last = last;
-        }
-
-        private Point getFirst() {
-            return first;
-        }
-
-        private Point getLast() {
-            return last;
-        }
-
-        @Override
-        public int compareTo(final Line that) {
-            int comparisonOfFirstPoint = this.first.compareTo(that.first);
-            return comparisonOfFirstPoint == 0 ? this.last.compareTo(that.last) : comparisonOfFirstPoint;
-        }
-
-        @Override
-        public String toString() {
-            return "Line{" +
-                    "first=" + first +
-                    ", last=" + last +
-                    '}';
-        }
-    }
-
-    private static class LineStack implements Iterable<Line> {
+    private static class LineSegmentStack implements Iterable<LineSegment> {
 
         private Node head;
         private int currentSize;
 
-        void push(final Line element) {
+        void push(final LineSegment element) {
             head = new Node(element, head);
             currentSize++;
         }
@@ -144,54 +111,32 @@ public class FastCollinearPoints {
             return currentSize;
         }
 
-        LineSegment[] asArrayOfUniqueLineSegments() {
-            final LineStack resultStack = new LineStack();
-            final Line[] lines = copyLines();
-            if (lines.length > 0) {
-                Arrays.sort(lines);
-                resultStack.push(lines[0]);
-                for (int i = 1; i < lines.length; i++) {
-                    if (lines[i].compareTo(lines[i - 1]) != 0) {
-                        resultStack.push(lines[i]);
-                    } else {
-                        System.out.println("removed duplicate: " + lines[i]);
-                    }
-                }
-            }
-            final LineSegment[] lineSegments = new LineSegment[resultStack.size()];
+        LineSegment[] asArray() {
+            final LineSegment[] array = new LineSegment[currentSize];
             int i = 0;
-            for (final Line line : resultStack) {
-                lineSegments[i++] = new LineSegment(line.getFirst(), line.getLast());
-            }
-            return lineSegments;
-        }
-
-        private Line[] copyLines() {
-            final Line[] array = new Line[currentSize];
-            int i = 0;
-            for (final Line line : this) {
-                array[i++] = line;
+            for (final LineSegment lineSegment : this) {
+                array[i++] = lineSegment;
             }
             return array;
         }
 
         @Override
-        public Iterator<Line> iterator() {
+        public Iterator<LineSegment> iterator() {
             return new PrimitiveIterator();
         }
 
         static class Node {
 
-            Line item;
+            LineSegment item;
             Node next;
 
-            Node(final Line item, final Node next) {
+            Node(final LineSegment item, final Node next) {
                 this.item = item;
                 this.next = next;
             }
         }
 
-        private class PrimitiveIterator implements Iterator<Line> {
+        private class PrimitiveIterator implements Iterator<LineSegment> {
 
             private Node nextNode;
 
@@ -200,8 +145,8 @@ public class FastCollinearPoints {
             }
 
             @Override
-            public Line next() {
-                final Line result = nextNode.item;
+            public LineSegment next() {
+                final LineSegment result = nextNode.item;
                 nextNode = nextNode.next;
                 return result;
             }
@@ -212,5 +157,4 @@ public class FastCollinearPoints {
             }
         }
     }
-
 }
