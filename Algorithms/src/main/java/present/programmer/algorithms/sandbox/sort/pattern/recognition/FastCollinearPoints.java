@@ -1,18 +1,19 @@
 package present.programmer.algorithms.sandbox.sort.pattern.recognition;
 
+import edu.princeton.cs.algs4.Stack;
+
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class FastCollinearPoints {
 
-    private final LineSegmentStack segments;
+    private final Stack<LineSegment> segments;
 
     public FastCollinearPoints(Point[] points) {
         final Point[] sortablePoints = copyOf(points);
         requireNonNullValues(sortablePoints);
         Arrays.sort(sortablePoints);
         requireNoDuplicates(sortablePoints);
-        segments = new LineSegmentStack();
+        segments = new Stack<>();
         findSegmentsOf4Points(sortablePoints);
     }
 
@@ -21,7 +22,12 @@ public class FastCollinearPoints {
     }
 
     public LineSegment[] segments() {
-        return segments.asArray();
+        final LineSegment[] array = new LineSegment[segments.size()];
+        int i = 0;
+        for (final LineSegment lineSegment : segments) {
+            array[i++] = lineSegment;
+        }
+        return array;
     }
 
     private static void requireNonNullValues(Point[] points) {
@@ -93,70 +99,5 @@ public class FastCollinearPoints {
 
     private static void sortNaturally_willHelpFindingSegmentVertices(final Point[] points) {
         Arrays.sort(points);
-    }
-
-    private static class LineSegmentStack implements Iterable<LineSegment> {
-
-        private Node head;
-        private int currentSize;
-
-        void push(final LineSegment element) {
-            head = new Node(element, head);
-            currentSize++;
-        }
-
-        boolean isEmpty() {
-            return head == null;
-        }
-
-        int size() {
-            return currentSize;
-        }
-
-        LineSegment[] asArray() {
-            final LineSegment[] array = new LineSegment[currentSize];
-            int i = 0;
-            for (final LineSegment lineSegment : this) {
-                array[i++] = lineSegment;
-            }
-            return array;
-        }
-
-        @Override
-        public Iterator<LineSegment> iterator() {
-            return new PrimitiveIterator();
-        }
-
-        static class Node {
-
-            LineSegment item;
-            Node next;
-
-            Node(final LineSegment item, final Node next) {
-                this.item = item;
-                this.next = next;
-            }
-        }
-
-        private class PrimitiveIterator implements Iterator<LineSegment> {
-
-            private Node nextNode;
-
-            PrimitiveIterator() {
-                this.nextNode = head;
-            }
-
-            @Override
-            public LineSegment next() {
-                final LineSegment result = nextNode.item;
-                nextNode = nextNode.next;
-                return result;
-            }
-
-            @Override
-            public boolean hasNext() {
-                return nextNode != null;
-            }
-        }
     }
 }
