@@ -79,11 +79,6 @@ public class BruteCollinearPoints {
         final double slopePQ = p.slopeTo(q);
         final double slopeQR = q.slopeTo(r);
         final double slopeRS = r.slopeTo(s);
-        return areFloatEqual(slopePQ, slopeQR) && areFloatEqual(slopeQR, slopeRS);
-    }
-
-    private static boolean areFloatEqual(final double x, final double y) {
-        final double EPSILON = 0.00001;
-        return Math.abs(x - y) < EPSILON;
+        return Double.compare(slopePQ, slopeQR) == 0 && Double.compare(slopeQR, slopeRS) == 0;
     }
 }

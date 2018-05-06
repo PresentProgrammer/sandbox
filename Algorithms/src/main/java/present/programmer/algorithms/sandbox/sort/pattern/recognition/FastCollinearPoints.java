@@ -52,7 +52,7 @@ public class FastCollinearPoints {
     private void findSegmentsOf4Points(final Point[] pointsThatShouldNotBeSorted) {
         final Point[] points = copyOf(pointsThatShouldNotBeSorted);
         for (final Point origin : pointsThatShouldNotBeSorted) {
-            sortNaturallyWhichWillHelpFindingSegmentVertices(points);
+            sortNaturallyWillHelpFindingSegmentVertices(points);
             Arrays.sort(points, origin.slopeOrder());
             searchForSegments(points, origin);
         }
@@ -73,7 +73,7 @@ public class FastCollinearPoints {
             final Point s = points[i + 2];
             double slopeToQ = origin.slopeTo(q);
             double slopeToS = origin.slopeTo(s);
-            if (areFloatEqual(slopeToQ, slopeToS)) {
+            if (Double.compare(slopeToQ, slopeToS) == 0) {
                 i += 3;
                 Point lastCollinearPoint = s;
                 while (i < points.length && isNextPointCollinear(points[i], origin, slopeToS)) {
@@ -94,15 +94,10 @@ public class FastCollinearPoints {
     }
 
     private static boolean isNextPointCollinear(final Point nextPoint, final Point origin, final double slope) {
-        return areFloatEqual(slope, origin.slopeTo(nextPoint));
+        return Double.compare(slope, origin.slopeTo(nextPoint)) == 0;
     }
 
-    private static void sortNaturallyWhichWillHelpFindingSegmentVertices(final Point[] points) {
+    private static void sortNaturallyWillHelpFindingSegmentVertices(final Point[] points) {
         Arrays.sort(points);
-    }
-
-    private static boolean areFloatEqual(final double x, final double y) {
-        final double EPSILON = 0.00001;
-        return Math.abs(x - y) < EPSILON;
     }
 }
