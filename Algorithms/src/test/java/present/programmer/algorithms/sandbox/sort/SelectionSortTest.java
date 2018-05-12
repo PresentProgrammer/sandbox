@@ -14,6 +14,11 @@ public class SelectionSortTest {
         commonTests().sortIntegers(new SelectionSort());
     }
 
+    @Test
+    public void applySelectionSort_sortEmptyArray_noExceptionsThrown() {
+        commonTests().sortEmptyArray(new SelectionSort());
+    }
+
     // Auxiliary Methods
 
     private CommonTests commonTests() {

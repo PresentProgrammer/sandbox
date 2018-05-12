@@ -16,7 +16,7 @@ public class SelectionSort extends SortMethod {
         int minIndex = i;
         T minValue = array[i];
         for (int j = i + 1; j < array.length; j++) {
-            if (array[j].compareTo(minValue) < 0) {
+            if (less(array[j], minValue)) {
                 minIndex = j;
                 minValue = array[j];
             }
@@ -24,7 +24,7 @@ public class SelectionSort extends SortMethod {
         return minIndex;
     }
 
-    private <T> void swap(final T[] array, final int firstIndex, final int secondIndex) {
+    private static <T> void swap(final T[] array, final int firstIndex, final int secondIndex) {
         final T temp = array[firstIndex];
         array[firstIndex] = array[secondIndex];
         array[secondIndex] = temp;

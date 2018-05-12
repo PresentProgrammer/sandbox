@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import static java.lang.Thread.currentThread;
 
-public class Inputs {
+class Inputs {
 
     private static final String INPUT_FOLDER = "sort";
     private static final String UNSORTED_WORDS = INPUT_FOLDER + "/unsorted-words.txt";

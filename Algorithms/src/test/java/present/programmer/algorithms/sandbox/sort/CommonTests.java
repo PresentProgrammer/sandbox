@@ -6,7 +6,7 @@ import static java.lang.System.arraycopy;
 import static java.util.Arrays.sort;
 import static org.junit.Assert.assertArrayEquals;
 
-public class CommonTests {
+class CommonTests {
 
     private static final int FROM_FIRST_ELEMENT = 0;
 
@@ -16,6 +16,10 @@ public class CommonTests {
 
     void sortIntegers(final SortMethod sortMethod) {
         assertSortingWorksCorrectly(sortMethod, inputIntegers());
+    }
+
+    void sortEmptyArray(final SortMethod sortMethod) {
+        sortMethod.sort(new Integer[0]);
     }
 
     // Auxiliary Methods
