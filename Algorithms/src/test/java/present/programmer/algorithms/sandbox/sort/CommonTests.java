@@ -1,7 +1,5 @@
 package present.programmer.algorithms.sandbox.sort;
 
-import java.util.Arrays;
-
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.sort;
 import static org.junit.Assert.assertArrayEquals;
@@ -29,7 +27,6 @@ class CommonTests {
         final T[] arraySortedByJavaApi = sortByJavaApi(unsortedArray);
         final T[] sortedArray = sortMethod.sort(unsortedArray);
         assertArrayEquals(arraySortedByJavaApi, sortedArray);
-        System.out.println(Arrays.deepToString(sortedArray));
     }
 
     @SuppressWarnings("unchecked")
