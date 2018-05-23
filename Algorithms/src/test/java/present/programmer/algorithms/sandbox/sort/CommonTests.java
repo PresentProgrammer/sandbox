@@ -8,6 +8,10 @@ class CommonTests {
 
     private static final int FROM_FIRST_ELEMENT = 0;
 
+    static CommonTests commonTests() {
+        return new CommonTests();
+    }
+
     void sortWords(final SortMethod sortMethod) {
         assertSortingWorksCorrectly(sortMethod, inputWords());
     }
@@ -41,7 +45,7 @@ class CommonTests {
         return new Inputs().getUnsortedWords();
     }
 
-    private Integer[] inputIntegers() {
+    private static Integer[] inputIntegers() {
         return new Inputs().getUnsortedIntegers();
     }
 }

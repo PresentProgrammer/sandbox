@@ -1,5 +1,7 @@
 package present.programmer.algorithms.sandbox.sort;
 
+import static present.programmer.algorithms.sandbox.sort.CommonTests.commonTests;
+
 import org.junit.Test;
 
 public class SelectionSortTest {
@@ -17,11 +19,5 @@ public class SelectionSortTest {
     @Test
     public void applySelectionSort_sortEmptyArray_noExceptionsThrown() {
         commonTests().sortEmptyArray(new SelectionSort());
-    }
-
-    // Auxiliary Methods
-
-    private CommonTests commonTests() {
-        return new CommonTests();
     }
 }
