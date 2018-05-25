@@ -10,10 +10,10 @@ public class MergeSort extends SortMethod {
         new MergeSorter<>(array).sort();
     }
 
-    private static class MergeSorter<T extends Comparable<T>> {
+    static class MergeSorter<T extends Comparable<T>> {
 
-        private final T[] result;
-        private final T[] auxiliaryArray;
+        final T[] result;
+        final T[] auxiliaryArray;
 
         MergeSorter(final T[] unsortedArray) {
             result = unsortedArray;
@@ -46,7 +46,7 @@ public class MergeSort extends SortMethod {
             arraycopy(result, begin, auxiliaryArray, begin, end - begin);
         }
 
-        private void mergeFromAuxiliaryArray(final int begin, final int mid, final int end) {
+        void mergeFromAuxiliaryArray(final int begin, final int mid, final int end) {
             int k = begin;
             int i = begin;
             int j = mid;
