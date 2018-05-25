@@ -15,12 +15,9 @@ public class MergeSort extends SortMethod {
         private final T[] result;
         private final T[] auxiliaryArray;
 
-        /**
-         * Note: auxiliaryArray is one element larger to optimize number of array accesses while merging.
-         */
         MergeSorter(final T[] unsortedArray) {
             result = unsortedArray;
-            auxiliaryArray = copyOf(unsortedArray, unsortedArray.length + 1);
+            auxiliaryArray = copyOf(unsortedArray, unsortedArray.length);
         }
 
         void sort() {
@@ -45,15 +42,15 @@ public class MergeSort extends SortMethod {
                 int k = begin;
                 int i = begin;
                 int j = mid;
-                T left = auxiliaryArray[i];
-                T right = auxiliaryArray[j];
                 while (i < mid && j < end) {
+                    T left = auxiliaryArray[i];
+                    T right = auxiliaryArray[j];
                     if (lessOrEquals(left, right)) {
                         result[k++] = left;
-                        left = auxiliaryArray[++i];
+                        i++;
                     } else {
                         result[k++] = right;
-                        right = auxiliaryArray[++j];
+                        j++;
                     }
                 }
                 copyLeftSubArrayIfNotExhausted(mid, i, k);
