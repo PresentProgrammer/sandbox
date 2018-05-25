@@ -36,33 +36,32 @@ public class MergeSort extends SortMethod {
         }
 
         private void merge(final int begin, final int mid, final int end) {
-            try {
-                assert arePreconditionsMet(begin, mid, end);
-                prepareAuxiliaryArray(begin, end);
-                int k = begin;
-                int i = begin;
-                int j = mid;
-                while (i < mid && j < end) {
-                    T left = auxiliaryArray[i];
-                    T right = auxiliaryArray[j];
-                    if (lessOrEquals(left, right)) {
-                        result[k++] = left;
-                        i++;
-                    } else {
-                        result[k++] = right;
-                        j++;
-                    }
-                }
-                copyLeftSubArrayIfNotExhausted(mid, i, k);
-                assert isResultSorted(begin, end);
-            } catch (final Throwable e) {
-                System.out.printf("begin: %d, mid: %d, end: %d", begin, mid, end);
-                throw e;
-            }
+            assert arePreconditionsMet(begin, mid, end);
+            prepareAuxiliaryArray(begin, end);
+            mergeFromAuxiliaryArray(begin, mid, end);
+            assert isResultSorted(begin, end);
         }
 
         private void prepareAuxiliaryArray(final int begin, final int end) {
             arraycopy(result, begin, auxiliaryArray, begin, end - begin);
+        }
+
+        private void mergeFromAuxiliaryArray(final int begin, final int mid, final int end) {
+            int k = begin;
+            int i = begin;
+            int j = mid;
+            while (i < mid && j < end) {
+                final T left = auxiliaryArray[i];
+                final T right = auxiliaryArray[j];
+                if (lessOrEquals(left, right)) {
+                    result[k++] = left;
+                    i++;
+                } else {
+                    result[k++] = right;
+                    j++;
+                }
+            }
+            copyLeftSubArrayIfNotExhausted(mid, i, k);
         }
 
         private void copyLeftSubArrayIfNotExhausted(final int mid, final int i, final int k) {
