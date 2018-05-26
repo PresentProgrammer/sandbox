@@ -41,7 +41,7 @@ public class MergeSort extends SortMethod {
             }
         }
 
-        private boolean isMergingNeeded(final int mid) {
+        boolean isMergingNeeded(final int mid) {
             return isMergingNeeded(result, mid);
         }
 
@@ -49,7 +49,7 @@ public class MergeSort extends SortMethod {
             return less(result[mid], result[mid - 1]);
         }
 
-        private void merge(final int begin, final int mid, final int end) {
+        void merge(final int begin, final int mid, final int end) {
             assert arePreconditionsMet(begin, mid, end);
             prepareAuxiliaryArray(begin, end);
             mergeFromAuxiliaryArray(begin, mid, end);
