@@ -12,6 +12,8 @@ public class MergeSort extends SortMethod {
 
     static class MergeSorter<T extends Comparable<T>> {
 
+        private static final int CUTOFF = 7;
+
         final T[] result;
         final T[] auxiliaryArray;
 
@@ -21,17 +23,19 @@ public class MergeSort extends SortMethod {
         }
 
         void sort() {
-            divideAndConquer(0, result.length);
+            sort(0, result.length);
         }
 
         // Auxiliary Methods
 
-        private void divideAndConquer(final int begin, final int end) {
-            if (end - begin > 1) {
+        private void sort(final int begin, final int end) {
+            if (end - begin > CUTOFF) {
                 final int mid = begin + ((end - begin) / 2);
-                divideAndConquer(begin, mid);
-                divideAndConquer(mid, end);
+                sort(begin, mid);
+                sort(mid, end);
                 merge(begin, mid, end);
+            } else {
+                new InsertionSort().applySortingMethodTo(result, begin, end);
             }
         }
 
