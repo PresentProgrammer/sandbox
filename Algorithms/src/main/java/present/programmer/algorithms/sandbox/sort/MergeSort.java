@@ -33,10 +33,16 @@ public class MergeSort extends SortMethod {
                 final int mid = begin + ((end - begin) / 2);
                 sort(begin, mid);
                 sort(mid, end);
-                merge(begin, mid, end);
+                if (isMergingNeeded(mid)) {
+                    merge(begin, mid, end);
+                }
             } else {
                 new InsertionSort().applySortingMethodTo(result, begin, end);
             }
+        }
+
+        private boolean isMergingNeeded(final int mid) {
+            return less(result[mid], result[mid - 1]);
         }
 
         private void merge(final int begin, final int mid, final int end) {
