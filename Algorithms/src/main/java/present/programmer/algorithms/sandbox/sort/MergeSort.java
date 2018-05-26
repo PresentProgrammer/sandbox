@@ -17,7 +17,7 @@ public class MergeSort extends SortMethod {
         final T[] result;
         final T[] auxiliaryArray;
 
-        MergeSorter(final T[] unsortedArray) {
+        private MergeSorter(final T[] unsortedArray) {
             result = unsortedArray;
             auxiliaryArray = copyOf(unsortedArray, unsortedArray.length);
         }
@@ -56,7 +56,7 @@ public class MergeSort extends SortMethod {
             arraycopy(result, begin, auxiliaryArray, begin, end - begin);
         }
 
-        void mergeFromAuxiliaryArray(final int begin, final int mid, final int end) {
+        private void mergeFromAuxiliaryArray(final int begin, final int mid, final int end) {
             int k = begin;
             int i = begin;
             int j = mid;

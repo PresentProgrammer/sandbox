@@ -3,14 +3,17 @@ package present.programmer.algorithms.sandbox.sort;
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOf;
 
+/**
+ * Optimization to avoid copying elements to auxiliary array: result and auxiliaryArray swap roles with each recursive call.
+ */
 public class MergeSortSwappingArrays extends SortMethod {
 
     @Override
     <T extends Comparable<T>> void applySortingMethodTo(final T[] array) {
-        new MergeSort.MergeSorter<>(array).sort();
+        new MergeSorter<>(array).sort();
     }
 
-    static class MergeSorter<T extends Comparable<T>> {
+    private static class MergeSorter<T extends Comparable<T>> {
 
         private static final int CUTOFF = 7;
 
@@ -26,9 +29,6 @@ public class MergeSortSwappingArrays extends SortMethod {
 
         // Auxiliary Methods
 
-        /**
-         * Optimization to avoid copying elements: result and auxiliaryArray swap roles with each recursive call.
-         */
         private void sort(T[] result, T[] auxiliaryArray, final int begin, final int end) {
             if (end - begin > CUTOFF) {
                 final int mid = begin + ((end - begin) / 2);
