@@ -17,7 +17,7 @@ public class MergeSort extends SortMethod {
         final T[] result;
         final T[] auxiliaryArray;
 
-        private MergeSorter(final T[] unsortedArray) {
+        MergeSorter(final T[] unsortedArray) {
             result = unsortedArray;
             auxiliaryArray = copyOf(unsortedArray, unsortedArray.length);
         }
@@ -42,6 +42,10 @@ public class MergeSort extends SortMethod {
         }
 
         private boolean isMergingNeeded(final int mid) {
+            return isMergingNeeded(result, mid);
+        }
+
+        boolean isMergingNeeded(final T[] result, final int mid) {
             return less(result[mid], result[mid - 1]);
         }
 
@@ -49,7 +53,7 @@ public class MergeSort extends SortMethod {
             assert arePreconditionsMet(begin, mid, end);
             prepareAuxiliaryArray(begin, end);
             mergeFromAuxiliaryArray(begin, mid, end);
-            assert isResultSorted(begin, end);
+            assert isSorted(result, begin, end);
         }
 
         private void prepareAuxiliaryArray(final int begin, final int end) {
@@ -79,21 +83,25 @@ public class MergeSort extends SortMethod {
         }
 
         private boolean arePreconditionsMet(final int begin, final int mid, final int end) {
-            return parametersAreValid(begin, mid, end) &&
-                    isResultSorted(begin, mid) &&
-                    isResultSorted(mid, end);
+            return arePreconditionsMet(result, begin, mid, end);
         }
 
-        private boolean parametersAreValid(final int begin, final int mid, final int end) {
+        boolean arePreconditionsMet(final T[] array, final int begin, final int mid, final int end) {
+            return parametersAreValid(array, begin, mid, end) &&
+                    isSorted(array, begin, mid) &&
+                    isSorted(array, mid, end);
+        }
+
+        private boolean parametersAreValid(final T[] auxiliaryArray, final int begin, final int mid, final int end) {
             return begin >= 0 &&
                     mid > begin &&
                     end > mid &&
-                    end <= result.length;
+                    end <= auxiliaryArray.length;
         }
 
-        private boolean isResultSorted(final int begin, final int end) {
+        boolean isSorted(final T[] array, final int begin, final int end) {
             for (int i = begin; i < end - 1; i++) {
-                if (less(result[i + 1], result[i])) {
+                if (less(array[i + 1], array[i])) {
                     return false;
                 }
             }
