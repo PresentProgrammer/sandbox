@@ -1,7 +1,6 @@
 package present.programmer.algorithms.sandbox.sort;
 
 import static java.lang.System.arraycopy;
-import static java.util.Arrays.copyOf;
 
 /**
  * Optimization to avoid copying elements to auxiliary array: result and auxiliaryArray swap roles with each recursive call.
@@ -17,16 +16,13 @@ public class MergeSortSwappingArrays extends SortMethod {
 
         private static final int CUTOFF = 7;
 
-        private final T[] array;
-
         MergeSorter(final T[] array) {
             super(array);
-            this.array = array;
         }
 
         @Override
         void sort() {
-            sort(array, copyOf(array, array.length), 0, array.length);
+            sort(result, auxiliaryArray, 0, result.length);
         }
 
         // Auxiliary Methods
