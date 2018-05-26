@@ -16,8 +16,8 @@ class CommonTests {
         assertSortingWorksCorrectly(sortMethod, inputWords());
     }
 
-    void sortIntegers(final SortMethod sortMethod) {
-        assertSortingWorksCorrectly(sortMethod, inputIntegers());
+    void sortIntegers(final int size, final SortMethod sortMethod) {
+        assertSortingWorksCorrectly(sortMethod, inputIntegers(size));
     }
 
     void sortEmptyArray(final SortMethod sortMethod) {
@@ -45,7 +45,7 @@ class CommonTests {
         return new Inputs().getUnsortedWords();
     }
 
-    private static Integer[] inputIntegers() {
-        return new Inputs().getUnsortedIntegers();
+    private static Integer[] inputIntegers(final int size) {
+        return new Inputs().getUnsortedIntegers(size);
     }
 }

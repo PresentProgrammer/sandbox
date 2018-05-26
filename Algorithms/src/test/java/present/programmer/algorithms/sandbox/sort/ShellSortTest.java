@@ -1,10 +1,12 @@
 package present.programmer.algorithms.sandbox.sort;
 
-import static present.programmer.algorithms.sandbox.sort.CommonTests.commonTests;
-
 import org.junit.Test;
 
+import static present.programmer.algorithms.sandbox.sort.CommonTests.commonTests;
+
 public class ShellSortTest {
+
+    private static final int NUMBER_OF_INTEGERS = 1_000_000;
 
     @Test
     public void applyShellSort_sortWords() {
@@ -13,7 +15,7 @@ public class ShellSortTest {
 
     @Test
     public void applyShellSort_sortIntegers() {
-        commonTests().sortIntegers(new ShellSort());
+        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new ShellSort());
     }
 
     @Test

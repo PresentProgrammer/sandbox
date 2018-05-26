@@ -1,10 +1,12 @@
 package present.programmer.algorithms.sandbox.sort;
 
-import static present.programmer.algorithms.sandbox.sort.CommonTests.commonTests;
-
 import org.junit.Test;
 
+import static present.programmer.algorithms.sandbox.sort.CommonTests.commonTests;
+
 public class InsertionSortTest {
+
+    private static final int NUMBER_OF_INTEGERS = 10_000;
 
     @Test
     public void applyInsertionSort_sortWords() {
@@ -13,7 +15,7 @@ public class InsertionSortTest {
 
     @Test
     public void applyInsertionSort_sortIntegers() {
-        commonTests().sortIntegers(new InsertionSort());
+        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new InsertionSort());
     }
 
     @Test

@@ -2,18 +2,18 @@ package present.programmer.algorithms.sandbox.sort;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import static java.lang.Thread.currentThread;
+import static java.util.stream.Stream.generate;
 
 class Inputs {
 
-    private static final String INPUT_FOLDER = "sort";
-    private static final String UNSORTED_WORDS = INPUT_FOLDER + "/unsorted-words.txt";
-    private static final String UNSORTED_INTEGERS = INPUT_FOLDER + "/unsorted-integers.txt";
+    private static final String UNSORTED_WORDS = "sort/unsorted-words.txt";
 
     String[] getUnsortedWords() {
-        try (final Scanner scanner = getFileScanner(UNSORTED_WORDS)) {
+        try (final Scanner scanner = getScannerOfUnsortedWords()) {
             final List<String> words = new ArrayList<>();
             while (scanner.hasNext()) {
                 words.add(scanner.next());
@@ -22,20 +22,15 @@ class Inputs {
         }
     }
 
-    Integer[] getUnsortedIntegers() {
-        try (final Scanner scanner = getFileScanner(UNSORTED_INTEGERS)) {
-            final List<Integer> integers = new ArrayList<>();
-            while (scanner.hasNextInt()) {
-                integers.add(scanner.nextInt());
-            }
-            return integers.toArray(new Integer[0]);
-        }
+    Integer[] getUnsortedIntegers(final int size) {
+        final Random random = new Random();
+        return generate(() -> random.nextInt(size)).limit(size).toArray(Integer[]::new);
     }
 
     // Auxiliary Methods
 
-    private static Scanner getFileScanner(final String path) {
+    private static Scanner getScannerOfUnsortedWords() {
         final ClassLoader classLoader = currentThread().getContextClassLoader();
-        return new Scanner(classLoader.getResourceAsStream(path));
+        return new Scanner(classLoader.getResourceAsStream(UNSORTED_WORDS));
     }
 }
