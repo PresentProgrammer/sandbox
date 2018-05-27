@@ -11,19 +11,19 @@ public class QuickSort extends SortMethod {
         new QuickSorter<>(array).sort();
     }
 
-    private static class QuickSorter<T extends Comparable<T>> {
+    static class QuickSorter<T extends Comparable<T>> {
 
-        private static final int ARRAY_BEGINNING = 0;
+        static final int ARRAY_BEGINNING = 0;
 
-        private final T[] array;
+        final T[] array;
 
-        private QuickSorter(final T[] array) {
+        QuickSorter(final T[] array) {
             this.array = array;
         }
 
-        private void sort() {
+        void sort() {
             shuffle();
-            sortRecursively(ARRAY_BEGINNING, array.length);
+            sort(ARRAY_BEGINNING, array.length);
         }
 
         // Auxiliary Methods
@@ -33,11 +33,11 @@ public class QuickSort extends SortMethod {
             arraycopy(shuffledArray, ARRAY_BEGINNING, array, ARRAY_BEGINNING, array.length);
         }
 
-        private void sortRecursively(final int begin, final int end) {
+        void sort(final int begin, final int end) {
             if (areAtLeastTwoElements(begin, end)) {
                 final int indexOfElementInPlace = partition(begin, end);
-                sortRecursively(begin, indexOfElementInPlace);
-                sortRecursively(indexOfElementInPlace + 1, end);
+                sort(begin, indexOfElementInPlace);
+                sort(indexOfElementInPlace + 1, end);
             }
         }
 
@@ -45,7 +45,7 @@ public class QuickSort extends SortMethod {
             return end - begin >= 2;
         }
 
-        private int partition(final int begin, final int end) {
+        int partition(final int begin, final int end) {
             final T partitioningElement = array[begin];
             int i = begin + 1;
             int j = end - 1;
@@ -68,7 +68,7 @@ public class QuickSort extends SortMethod {
             return j;
         }
 
-        private void swap(final int firstIndex, final int secondIndex) {
+        void swap(final int firstIndex, final int secondIndex) {
             final T temp = array[firstIndex];
             array[firstIndex] = array[secondIndex];
             array[secondIndex] = temp;
