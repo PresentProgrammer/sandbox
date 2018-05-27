@@ -9,7 +9,7 @@ public class UniformRandomPermutation {
     public <T> T[] of(final T[] input) {
         final T[] array = copyOf(input, input.length);
         final Random random = new Random();
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 1; i < array.length; i++) {
             swap(array, i, random.nextInt(i + 1));
         }
         return array;
