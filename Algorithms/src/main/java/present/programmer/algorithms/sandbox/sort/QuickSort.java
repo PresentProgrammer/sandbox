@@ -3,6 +3,8 @@ package present.programmer.algorithms.sandbox.sort;
 import present.programmer.algorithms.sandbox.sort.shuffle.UniformRandomPermutation;
 
 import static java.lang.System.arraycopy;
+import static present.programmer.algorithms.sandbox.sort.util.Compare.greater;
+import static present.programmer.algorithms.sandbox.sort.util.Compare.less;
 
 public class QuickSort extends SortMethod {
 

@@ -1,5 +1,10 @@
 package present.programmer.algorithms.sandbox.sort;
 
+import present.programmer.algorithms.sandbox.sort.util.Median;
+
+import static present.programmer.algorithms.sandbox.sort.util.Compare.greater;
+import static present.programmer.algorithms.sandbox.sort.util.Compare.less;
+
 public class QuickSortAsInCourse extends SortMethod {
 
     @Override
@@ -31,30 +36,8 @@ public class QuickSortAsInCourse extends SortMethod {
         private void swapPartitionElementWithMedian(final int begin, final int end) {
             final int endInclusive = end - 1;
             final int mid = begin + (endInclusive - begin) / 2;
-            final int median = medianOf3(begin, mid, endInclusive);
+            final int median = Median.of3(array, begin, mid, endInclusive);
             swap(begin, median);
-        }
-
-        @SuppressWarnings("Duplicates")
-        private int medianOf3(final int aIndex, final int bIndex, final int cIndex) {
-            final T a = array[aIndex];
-            final T b = array[bIndex];
-            final T c = array[cIndex];
-            if (less(a, b)) {
-                if (less(b, c)) {
-                    return bIndex;
-                } else if (less(a, c)) {
-                    return cIndex;
-                } else {
-                    return aIndex;
-                }
-            } else if (less(c, b)) {
-                return bIndex;
-            } else if (less(a, c)) {
-                return aIndex;
-            } else {
-                return cIndex;
-            }
         }
 
         @Override

@@ -1,5 +1,7 @@
 package present.programmer.algorithms.sandbox.sort;
 
+import static present.programmer.algorithms.sandbox.sort.util.Compare.less;
+
 public class SelectionSort extends SortMethod {
 
     @Override

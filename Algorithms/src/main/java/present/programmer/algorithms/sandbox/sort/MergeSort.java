@@ -2,6 +2,8 @@ package present.programmer.algorithms.sandbox.sort;
 
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOf;
+import static present.programmer.algorithms.sandbox.sort.util.Compare.less;
+import static present.programmer.algorithms.sandbox.sort.util.Compare.lessOrEquals;
 
 public class MergeSort extends SortMethod {
 

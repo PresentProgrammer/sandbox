@@ -1,5 +1,7 @@
 package present.programmer.algorithms.sandbox.sort;
 
+import static present.programmer.algorithms.sandbox.sort.util.Compare.less;
+
 public class InsertionSort extends SortMethod {
 
     private static final int NO_STEP = 1;
@@ -16,7 +18,7 @@ public class InsertionSort extends SortMethod {
         }
     }
 
-    protected static <T extends Comparable<T>> void pushElementUntilLeftSideIsSorted(
+    static <T extends Comparable<T>> void pushElementUntilLeftSideIsSorted(
             final T[] array, final int pushedIndex, final int step) {
         pushElementUntilLeftSideIsSorted(array, pushedIndex, step, WHOLE_LEFT_SIDE);
     }
