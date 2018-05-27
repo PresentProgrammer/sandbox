@@ -19,4 +19,8 @@ abstract class SortMethod {
     static <T> boolean lessOrEquals(final Comparable<T> first, final T second) {
         return first.compareTo(second) <= 0;
     }
+
+    static <T> boolean greater(final Comparable<T> first, final T second) {
+        return first.compareTo(second) > 0;
+    }
 }
