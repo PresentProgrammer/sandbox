@@ -28,9 +28,7 @@ public class QuickSort extends SortMethod {
             sort(ARRAY_BEGINNING, array.length);
         }
 
-        // Auxiliary Methods
-
-        private void shuffle() {
+        void shuffle() {
             final T[] shuffledArray = new UniformRandomPermutation().of(array);
             arraycopy(shuffledArray, ARRAY_BEGINNING, array, ARRAY_BEGINNING, array.length);
         }
@@ -41,10 +39,6 @@ public class QuickSort extends SortMethod {
                 sort(begin, indexOfElementInPlace);
                 sort(indexOfElementInPlace + 1, end);
             }
-        }
-
-        private boolean areAtLeastTwoElements(final int begin, final int end) {
-            return end - begin >= 2;
         }
 
         int partition(final int begin, final int end) {
@@ -74,6 +68,12 @@ public class QuickSort extends SortMethod {
             final T temp = array[firstIndex];
             array[firstIndex] = array[secondIndex];
             array[secondIndex] = temp;
+        }
+
+        // Auxiliary Methods
+
+        private boolean areAtLeastTwoElements(final int begin, final int end) {
+            return end - begin >= 2;
         }
     }
 }

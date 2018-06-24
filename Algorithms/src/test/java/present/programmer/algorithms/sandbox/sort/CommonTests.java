@@ -34,8 +34,7 @@ class CommonTests {
 
     // Auxiliary Methods
 
-    private static <T extends Comparable<T>> void assertSortingWorksCorrectly(final SortMethod sortMethod, final T[]
-            unsortedArray) {
+    private static <T extends Comparable<T>> void assertSortingWorksCorrectly(final SortMethod sortMethod, final T[] unsortedArray) {
         final T[] arraySortedByJavaApi = sortByJavaApi(unsortedArray);
         final T[] sortedArray = sortByMethod(sortMethod, unsortedArray);
         assertArrayEquals(arraySortedByJavaApi, sortedArray);
