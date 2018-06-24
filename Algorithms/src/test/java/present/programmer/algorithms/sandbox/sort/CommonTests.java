@@ -24,6 +24,10 @@ class CommonTests {
         assertSortingWorksCorrectly(sortMethod, inputIntegers(size));
     }
 
+    void sortAlreadySortedIntegers(final int size, final SortMethod sortMethod) {
+        assertSortingWorksCorrectly(sortMethod, inputSortedIntegers(size));
+    }
+
     void sortEmptyArray(final SortMethod sortMethod) {
         sortMethod.sort(new Integer[0]);
     }
@@ -58,5 +62,9 @@ class CommonTests {
 
     private static Integer[] inputIntegers(final int size) {
         return new Inputs().getUnsortedIntegers(size);
+    }
+
+    private static Integer[] inputSortedIntegers(final int size) {
+        return new Inputs().getSortedIntegers(size);
     }
 }

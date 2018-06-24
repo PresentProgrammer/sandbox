@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 import static java.lang.Thread.currentThread;
 import static java.util.stream.Stream.generate;
@@ -25,6 +26,10 @@ class Inputs {
     Integer[] getUnsortedIntegers(final int size) {
         final Random random = new Random();
         return generate(() -> random.nextInt(size)).limit(size).toArray(Integer[]::new);
+    }
+
+    Integer[] getSortedIntegers(final int size) {
+        return IntStream.range(0, size).boxed().toArray(Integer[]::new);
     }
 
     // Auxiliary Methods

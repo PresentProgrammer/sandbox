@@ -19,6 +19,11 @@ public class QuickSortAsInCourseTest {
     }
 
     @Test
+    public void applySelectionSort_onAlreadySortedIntegers() {
+        commonTests().sortAlreadySortedIntegers(NUMBER_OF_INTEGERS, new QuickSortAsInCourse());
+    }
+
+    @Test
     public void applySelectionSort_sortEmptyArray_noExceptionsThrown() {
         commonTests().sortEmptyArray(new QuickSortAsInCourse());
     }
