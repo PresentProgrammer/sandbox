@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>StringToNumber</title>
+</head>
+<body>
+<p id="results"></p>
+<script>
+    console.log("parseInt('123abc') == " + parseInt('123abc'));
+    console.log("parseInt('abc') == " + parseInt('abc'));
+    console.log("parseInt('111abc', 2) == " + parseInt('111abc', 2));
+    console.log("parseInt('112abc', 2) == " + parseInt('112abc', 2));
+    console.log("parseInt('112abc', 16) == " + parseInt('112abc', 16));
+    console.log("parseInt('0x112abc') == " + parseInt('0x112abc'));
+    console.log("parseInt('0112abc') == " + parseInt('0112abc'));
+    console.log("parseFloat('123.4abc') == " + parseFloat('123.4abc'));
+    console.log("parseFloat('123,4abc') == " + parseFloat('123,4abc'));
+    console.log("parseFloat('123abc') == " + parseFloat('123abc'));
+    console.log("parseFloat('abc') == " + parseFloat('abc'));
+
+    console.log("isNaN('Hello') == " + isNaN('Hello'));
+    console.log("isNaN('34') == " + isNaN('34'));
+    console.log("isNaN('34.4') == " + isNaN('34.4'));
+    console.log("isNaN('34.4abc') == " + isNaN('34.4abc'));
+    console.log("isNaN(NaN) == " + isNaN(NaN));
+    console.log("isNaN(parseInt('abc')) == " + isNaN(parseInt('abc')));
+    console.log("isNaN(parseInt('123abc')) == " + isNaN(parseInt('123abc')));
+</script>
+</body>
+</html>

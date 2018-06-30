@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Arrays</title>
+</head>
+<body>
+<p id="results"></p>
+<script>
+    var myArray = ["Paul", 45, "John", 112, 99];
+    myArray[10] = "Artur";
+    console.log("myArray.length == " + myArray.length);
+    console.log("myArray['length'] == " + myArray['length']);
+    console.log("myArray == " + myArray);
+    console.log("myArray[7] == " + myArray[7]);
+    console.log("myArray[2] == " + myArray[2]);
+    console.log("myArray['2'] == " + myArray['2']);
+
+    myArray.length = 2;
+    console.warn("After 'myArray.length = 2;'");
+    console.log("myArray.length == " + myArray.length);
+    console.log("myArray == " + myArray);
+    console.log("myArray[2] == " + myArray[2]);
+    console.log("myArray.length == " + myArray.length);
+
+    myArray.length = 20;
+    console.warn("After 'myArray.length = 20;'");
+    console.log("myArray.length == " + myArray.length);
+    console.log("myArray == " + myArray);
+    console.log("myArray[2] == " + myArray[2]);
+</script>
+</body>
+</html>
