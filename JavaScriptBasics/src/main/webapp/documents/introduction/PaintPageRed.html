@@ -1,0 +1,24 @@
+<!--Interestingly, execution differs in Chrome and IE.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Paint page red</title>
+</head>
+<body bgcolor="white">
+<p>Paragraph 1</p>
+<script>
+    alert("First script block!");
+</script>
+<p>Paragraph 2</p>
+<script>
+    document.bgColor = "red";
+    alert("Second script block");
+</script>
+<p>Paragraph 3</p>
+<script>
+    alert("Third script block");
+</script>
+</body>
+</html>
