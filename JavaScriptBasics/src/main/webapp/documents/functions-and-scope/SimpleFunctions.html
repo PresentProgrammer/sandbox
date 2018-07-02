@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>SimpleFunctions</title>
+</head>
+<body>
+<p id="results"></p>
+<script>
+    function convertToCentigrade(fahrenheits) {
+        return 5 / 9 * (fahrenheits - 32);
+    }
+
+    function convertToCentigradeArray(fahrenheits) {
+        var centigrades = [];
+        for (var i in fahrenheits) {
+            centigrades[i] = convertToCentigrade(fahrenheits[i]);
+        }
+        return centigrades;
+    }
+
+    function printDegrees(fahrenheits, centigrades) {
+        for (var i in fahrenheits) {
+            document.write(fahrenheits[i] + " F\xB0 == " + centigrades[i] + " C\xB0" + "<br/>");
+        }
+    }
+
+    var fahrenheits = [212, 32, -459.15];
+    var centigrades = convertToCentigradeArray(fahrenheits);
+    printDegrees(fahrenheits, centigrades);
+</script>
+</body>
+</html>

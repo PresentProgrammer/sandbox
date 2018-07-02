@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Arguments</title>
+</head>
+<body>
+<p id="results"></p>
+<script>
+    function printFirstThreeArguments() {
+        console.log(arguments[0]);
+        console.log(arguments[1]);
+        console.log(arguments[2]);
+    }
+
+    function changeAgrument(text) {
+        console.log("Before arguments[0] = 'MyHate': " + text);
+        arguments[0] = 'MyHate';
+        console.log("After arguments[0] = 'MyHate': " + text);
+    }
+
+    printFirstThreeArguments("Hello!", "Peppa", 3, "Should not be printed");
+    changeAgrument("MyLove");
+</script>
+</body>
+</html>
