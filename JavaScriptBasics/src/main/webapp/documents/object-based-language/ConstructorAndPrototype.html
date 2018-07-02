@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ConstructorAndPrototype</title>
+</head>
+<body>
+<p id="results"></p>
+<script>
+    function Person(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    Person.prototype.hello = function() {
+        console.log("Hello, my name is " + this.name + ". I am " + this.age + " years young.");
+    };
+
+    var johnDoe = new Person("John", 25);
+    johnDoe.hello();
+
+    console.log("'hello' in johnDoe == " + ('hello' in johnDoe));
+    console.log("johnDoe.hasOwnProperty('hello') == " + johnDoe.hasOwnProperty('hello'));
+
+    for (var property in johnDoe) {
+        console.log(property + " : " + johnDoe[property]);
+    }
+
+    console.log("typeof(johnDoe) == " + typeof(johnDoe));
+
+    delete johnDoe.age;
+    johnDoe.hello();
+</script>
+</body>
+</html>

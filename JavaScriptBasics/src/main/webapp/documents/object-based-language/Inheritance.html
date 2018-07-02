@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Inheritance</title>
+</head>
+<body>
+<p id="results"></p>
+<script>
+    function Animal(name, numberOfLegs) {
+        this.name = name;
+        this.numberOfLegs = numberOfLegs;
+        this.alive = true;
+    }
+    Animal.prototype.sayName = function() {
+        console.log("My name is " + this.name);
+    };
+
+    function Penguin(name) {
+        this.name = name;
+        this.numberOfLegs = 2;
+    }
+    Penguin.prototype = new Animal();
+    var penguin = new Penguin("Penguin");
+    penguin.sayName();
+    for (var property in penguin) {
+        console.log(property + " : " + penguin[property] + " | is own property == " + penguin.hasOwnProperty(property));
+    }
+
+    function Bear() {}
+    Bear.prototype = new Animal("Bear", 4);
+    var bear = new Bear();
+    bear.sayName();
+    for (var property in bear) {
+        console.log(property + " : " + bear[property] + " | is own property == " + bear.hasOwnProperty(property));
+    }
+</script>
+</body>
+</html>

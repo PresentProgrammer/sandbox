@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Encapsulation</title>
+</head>
+<body>
+<p id="results"></p>
+<script>
+    function BankAccount(holderName) {
+        var _holderName = holderName;
+        var _balance = 7500;
+        var _getBalance = function() {
+            return _balance;
+        };
+        this.askForBalance = function(password) {
+            if (password === "qwerty") {
+                return _getBalance;
+            }
+        };
+        this.getHolderName = function() {
+            return _holderName;
+        }
+    }
+
+    var johnsAccount = new BankAccount("John");
+    var getBalancePrivateFunction = johnsAccount.askForBalance("qwerty");
+    console.log(johnsAccount.getHolderName() + "'s balance is " + getBalancePrivateFunction());
+</script>
+</body>
+</html>
