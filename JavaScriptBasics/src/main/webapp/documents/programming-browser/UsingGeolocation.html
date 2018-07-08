@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>UsingGeolocation</title>
+</head>
+<body>
+<script>
+    function geoSuccess(position) {
+        alert("You're at " + position.coords.latitude + ", " + position.coords.longitude);
+    }
+
+    function geoError(error) {
+        alert(error.message);
+    }
+
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+</script>
+</body>
+</html>
