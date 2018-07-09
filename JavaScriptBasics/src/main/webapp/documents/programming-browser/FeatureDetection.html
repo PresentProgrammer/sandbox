@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>UsingGeolocation</title>
+    <title>FeatureDetection</title>
 </head>
 <body>
 <script>
@@ -14,7 +14,11 @@
         alert(error.message);
     }
 
-    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+    if (typeof navigator.geolocation !== "undefined") {
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+    } else {
+        document.write("Sorry, your browser does not support 'navigator.geolocation' feature.");
+    }
 </script>
 </body>
 </html>
