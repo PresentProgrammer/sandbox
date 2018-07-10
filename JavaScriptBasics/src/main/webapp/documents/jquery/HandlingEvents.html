@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>HandlingEvents</title>
+</head>
+<body>
+<div class="click-me">Click on me</div>
+<div class="double-click-me">Double-click on me</div>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    function onClick(event) {
+        if (event.type === "click") {
+            alert("You have clicked on me! Thanks!");
+        } else if (event.type === "dblclick") {
+            alert(event.target.tagName + " was double-clicked! Thanks a bunch!!! Turning off listeners on this element.");
+            $(event.currentTarget).off();
+        }
+    }
+
+    function onMouseover() {
+        alert("Great, now click me!!!");
+    }
+
+    $(".click-me").on("click", onClick);
+    $(".double-click-me").on({
+        dblclick: onClick,
+        mouseover: onMouseover
+    });
+</script>
+</body>
+</html>

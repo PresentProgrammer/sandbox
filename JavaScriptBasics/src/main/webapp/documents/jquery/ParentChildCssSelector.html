@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ParentChildCssSelector</title>
+</head>
+<body>
+<div>
+    <div>Div 1</div>
+    <div>
+        <span>Span 1</span>
+    </div>
+    <div id="myDivId">Div 2</div>
+    <span>Span 2</span>
+</div>
+<span>Span 3</span>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    $("#myDivId, div > span").attr("style", "color:red");
+</script>
+</body>
+</html>

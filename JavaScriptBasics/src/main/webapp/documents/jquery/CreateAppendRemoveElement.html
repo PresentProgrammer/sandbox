@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>CreateAppendRemoveElement</title>
+</head>
+<body>
+<div class="shouldBeRemoved">This text should be removed</div>
+<div class="shouldBeEmptied">
+    <p>This element should be removed</p>
+    <div>And this element, too</div>
+</div>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    var a = $("<a/>").attr({
+        id: "myLink",
+        href: "http://jquery.com",
+        title: "jQuery's website"
+    }).text("Go to jQuery's website");
+    $(document.body).append(a);
+    $(".shouldBeRemoved").remove();
+    $(".shouldBeEmptied").empty();
+</script>
+
+</body>
+</html>

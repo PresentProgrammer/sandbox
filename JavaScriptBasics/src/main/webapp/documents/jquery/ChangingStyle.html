@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ChangingStyle</title>
+    <style>
+        .bold {
+            font-weight: bold
+        }
+    </style>
+</head>
+<body>
+<div id="myFirstDiv">My First Div in blue</div>
+<div id="mySecondDiv">My Second Div on red background with white letters</div>
+<div id="myThirdDiv">My Third Div with added bold class</div>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<!--suppress JSUnresolvedFunction, JSJQueryEfficiency -->
+<script>
+    $("#myFirstDiv").css("color", "blue");
+    $("#mySecondDiv").css({
+        color: "white",
+        backgroundColor: "red"
+    });
+    $("#myThirdDiv").addClass("bold");
+    document.write('$("#myThirdDiv").hasClass("bold") === ' + $("#myThirdDiv").hasClass("bold"))
+</script>
+
+</body>
+</html>

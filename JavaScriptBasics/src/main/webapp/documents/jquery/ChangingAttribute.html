@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ChangingAttribute</title>
+</head>
+<body>
+<p><a href="https://localhost:8080">To 8080</a></p>
+<p><a href="https://localhost:18080">To 18080</a></p>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    var links = $("a");
+    links.attr("target", "_blank");
+    console.log(links.length);
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>RetrievingTabStripWithJquery</title>
+    <style>
+        .tabStrip {
+            background-color: #E4E2D5;
+            padding: 3px;
+            height: 22px;
+        }
+        .tabStrip div {
+            float: left;
+            font: 14px arial;
+            cursor: pointer;
+        }
+        .tabStrip-tab {
+            padding: 3px;
+        }
+        .tabStrip-tab-hover {
+            border: 1px solid #316AC5;
+            background-color: #C1D2EE;
+            padding: 2px;
+        }
+        .tabStrip-tab-click {
+            border: 1px solid #FACC5A;
+            background-color: #F9E391;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="tabStrip">
+    <div data-tab-number="1" class="tabStrip-tab">Tab 1</div>
+    <div data-tab-number="2" class="tabStrip-tab">Tab 2</div>
+    <div data-tab-number="3" class="tabStrip-tab">Tab 3</div>
+</div>
+<div id="descContainer"></div>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    function handleEvent(e) {
+        var target = $(e.target);
+        var type = e.type;
+
+        if (type === "mouseover" || type === "mouseout") {
+            target.toggleClass("tabStrip-tab-hover").removeClass("tabStrip-tab-click");
+        } else if (type === "click") {
+            target.addClass("tabStrip-tab-click");
+            showDescription(target.data("tab-number"));
+        }
+    }
+
+    function showDescription(tabNumber) {
+        $("#descContainer").text("Description for tab " + tabNumber);
+    }
+
+    $(".tabStrip > div").on("mouseover mouseout click", handleEvent);
+</script>
+</body>
+</html>
