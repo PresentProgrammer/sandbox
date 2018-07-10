@@ -28,4 +28,9 @@ class HelloWorldController {
     String greetBigBoss() {
         return "Hello, Peppa Pig!";
     }
+
+    @RequestMapping("/ajax-sandbox/sandbox")
+    String ajaxSandboxPage() {
+        return "AjaxSandboxPage";
+    }
 }

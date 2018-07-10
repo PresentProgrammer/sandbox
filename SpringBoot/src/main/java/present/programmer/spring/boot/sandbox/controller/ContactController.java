@@ -18,6 +18,7 @@ class ContactController {
 
     private static final String CONTACTS = "contacts";
     private static final String CONTACTS_VIEW = "Contacts";
+    private static final String ALTERNATIVE_CONTACT_FORM = "AlternativeContactForm";
     private static final String REDIRECT_TO_SHOW_ALL_CONTACTS = "redirect:/contacts";
 
     private final ContactRepository repository;
@@ -37,5 +38,10 @@ class ContactController {
     String submit(final Contact contact) {
         repository.create(contact);
         return REDIRECT_TO_SHOW_ALL_CONTACTS;
+    }
+
+    @RequestMapping("/ajax-sandbox/alternative-contact-form")
+    String alternativeContactForm() {
+        return ALTERNATIVE_CONTACT_FORM;
     }
 }
