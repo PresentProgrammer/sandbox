@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>IntroductionToForms</title>
+</head>
+<body>
+<form name="form1">
+    <p>This is inside form1</p>
+</form>
+<form name="form2">
+    <p>This is inside form2</p>
+</form>
+<form name="form3">
+    <p>This is inside form3</p>
+</form>
+<script>
+    var numberOfForms = document.forms.length;
+	for (var i = 0; i < numberOfForms; i++) {
+	    console.log(i + '-th form name : ' + document.forms[i].name);
+	}
+	console.log('document.form3.name === ' + document.form3.name);
+</script>
+</body>
+</html>
