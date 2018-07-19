@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ButtonWithEvent</title>
+</head>
+<body>
+<form name="myForm">
+    <input type="button" name="clickCountingButton" value="Hover me!"/>
+	<input type="button" name="mouseUpAndDownButton" value="Click me!"/>
+</form>
+<script>
+    var clickCountingButton = document.myForm.clickCountingButton;
+	var numberOfClicks = 0;
+	clickCountingButton.addEventListener('click', function() {
+	    numberOfClicks++;
+        clickCountingButton.value = 'Button clicked ' + numberOfClicks + ' times';
+	});
+	clickCountingButton.addEventListener('mouseover', function() { clickCountingButton.value = 'Button clicked ' + numberOfClicks + ' times'; });
+	clickCountingButton.addEventListener('mouseout', function() { clickCountingButton.value = 'Hover me!'; });
+	
+	var mouseUpAndDownButton = document.myForm.mouseUpAndDownButton;
+	mouseUpAndDownButton.addEventListener('mouseup', function() { mouseUpAndDownButton.value = 'Mouse went up'; });
+	mouseUpAndDownButton.addEventListener('mousedown', function() { mouseUpAndDownButton.value = 'Mouse went down'; });
+</script>
+</body>
+</html>

@@ -23,6 +23,7 @@
 You can reference form-corresponding objects (HtmlFormElement, Form is used further) through document.<formName> or document.forms collection.
 Note: Form has .submit() method, that does not trigger submit event on the Form object.
 Form's reset() makes entered values to be changed to defaults or cleared completely.
+Every Form object has collection of elements (HTMLFormControlsCollection, consisted of HTMLInputElement, HTMLTextAreaElement and other objects) — myForm.elements
 
 #### HTML elements in forms
 Commonly found form elements are the following:
@@ -36,3 +37,9 @@ Commonly found form elements are the following:
 * Button - <input type="button"/>
 * Submit button - <input type="submit"/>
 * Reset button - <input type="reset"/>
+
+Common properties of elements:
+* name / value pair;
+* type;
+* form;
+* focus() / blur() - mind that there are onfocus and onblur events;

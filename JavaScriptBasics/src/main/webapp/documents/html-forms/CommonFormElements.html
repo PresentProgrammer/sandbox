@@ -6,12 +6,12 @@
 </head>
 <body>
 <form name="myForm">
-    <input type="text" value="DefaultText"/>
-	<input type="password"/>
-	<textarea>Hello!</textArea>
+    <input type="text" name="textInput" value="DefaultText"/>
+	<input type="password" name="passwordInput"/>
+	<textarea name="textArea">Hello!</textArea>
 	<br/>
-	<input type="checkbox"/>
-	<input type="radio"/>
+	<input type="checkbox" name="checkBoxInput"/>
+	<input type="radio" name="radioInput"/>
 	<br/>
 	<select>
 	    <option>1</option>
@@ -22,9 +22,20 @@
 		<option>2</option>
 	</select>
 	<br/>
-	<input type="button" value="General button"/>
-	<input type="submit" value="Submit"/>
-	<input type="reset" value="Reset"/>
+	<input type="button" name="buttonInput" value="General button"/>
+	<input type="submit" name="submitInput" value="Submit"/>
+	<input type="reset" name="resetInput" value="Reset"/>
 </form>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    const textArea = document.myForm.elements.textArea;
+	$(textArea).on('focus', () => {
+	    console.log('textArea has been focused');
+	}).on('blur', () => {
+	    console.log('textArea has lost focus');
+	});
+    document.myForm.elements.textArea.focus();
+</script>
 </body>
 </html>
