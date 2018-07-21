@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>HTML5-MeterAndProgress</title>
+</head>
+<body>
+<h2>Highway Speed Tracker</h2>
+<form id="myForm" name="myForm">
+    <p>
+	    <label for="driverName">Driver name: </label>
+		<input type="text" id="driverName" name="driverName"/>
+	</p>
+	<p>
+	    <label for="speed">Speed (Miles / Hour): </label>
+		<input type="number" id="speed" name="speed"/>
+		<meter id="speedMeter" value="0" low="55" optimum="75" high="90" max="120"/>
+	</p>
+	<p>
+	    <label for="vehicleType">Vehicle Type: </label>
+		<input type="text" id="vehicleType" name="vehicleType"/>
+	</p>
+</form>
+<p>
+    Form completion progress:
+	<progress id="completionProgress" max="3" value="0" form="myForm"/>
+</p>
+<script>
+    function updateSpeedMeter() {
+	    document.getElementById('speedMeter').value = document.myForm.speed.value;
+	}
+
+    function updateCompletionProgress() {
+	    var filledInputCount = 0;
+		var elements = document.myForm.elements;
+		for (var i = 0; i < elements.length; i++) {
+		    if (elements[i].value) {
+			    filledInputCount++;
+			}
+		}
+		document.getElementById('completionProgress').value = filledInputCount;
+	}
+
+    function formInputsChanged() {
+	    updateSpeedMeter();
+	    updateCompletionProgress();
+	}
+	
+	document.myForm.addEventListener('input', formInputsChanged);
+</script>
+</body>
+</html>

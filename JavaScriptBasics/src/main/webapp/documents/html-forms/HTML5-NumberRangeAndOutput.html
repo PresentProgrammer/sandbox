@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>HTML5-NumberRangeAndOutput</title>
+</head>
+<body>
+<form id="myFormId" name="myForm">
+    <p>
+	    <label for="minValue">Min: </label>
+		<input type="number" id="minValue" name="minValue"/>
+	</p>
+	<p>
+	    <label for="maxValue">Max: </label>
+		<input type="number" id="maxValue" name="maxValue"/>
+	</p>
+	<p>
+	    <label for="stepValue">Step: </label>
+		<input type="number" id="stepValue" name="stepValue"/>
+	</p>
+	<p>
+	    <input type="range" id="slider" name="slider"/>
+	</p>
+</form>
+<output id="sliderValueOutput" name="sliderValueOutput" form="myFormId" for="slider"></output>
+<script>
+    var myForm = document.myForm;
+	
+	function formInputChange() {
+	    var slider = myForm.slider;
+		slider.min = parseFloat(myForm.minValue.value);
+		slider.max = parseFloat(myForm.maxValue.value);
+		slider.step = parseFloat(myForm.stepValue.value);
+		myForm.sliderValueOutput.value = slider.value;
+	}
+	
+	myForm.addEventListener('input', formInputChange);
+</script>
+</body>
+</html>

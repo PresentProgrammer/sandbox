@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>SelectEvents</title>
+</head>
+<body>
+<div>Local Time is <span id="spanLocalTime"></span></div>
+<div id="divCityTime"></div>
+
+<form name="myForm">
+    <select name="citySelect" size="5">
+	    <option value="60" selected>Berlin</option>
+		<option value="330">Bombay</option>
+		<option value="0">London</option>
+		<option value="180">Moscow</option>
+		<option value="-300">New York</option>
+		<option value="60">Paris</option>
+		<option value="-480">San Francisco</option>
+		<option value="600">Sydney</option>
+	</select>
+	<p>
+	    <input type="checkbox" id="adjustDaylightCheckbox" name="adjustDaylightCheckbox"/>
+		<label for="adjustDaylightCheckbox">Adjust city time for Daylight Savings</label>
+	</p>
+</form>
+<script>
+    var myForm = document.myForm;
+	
+	function daylightAdjustment() {
+	    var isAdjustDaylight = myForm.adjustDaylightCheckbox.checked;
+		return isAdjustDaylight ? 60 : 0;
+	}
+	
+	function updateOutput(city, cityTimezoneOffset, daylightAdjustment) {
+	    document.getElementById("spanLocalTime").innerHTML = new Date().toLocaleString();
+		var time = new Date();
+		time.setMinutes(time.getMinutes() + time.getTimezoneOffset() + cityTimezoneOffset + daylightAdjustment);
+		document.getElementById("divCityTime").innerHTML = city + " time is " + time.toLocaleString();
+	}
+	
+	function updateTimeZone() {
+	    var citySelect = myForm.citySelect;
+		var selectedOption = citySelect.options[citySelect.selectedIndex];
+		var selectedCity = selectedOption.text;
+		var offset = parseInt(selectedOption.value)
+		updateOutput(selectedCity, offset, daylightAdjustment());
+	}
+	
+	myForm.citySelect.addEventListener('change', updateTimeZone);
+	myForm.adjustDaylightCheckbox.addEventListener('click', updateTimeZone);
+	updateTimeZone();
+</script>
+</body>
+</html>

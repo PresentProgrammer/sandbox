@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Select</title>
+</head>
+<body>
+<form name="myForm">
+    <select name="daySelect" size="5">
+	    <option value="MON" selected="selected">Monday</option>
+		<option value="TUE">Tuesday</option>
+		<option value="WED">Wednesday</option>
+		<option value="THU">Thursday</option>
+		<option value="FRI">Friday</option>
+		<option value="SAT">Saturday</option>
+		<option value="SUN">Sunday</option>
+	</select>
+</form>
+<script>
+    var daySelectOptions = document.myForm.daySelect.options;
+    
+	function printDaySelection() {
+	    for (var i = 0; i < daySelectOptions.length; i++) {
+	        document.write("Option value: " + daySelectOptions[i].value + ", text: " + daySelectOptions[i].text + "<br/>");
+	    }
+	}
+	
+	function getFridayOption() {
+	    for (var i = 0; i < daySelectOptions.length; i++) {
+		    if (daySelectOptions[i].value === "FRI") {
+			    return daySelectOptions[i];
+			}
+		}
+		return null;
+	}
+	
+	printDaySelection();
+	
+    var newDay = new Option("New Day", "XXX");
+	daySelectOptions[daySelectOptions.length] = newDay;
+	document.write("<br/>After adding new day (XXX) with help of assignment:<br/>");
+	printDaySelection();
+	
+	daySelectOptions[daySelectOptions.length - 1] = null;
+	document.write("<br/>After removing new day (XXX) with help of assignment:<br/>");
+	printDaySelection();
+	
+	daySelectOptions.remove(3);
+	document.write("<br/>After removing Thursday with help of remove():<br/>");
+	printDaySelection();
+	
+	daySelectOptions.add(new Option("Thursday", "THU"), getFridayOption());
+	document.write("<br/>After placing Thursday back with help of add():<br/>");
+	printDaySelection();
+</script>
+</body>
+</html>
