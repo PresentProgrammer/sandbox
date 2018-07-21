@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>TextArea</title>
+</head>
+<body>
+<form name="myForm">
+    <textarea rows="15" cols="40" name="firstTextArea"></textArea>
+	<textarea rows="15" cols="40" name="secondTextArea"></textArea>
+	<input type="button" name="clearEventLogButton" value="Clear event log"/>
+</form>
+<script>
+    var myForm = document.myForm;
+	var secondTextArea = myForm.secondTextArea;
+	
+	function logEvent(event) {
+	    secondTextArea.value += event.type + '\n';
+	}
+	
+	function clearLog() {
+	    secondTextArea.value = '';
+	}
+	
+	var firstTextArea = myForm.firstTextArea;
+	firstTextArea.addEventListener('change', logEvent);
+	firstTextArea.addEventListener('keydown', logEvent);
+	firstTextArea.addEventListener('keyup', logEvent);
+	firstTextArea.addEventListener('keypress', logEvent);
+	
+	var clearEventLogButton = myForm.clearEventLogButton;
+	clearEventLogButton.addEventListener('click', clearLog);
+</script>
+</body>
+</html>

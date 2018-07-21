@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>TextBoxesWithValidation</title>
+</head>
+<body>
+<style>
+    .validation-message {
+	    color: red;
+		display: none;
+	}
+</style>
+<form name="myForm">
+    Please enter the following details:
+	<p>
+	    Name:
+		<input type="text" name="nameInput"/>
+	</p>
+	<p>
+	    Age:
+		<input type="text" name="ageInput" size="3" maxlength="3"/>
+		<text id="ageInputValidationMessage" class="validation-message">Please enter a number for age!</text>
+	</p>
+    <p>
+	    <input type="button" name="verifyFormIsFilledButton" value="Check details"/>
+	</p>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    function verifyFormIsFilled() {
+	    var nameInput = document.myForm.nameInput;
+		var ageInput = document.myForm.ageInput;
+		if (nameInput.value === "") {
+		    alert("Please fill in all the fields!");
+			nameInput.focus();
+	    } else if (ageInput.value === "") {
+		    alert("Please fill in all the fields!");
+			ageInput.focus();
+	    } else {
+		    alert("Thanks for filling the form!");
+		}
+	}
+	
+	function ageInputBlur(event) {
+	    var target = event.target;
+	    if (isNaN(target.value)) {
+		    $('#ageInputValidationMessage').show();
+			target.focus();
+			target.select();
+		} else {
+		    $('#ageInputValidationMessage').hide();
+		}
+	}
+	
+	function nameInputChange(event) {
+	    alert("Hello, " + event.target.value);
+	}
+	
+	document.myForm.verifyFormIsFilledButton.addEventListener('click', verifyFormIsFilled);
+	document.myForm.ageInput.addEventListener('blur', ageInputBlur);
+	document.myForm.nameInput.addEventListener('change', nameInputChange);
+</script>
+</body>
+</html>

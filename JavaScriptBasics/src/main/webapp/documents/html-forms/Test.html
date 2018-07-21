@@ -10,8 +10,10 @@
 	<input type="password"/>
 	<textarea>Hello!</textArea>
 	<br/>
-	<input type="checkbox"/>
-	<input type="radio"/>
+	<input type="checkedCheckbox" checked="checked"/>
+	<input type="uncheckedCheckbox" checked="unchecked"/>
+	<input type="checkedRadio" checked="checked"/>
+	<input type="uncheckedRadio" checked="unchecked"/>
 	<br/>
 	<select>
 	    <option>1</option>
@@ -29,6 +31,7 @@
 <script>
     console.log(document.forms);
 	console.log(document.myForm);
+	console.log(new Number(""));
 </script>
 </body>
 </html>
