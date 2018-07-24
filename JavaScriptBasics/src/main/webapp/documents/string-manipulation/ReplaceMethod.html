@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ReplaceMethod.html</title>
+</head>
+<body>
+<script>
+    var originalString = "Paul, Paula, Pauline, paul, Paul";
+    console.log("originalString: " + originalString);
+    console.log("originalString.replace('Paul', 'Ringo'): " + originalString.replace('Paul', 'Ringo'));
+
+    var onlyFirstMatchingRegex = /Paul/;
+    console.log("originalString.replace(onlyFirstMatchingRegex, 'Ringo'): " +
+            originalString.replace(onlyFirstMatchingRegex, 'Ringo'));
+
+    var globalCaseInsensitiveRegexp = /Paul/gi;
+    console.log("originalString.replace(globalCaseInsensitiveRegexp, 'Ringo'): " +
+        originalString.replace(globalCaseInsensitiveRegexp, 'Ringo'));
+</script>
+</body>
+</html>
