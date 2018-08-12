@@ -9,7 +9,8 @@ class Counter extends Component {
      * In arrow function, 'this' resolves to lexically enclosing environment.
      * Particularly in this case, 'this' will reverence this object, as in Java.
      */
-    handleIncrement = () => {
+    handleIncrement = product => {
+        console.log(product);
         this.setState({ count: this.state.count + 1 });
     };
 
@@ -24,7 +25,9 @@ class Counter extends Component {
             <div>
                 <span className={this.badgeClasses()}>{this.formatCount()}</span>
                 <button className="btn btn-secondary btn-sm"
-                        onClick={this.handleIncrement}>Increment</button>
+                        onClick={ () => this.handleIncrement( { id: 1 }) }>
+                    Increment
+                </button>
             </div>
         );
     }
