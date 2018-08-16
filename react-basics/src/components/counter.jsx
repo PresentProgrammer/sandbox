@@ -2,36 +2,13 @@ import React, {Component} from 'react';
 
 class Counter extends Component {
 
-    state = {
-        value: this.props.counter.value
-    };
-
-    /**
-     * In arrow function, 'this' resolves to lexically enclosing environment.
-     * Particularly in this case, 'this' will reverence this object, as in Java.
-     */
-    handleIncrement = () => {
-        this.setState({ value: this.state.value + 1 });
-    };
-
-    // Alternative way is to use constructor and bind the function.
-    // constructor() {
-    //     super();
-    //     this.handleIncrement = this.handleIncrement.bind(this);
-    // }
-
-    handleSetCounterToZero = () => {
-        this.setState({ value: 0 });
-    };
-
     badgeClasses() {
-        let classes = "badge m-2 badge-";
-        classes += (this.state.value === 0) ? "warning" : "primary";
-        return classes;
+        return "badge m-2 badge-" +
+            ((this.props.counter.value === 0) ? "warning" : "primary");
     }
 
     formatCount() {
-        const { value } = this.state;
+        const { value } = this.props.counter;
         return value === 0 ? 'Zero' : value;
     }
 
@@ -41,15 +18,15 @@ class Counter extends Component {
                 {this.props.children}
                 <span className={this.badgeClasses()}>{this.formatCount()}</span>
                 <button className="btn btn-secondary btn-sm"
-                        onClick={this.handleIncrement}>
+                        onClick={() => this.props.onIncrement(this.props.counter)}>
                     Increment
                 </button>
                 <button className="btn btn-warning btn-sm m-2"
-                        onClick={this.handleSetCounterToZero}>
+                        onClick={() => this.props.onSetToZero(this.props.counter)}>
                     Set to Zero
                 </button>
                 <button className="btn btn-danger btn-sm m-2"
-                        onClick={() => this.props.onDelete(this.props.counter.id)}>
+                        onClick={() => this.props.onDelete(this.props.counter)}>
                     Delete
                 </button>
             </div>

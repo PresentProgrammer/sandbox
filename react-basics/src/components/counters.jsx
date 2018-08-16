@@ -12,8 +12,23 @@ class Counters extends Component {
         ]
     };
 
-    handleDelete = (counterId) => {
-        const counters = this.state.counters.filter(c => c.id !== counterId);
+    handleIncrement = (counter) => {
+        const counters = [...this.state.counters];
+        const index = counters.indexOf(counter);
+        counters[index] = {...counter};
+        counters[index].value++;
+        this.setState({ counters });
+    };
+
+    handleSetToZero = (counter) => {
+        const counters = [...this.state.counters];
+        const index = counters.indexOf(counter);
+        counters[index] = Object.assign({}, counter, { value: 0 });
+        this.setState({ counters });
+    };
+
+    handleDelete = (counter) => {
+        const counters = this.state.counters.filter(c => c.id !== counter.id);
         this.setState({ counters }); // simplified from { counters: counters }
     };
 
@@ -29,8 +44,10 @@ class Counters extends Component {
             <button className="btn btn-primary btn-sm m-2"
                     onClick={this.handleReset}>Reset</button>
             {this.state.counters.map(counter =>
-                <Counter key={counter.id} onDelete={this.handleDelete}
-                         counter={counter}>
+                <Counter key={counter.id} counter={counter}
+                         onIncrement={this.handleIncrement}
+                         onSetToZero={this.handleSetToZero}
+                         onDelete={this.handleDelete}>
                     <h4>Counter #{counter.id}</h4>
                 </Counter>)
             }
