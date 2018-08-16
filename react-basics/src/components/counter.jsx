@@ -20,18 +20,9 @@ class Counter extends Component {
     //     this.handleIncrement = this.handleIncrement.bind(this);
     // }
 
-    render() {
-        return (
-            <div>
-                {this.props.children}
-                <span className={this.badgeClasses()}>{this.formatCount()}</span>
-                <button className="btn btn-secondary btn-sm"
-                        onClick={ () => this.handleIncrement({ id: 1 }) }>
-                    Increment
-                </button>
-            </div>
-        );
-    }
+    handleSetCounterToZero = () => {
+        this.setState({ value: 0 });
+    };
 
     badgeClasses() {
         let classes = "badge m-2 badge-";
@@ -42,6 +33,27 @@ class Counter extends Component {
     formatCount() {
         const { value } = this.state;
         return value === 0 ? 'Zero' : value;
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.children}
+                <span className={this.badgeClasses()}>{this.formatCount()}</span>
+                <button className="btn btn-secondary btn-sm"
+                        onClick={ () => this.handleIncrement({ id: 1 }) }>
+                    Increment
+                </button>
+                <button className="btn btn-warning btn-sm m-2"
+                        onClick={this.handleSetCounterToZero}>
+                    Set to Zero
+                </button>
+                <button className="btn btn-danger btn-sm m-2"
+                        onClick={this.props.onDelete}>
+                    Delete
+                </button>
+            </div>
+        );
     }
 }
 

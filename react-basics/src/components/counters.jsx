@@ -12,10 +12,15 @@ class Counters extends Component {
         ]
     };
 
+    handleDelete = () => {
+        console.log('handleDelete() called');
+    };
+
     render() {
         return (<div>
             {this.state.counters.map(counter =>
-                <Counter key={counter.key} value={counter.value}>
+                <Counter key={counter.key} value={counter.value}
+                         onDelete={this.handleDelete}>
                     <h4>Counter #{counter.key}</h4>
                 </Counter>)
             }
