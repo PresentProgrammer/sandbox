@@ -5,23 +5,24 @@ class Counters extends Component {
 
     state = {
         counters: [
-            { key: 1, value: 4 },
-            { key: 2, value: 2 },
-            { key: 3, value: 0 },
-            { key: 4, value: 1 }
+            { id: 1, value: 4 },
+            { id: 2, value: 2 },
+            { id: 3, value: 0 },
+            { id: 4, value: 1 }
         ]
     };
 
-    handleDelete = () => {
-        console.log('handleDelete() called');
+    handleDelete = (counterId) => {
+        const counters = this.state.counters.filter(c => c.id !== counterId);
+        this.setState({ counters }); // simplified from { counters: counters }
     };
 
     render() {
         return (<div>
             {this.state.counters.map(counter =>
-                <Counter key={counter.key} value={counter.value}
+                <Counter key={counter.id} value={counter.value} id={counter.id}
                          onDelete={this.handleDelete}>
-                    <h4>Counter #{counter.key}</h4>
+                    <h4>Counter #{counter.id}</h4>
                 </Counter>)
             }
         </div>);
