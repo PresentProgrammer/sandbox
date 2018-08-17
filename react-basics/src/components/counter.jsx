@@ -12,6 +12,17 @@ class Counter extends Component {
         return value === 0 ? 'Zero' : value;
     }
 
+    componentDidUpdate(prevProps) {
+        const prevValue = prevProps.counter.value;
+        const id = this.props.counter.id;
+        const currentValue = this.props.counter.value;
+        if (prevValue !== currentValue) {
+            // Normally, this would be a good place to make Ajax call.
+            console.log('Value of counter #' + id + ' changed: ' +
+                prevValue + ' → ' + currentValue);
+        }
+    }
+
     render() {
         console.log('Counter - Rendered');
         return (
