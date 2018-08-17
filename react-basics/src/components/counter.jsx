@@ -12,15 +12,27 @@ class Counter extends Component {
         return value === 0 ? 'Zero' : value;
     }
 
+    /**
+     * 2nd update phase lifecycle hook after render().
+     * Normally, this would be a good place to make Ajax call if the value has changed.
+     * Note that this method is called even if the the values for this component have not changed.
+     */
     componentDidUpdate(prevProps) {
         const prevValue = prevProps.counter.value;
         const id = this.props.counter.id;
         const currentValue = this.props.counter.value;
         if (prevValue !== currentValue) {
-            // Normally, this would be a good place to make Ajax call.
             console.log('Value of counter #' + id + ' changed: ' +
                 prevValue + ' → ' + currentValue);
         }
+    }
+
+    /**
+     * Unmount phase lifecycle hook.
+     * Good place to do clean-ups, e.g., to remove event listeners.
+     */
+    componentWillUnmount() {
+        console.log("Counter - Unmount");
     }
 
     render() {
