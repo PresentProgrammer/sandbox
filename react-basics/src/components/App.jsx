@@ -13,6 +13,22 @@ class App extends Component {
         ]
     };
 
+    /**
+     * 1st mounting phase lifecycle hook.
+     */
+    constructor(props) {
+        super(props);
+        console.log('App - Constructor with props:', this.props);
+    }
+
+    /**
+     * 3rd mounting phase lifecycle hook.
+     * Good place to make Ajax calls and get data for the component from server.
+     */
+    componentDidMount() {
+        console.log('App - Mounted')
+    }
+
     handleIncrement = (counter) => {
         const counters = [...this.state.counters];
         const index = counters.indexOf(counter);
@@ -40,7 +56,11 @@ class App extends Component {
         this.setState({ counters });
     };
 
+    /**
+     * 2nd mounting phase lifecycle hook.
+     */
     render() {
+        console.log('App - Rendered');
         return (
             <React.Fragment>
                 <Navbar sumOfCounters={this.state.counters.map(c => parseInt(c.value)).reduce((sum, value) => sum + value)}/>
