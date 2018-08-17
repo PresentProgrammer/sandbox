@@ -43,7 +43,7 @@ class App extends Component {
     render() {
         return (
             <React.Fragment>
-                <Navbar totalCount={this.state.counters.map(c => parseInt(c.value)).reduce((sum, value) => sum + value)}/>
+                <Navbar sumOfCounters={this.state.counters.map(c => parseInt(c.value)).reduce((sum, value) => sum + value)}/>
                 <main className="container">
                     <Counters counters={this.state.counters}
                         onReset={this.handleReset}
