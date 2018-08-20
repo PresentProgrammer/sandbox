@@ -10,7 +10,6 @@ export const fetchPosts = () => dispatch => {
 };
 
 export const submitNewPost = post => dispatch => {
-    console.log('submitNewPost action fired');
     fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         headers: {

@@ -14,7 +14,6 @@ class PostForm extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-        console.log('onSubmit event triggered');
         this.props.submitNewPost({
             title: this.state.title,
             body: this.state.body
