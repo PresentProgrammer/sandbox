@@ -2,7 +2,10 @@ import {FETCH_POSTS, NEW_POST} from "../actions/types";
 
 const initialState = {
     items: [],
-    item: {}
+    item: {
+        title: 'John',
+        body: 'Big Boss'
+    }
 };
 
 export default function(state = initialState, action) {
@@ -10,7 +13,8 @@ export default function(state = initialState, action) {
         case FETCH_POSTS:
             return {...state, items: action.payload};
         case NEW_POST:
-            break;
+            const newItem = action.payload;
+            return {...state, items: state.items.concat(newItem), item: newItem };
         default:
             return state;
     }

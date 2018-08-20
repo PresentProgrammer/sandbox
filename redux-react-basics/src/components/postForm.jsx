@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {submitNewPost} from '../actions/postActions';
 
 class PostForm extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            body: ''
-        }
-    }
+    state = this.props.post;
 
     onChange = event => {
         console.log('onChange: ' + event.target.value);
@@ -17,18 +14,11 @@ class PostForm extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-        const post = {
+        console.log('onSubmit event triggered');
+        this.props.submitNewPost({
             title: this.state.title,
             body: this.state.body
-        };
-        fetch('https://jsonplaceholder.typicode.com/posts', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(post)
-        }).then(res => res.json())
-            .then(data => console.log(data));
+        });
     };
 
     render() {
@@ -57,4 +47,13 @@ class PostForm extends Component {
     }
 }
 
-export default PostForm;
+PostForm.propTypes = {
+    submitNewPost: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    post: state.posts.item
+});
+
+export default connect(mapStateToProps, { submitNewPost })(PostForm);

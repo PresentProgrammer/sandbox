@@ -14,7 +14,7 @@ class Posts extends Component {
             <div>
                 <h1>Posts</h1>
                 {this.props.posts.map(post => (
-                    <div key={post.id}>
+                    <div key={post.id + post.title}>
                         <h3>{post.title}</h3>
                         <p>{post.body}</p>
                     </div>
