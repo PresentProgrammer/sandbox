@@ -21,7 +21,8 @@ class MqChannelFactory {
 
 	Channel createMqChannel() throws URISyntaxException, NoSuchAlgorithmException, KeyManagementException, IOException {
 		final ConnectionFactory factory = new ConnectionFactory();
-		factory.setUri("amqp://test:test@localhost");
+        // factory.setUri("amqp://test:test@localhost"); - for Docker RabbitMQ
+		factory.setHost("localhost");
 		factory.setConnectionTimeout(300000);
 		final Connection connection = factory.newConnection();
 		final Channel channel = connection.createChannel();
