@@ -6,7 +6,7 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">org.h2.Driver</property>
 		<property name="hibernate.connection.url">
-			jdbc:h2:file:C:\Users\arturs.solomencevs/h2-hibernate-sandbox-database
+			jdbc:h2:file:C:\Users\arturs.solomencevs/h2-hibernate-sandbox-database-2
 		</property>
 		<property name="hibernate.connection.username">sa</property>
 		<property name="hibernate.connection.password"/>
@@ -15,6 +15,6 @@
 		<property name="show_sql">true</property>
 		<property name="hbm2ddl.auto">update</property>
 
-		<mapping class="present.programmer.hibernate.domain.UserDetails"/>
+		<mapping class="present.programmer.hibernate.domain.User"/>
 	</session-factory>
 </hibernate-configuration>
