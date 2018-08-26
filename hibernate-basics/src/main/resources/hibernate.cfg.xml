@@ -9,7 +9,7 @@
 			jdbc:h2:file:C:\Users\arturs.solomencevs/h2-hibernate-sandbox-database
 		</property>
 		<property name="hibernate.connection.username">sa</property>
-		<property name="hibernate.connection.password"></property>
+		<property name="hibernate.connection.password"/>
 		<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
 		<property name="hibernate.connection.pool_size">1</property>
 		<property name="show_sql">true</property>
