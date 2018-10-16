@@ -5,6 +5,7 @@ import Counters from './counters';
 class App extends Component {
 
     state = {
+        message: 'Hello!',
         counters: [
             { id: 1, value: 4 },
             { id: 2, value: 2 },
@@ -63,7 +64,7 @@ class App extends Component {
         console.log('App - Rendered');
         return (
             <React.Fragment>
-                <Navbar sumOfCounters={this.state.counters.map(c => parseInt(c.value)).reduce((sum, value) => sum + value, 0)}/>
+                <Navbar message={this.state.message} sumOfCounters={this.state.counters.map(c => parseInt(c.value)).reduce((sum, value) => sum + value, 0)}/>
                 <main className="container">
                     <Counters counters={this.state.counters}
                         onReset={this.handleReset}
