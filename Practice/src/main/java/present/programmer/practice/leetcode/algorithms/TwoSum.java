@@ -6,13 +6,13 @@ public class TwoSum {
     public int[] twoSum(int[] nums, int target) {
         final Map<Integer, Integer> map = new HashMap<>(nums.length);
         for (int i = 0; i < nums.length; i++) {
-        final Integer current = nums[i];
+            final Integer current = nums[i];
             final Integer needed = target - current;
-        if (map.get(needed) == null) {
-            map.put(current, i);
-        } else {
-            return new int[] {map.get(needed), i};
-        }
+            if (map.get(needed) == null) {
+                map.put(current, i);
+            } else {
+                return new int[] { map.get(needed), i };
+            }
         }
         return new int[] {};        
     }
