@@ -18,6 +18,6 @@ public class TwoSum {
     }
     
     public static void main(final String... args) {
-    System.out.println(Arrays.toString(new TwoSum().twoSum(new int[] { 2, 7, 11, 15 }, 9)));
+        System.out.println(Arrays.toString(new TwoSum().twoSum(new int[] { 2, 7, 11, 15 }, 9)));
     }
 }
