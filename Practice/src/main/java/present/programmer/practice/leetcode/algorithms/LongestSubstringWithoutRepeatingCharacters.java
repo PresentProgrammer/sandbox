@@ -1,27 +1,53 @@
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 public class LongestSubstringWithoutRepeatingCharacters {
     
     public int lengthOfLongestSubstring(String s) {
-        final Set<Character> set = new HashSet<>();
-        int left = 0;
-        int right = 0;
-        int maxSetSize = 0;
-        while (right < s.length()) {
-            if (set.contains(s.charAt(right))) {
-                maxSetSize = Math.max(maxSetSize, set.size());
-                while (s.charAt(left) != s.charAt(right)) {
-                    set.remove(s.charAt(left));
-                    left++;
-                }
-                left++;                
-            } else {
-                set.add(s.charAt(right));                
-            }
-            right++;
+        final int length = s.length();
+        if (length < 2) {
+            return length;
         }
-        return Math.max(maxSetSize, set.size());
+        int i = 0;
+        int j = 0;
+        int max = 0;
+        final int ASCII_SYMBOL_NUMBER = 128;
+        final int[] lastIndices = new int[ASCII_SYMBOL_NUMBER];
+        Arrays.fill(lastIndices, -1);
+        while (j < length) {
+            final char jthChar = s.charAt(j);
+            final int charLastIndex = lastIndices[jthChar];
+            if (charLastIndex >= i) {
+                max = Math.max(max, j - i);
+                i = charLastIndex + 1;
+            }
+            lastIndices[jthChar] = j;
+            j++;
+        }
+        return Math.max(max, j - i);
+    }
+    
+    public int lengthOfLongestSubstring_usingHashMap(String s) {
+        final int length = s.length();
+        if (length < 2) {
+            return length;
+        }
+        int i = 0;
+        int j = 0;
+        int max = 0;        
+        final Map<Character, Integer> map = new HashMap<>(32);
+        while (j < length) {
+            final char jthChar = s.charAt(j);
+            final Integer charLastIndex = map.get(jthChar);
+            if (charLastIndex != null && charLastIndex >= i) {
+                max = Math.max(max, j - i);
+                i = charLastIndex + 1;
+            }
+            map.put(jthChar, j);
+            j++;
+        }
+        return Math.max(max, j - i);
     }
     
     public static void main(final String args[]) {
