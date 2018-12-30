@@ -1,8 +1,14 @@
-
-
 public class MedianOfTwoSortedArrays {
     
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        return findMedianSortedArrays_usingMergeSort(nums1, nums2);
+    }
+    
+    /**
+     * Runtime: O(log(min(m, n)))
+     * Space: O(1)
+     */
+    public double findMedianSortedArrays_usingMergeSort(int[] nums1, int[] nums2) {
         return median(merge(nums1, nums2));
     }
     
