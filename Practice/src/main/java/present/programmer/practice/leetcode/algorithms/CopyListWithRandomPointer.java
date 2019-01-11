@@ -2,8 +2,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * Time: O(n)
- * Space: O(n)
+ * Time: O(n): one pass over n elements, but each has 2 calls on HashMap (which are O(1)).
+ * Space: O(n): for result and for HashMap.
  **/
 public class CopyListWithRandomPointer {
     
