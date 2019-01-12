@@ -1,7 +1,7 @@
 /**
  * Time: O(n): one pass over n for copying elements, one pass for setting random,
  *       and one pass for separating original from copy.
- * Space: O(n): only for result.
+ * Space: O(1): no additional space required.
  **/
 public class CopyListWithRandomPointer_Interweaving {
     

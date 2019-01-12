@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 /**
  * Time: O(n): one pass over n elements, but each has 2 calls on HashMap (which are O(1)).
- * Space: O(n): for result and for HashMap.
+ * Space: O(n): for HashMap which will contain n entries.
  **/
 public class CopyListWithRandomPointer {
     
