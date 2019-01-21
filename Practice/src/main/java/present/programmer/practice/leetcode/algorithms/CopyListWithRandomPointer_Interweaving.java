@@ -1,8 +1,11 @@
+package present.programmer.practice.leetcode.algorithms;
+
 /**
  * Time: O(n): one pass over n for copying elements, one pass for setting random,
  *       and one pass for separating original from copy.
  * Space: O(1): no additional space required.
  **/
+@SuppressWarnings("Duplicates")
 public class CopyListWithRandomPointer_Interweaving {
     
     public RandomListNode copyRandomList(RandomListNode head) {
@@ -58,14 +61,14 @@ public class CopyListWithRandomPointer_Interweaving {
         }
         new CopyListWithRandomPointer_Interweaving().copyRandomList(null);
     }
-}
 
-class RandomListNode {
-    
-    int label;
-    RandomListNode next, random;
-    
-    RandomListNode(int x) {
-        this.label = x;
+    private static class RandomListNode {
+
+        int label;
+        RandomListNode next, random;
+
+        RandomListNode(int x) {
+            this.label = x;
+        }
     }
-};
+}

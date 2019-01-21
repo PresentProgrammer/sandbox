@@ -1,7 +1,10 @@
-import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
+package present.programmer.practice.leetcode.algorithms;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+@SuppressWarnings("Duplicates")
 public class LongestSubstringWithoutRepeatingCharacters {
     
     public int lengthOfLongestSubstring(String s) {
@@ -50,7 +53,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
         return Math.max(max, j - i);
     }
     
-    public static void main(final String args[]) {
+    public static void main(final String[] args) {
         final LongestSubstringWithoutRepeatingCharacters testedObject = new LongestSubstringWithoutRepeatingCharacters();
         System.out.println("For \"abcabcbb\": " + testedObject.lengthOfLongestSubstring("abcabcbb"));
         System.out.println("For \"bbbbb\": " + testedObject.lengthOfLongestSubstring("bbbbb"));

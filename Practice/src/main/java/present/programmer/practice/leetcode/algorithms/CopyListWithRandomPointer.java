@@ -1,10 +1,13 @@
-import java.util.Map;
+package present.programmer.practice.leetcode.algorithms;
+
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Time: O(n): one pass over n elements, but each has 2 calls on HashMap (which are O(1)).
  * Space: O(n): for HashMap which will contain n entries.
  **/
+@SuppressWarnings("Duplicates")
 public class CopyListWithRandomPointer {
     
     private final Map<RandomListNode, RandomListNode> originalToCopy = new HashMap<>();
@@ -39,14 +42,15 @@ public class CopyListWithRandomPointer {
         }
         new CopyListWithRandomPointer().copyRandomList(null);
     }
+
+    private static class RandomListNode {
+
+        int label;
+        RandomListNode next, random;
+
+        RandomListNode(int x) {
+            this.label = x;
+        }
+    }
 }
 
-class RandomListNode {
-    
-    int label;
-    RandomListNode next, random;
-    
-    RandomListNode(int x) {
-        this.label = x;
-    }
-};
