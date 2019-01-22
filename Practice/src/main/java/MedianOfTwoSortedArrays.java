@@ -1,5 +1,3 @@
-package present.programmer.practice.leetcode.algorithms;
-
 import java.util.TreeSet;
 
 public class MedianOfTwoSortedArrays {

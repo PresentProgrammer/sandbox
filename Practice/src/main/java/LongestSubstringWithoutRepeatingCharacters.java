@@ -1,5 +1,3 @@
-package present.programmer.practice.leetcode.algorithms;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

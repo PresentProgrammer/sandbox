@@ -1,5 +1,3 @@
-package present.programmer.practice.leetcode.algorithms;
-
 /**
  * Time: O(n): one pass over n for copying elements, one pass for setting random,
  *       and one pass for separating original from copy.
