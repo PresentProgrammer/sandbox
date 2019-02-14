@@ -3,8 +3,9 @@ import java.util.List;
 
 /**
  * Problem #11
- * Time complexity: O(n^k), where n — input size, and k — number of non-singular symbols in pattern.
- * Space complexity: O(n).
+ * Time complexity: O(n^k)
+ * Space complexity: O(n + m),
+ * where n — input size, and k — number of non-singular symbols in pattern, and m — pattern size.
  **/
 public class RegularExpressionMatching {
 	
