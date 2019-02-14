@@ -7,7 +7,8 @@ import java.util.List;
  * Space complexity: O(n + m),
  * where n — input size, and k — number of non-singular symbols in pattern, and m — pattern size.
  **/
-public class RegularExpressionMatching {
+@SuppressWarnings("Duplicates")
+public class RegularExpressionMatching_My {
 	
 	private static class PatternSymbol {
 		
@@ -103,12 +104,12 @@ public class RegularExpressionMatching {
 	}
     
     public static void main(final String[] args) {
-        System.out.println("false - " + new RegularExpressionMatching().isMatch("aa", "a"));
-        System.out.println("true - " + new RegularExpressionMatching().isMatch("aa", "a*"));
-        System.out.println("true - " + new RegularExpressionMatching().isMatch("ab", ".*"));
-        System.out.println("true - " + new RegularExpressionMatching().isMatch("aab", "c*a*b"));
-        System.out.println("false - " + new RegularExpressionMatching().isMatch("mississippi", "mis*is*p*."));
-        System.out.println("true - " + new RegularExpressionMatching().isMatch("xfooxxxxxxfoo", ".*foo"));
+        System.out.println("false - " + new RegularExpressionMatching_My().isMatch("aa", "a"));
+        System.out.println("true - " + new RegularExpressionMatching_My().isMatch("aa", "a*"));
+        System.out.println("true - " + new RegularExpressionMatching_My().isMatch("ab", ".*"));
+        System.out.println("true - " + new RegularExpressionMatching_My().isMatch("aab", "c*a*b"));
+        System.out.println("false - " + new RegularExpressionMatching_My().isMatch("mississippi", "mis*is*p*."));
+        System.out.println("true - " + new RegularExpressionMatching_My().isMatch("xfooxxxxxxfoo", ".*foo"));
 	}
 }
 
