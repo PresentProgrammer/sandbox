@@ -74,7 +74,7 @@ public class RegularExpressionMatching {
 			}
 		} else {
 			if (currSymbol.isAny()) {
-				for (int i = input.size(); i >= 0; i--) {
+				for (int i = input.size() - countOfSingular(symbols); i >= 0; i--) {
 					if (match(input.subList(i, input.size()), symbols.subList(1, symbols.size()))) {
 						return true;
 					}
@@ -93,6 +93,12 @@ public class RegularExpressionMatching {
 				return false;
 			}
 		}
+	}
+	
+	private static int countOfSingular(final List<PatternSymbol> symbols) {
+		return (int) symbols.subList(1, symbols.size()).stream()
+				.filter(PatternSymbol::isSingular)
+				.count();
 	}
     
     public static void main(final String[] args) {
