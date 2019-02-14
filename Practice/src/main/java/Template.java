@@ -3,13 +3,13 @@
  * Time complexity: O()
  * Space complexity: O()
  **/
-public class ProblemTemplate {
+public class Template {
     
     public String problemMainMethod() {
 		return "";
     }
     
     public static void main(final String[] args) {
-        System.out.println(new ProblemTemplate().problemMainMethod());
+        System.out.println(new Template().problemMainMethod());
 	}
 }
