@@ -7,7 +7,7 @@ import java.util.List;
  * Time complexity: O(n)
  * Space complexity: O(n)
  **/
-public class TrappingRainWater {
+public class TrappingRainWater_My {
 	
 	private static class LocalMaximum {
 		final int height;
@@ -88,7 +88,7 @@ public class TrappingRainWater {
 	}
     
     public static void main(final String[] args) {
-        System.out.println("6 == " + new TrappingRainWater().trap(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 }));
-        System.out.println("1 == " + new TrappingRainWater().trap(new int[] { 5, 4, 1, 2 }));
+        System.out.println("6 == " + new TrappingRainWater_My().trap(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 }));
+        System.out.println("1 == " + new TrappingRainWater_My().trap(new int[] { 5, 4, 1, 2 }));
 	}
 }
