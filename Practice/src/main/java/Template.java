@@ -10,6 +10,6 @@ public class Template {
     }
     
     public static void main(final String[] args) {
-        System.out.println(new Template().problemMainMethod());
+        System.out.println(" == " + new Template().problemMainMethod());
 	}
 }
