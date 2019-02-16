@@ -9,23 +9,14 @@ public class LongestCommonPrefix {
 		if (strs.length == 0) {
 		    return "";
         }
-		int n = 0;
-		scanningSymbols:
-		while (true) {
-		    final char currChar;
-		    if (n < strs[0].length()) {
-		        currChar = strs[0].charAt(n);
-            } else {
-		        break scanningSymbols;
-            }
+		for (int n = 0; n < strs[0].length(); n++) {
 		    for (int i = 1; i < strs.length; i++) {
-		        if (n >= strs[i].length() || strs[i].charAt(n) != currChar) {
-		            break scanningSymbols;
+		        if (n >= strs[i].length() || strs[i].charAt(n) != strs[0].charAt(n)) {
+		            return strs[0].substring(0, n);
                 }
             }
-		    n++;
         }
-		return strs[0].substring(0, n);
+		return strs[0];
     }
     
     public static void main(final String[] args) {
