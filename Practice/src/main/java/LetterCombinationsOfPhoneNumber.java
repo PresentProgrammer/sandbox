@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Problem #17
@@ -8,35 +7,25 @@ import java.util.stream.Collectors;
  **/
 public class LetterCombinationsOfPhoneNumber {
 
-    private static final Map<Character, List<Character>> DIGIT_TO_CHARS =
-            Collections.unmodifiableMap(new HashMap<Character, List<Character>>() {
-                {
-                    put('2', Arrays.asList('a', 'b', 'c'));
-                    put('3', Arrays.asList('d', 'e', 'f'));
-                    put('4', Arrays.asList('g', 'h', 'i'));
-                    put('5', Arrays.asList('j', 'k', 'l'));
-                    put('6', Arrays.asList('m', 'n', 'o'));
-                    put('7', Arrays.asList('p', 'q', 'r', 's'));
-                    put('8', Arrays.asList('t', 'u', 'v'));
-                    put('9', Arrays.asList('w', 'x', 'y', 'z'));
-                }
-            });
-    
+    private static final String[] DIGIT_TO_CHARS = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
     public List<String> letterCombinations(final String digits) {
-        return digits.isEmpty() ? Collections.emptyList() : solve(digits, 0, "");
+        if (digits.isEmpty()) {
+            return Collections.emptyList();
+        }
+        final Deque<String> deque = new ArrayDeque<>((int) Math.pow(4, digits.length()));
+        deque.add("");
+        for (int i = 0; i < digits.length(); i++) {
+            while (deque.peekFirst().length() == i) {
+                final String first = deque.removeFirst();
+                for (final char ch : DIGIT_TO_CHARS[Character.getNumericValue(digits.charAt(i))].toCharArray()) {
+                    deque.addLast(first + ch);
+                }
+            }
+        }
+        return new ArrayList<>(deque);
     }
 
-    private static List<String> solve(final String digits, final int currIndex, final String resultSoFar) {
-        if (currIndex < digits.length()) {
-            return DIGIT_TO_CHARS.get(digits.charAt(currIndex)).stream()
-                    .map(currChar -> solve(digits, currIndex + 1, resultSoFar + currChar))
-                    .flatMap(Collection::stream)
-                    .collect(Collectors.toList());
-        } else {
-            return Collections.singletonList(resultSoFar);
-        }
-    }
-    
     public static void main(final String[] args) {
         System.out.println("[ad, ae, af, bd, be, bf, cd, ce, cf] == " + new LetterCombinationsOfPhoneNumber().letterCombinations("23"));
 	}
