@@ -1,6 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Queue;
+import java.util.Deque;
 
 /**
  * Problem #200
@@ -27,16 +27,16 @@ public class NumberOfIslands {
     }
 
     private void sinkIsland(char[][] grid, int i, int j) {
-        final Queue<Pair> queue = new ArrayDeque<>();
-        queue.offer(new Pair(i, j));
-        while (!queue.isEmpty()) {
-            final Pair p = queue.poll();
+        final Deque<Pair> stack = new ArrayDeque<>();
+        stack.push(new Pair(i, j));
+        while (!stack.isEmpty()) {
+            final Pair p = stack.pop();
             if (0 <= p.i && p.i < grid.length && 0 <= p.j && p.j < grid[p.i].length && grid[p.i][p.j] == LAND) {
                 grid[p.i][p.j] = WATER;
-                queue.offer(new Pair(p.i - 1, p.j));
-                queue.offer(new Pair(p.i + 1, p.j));
-                queue.offer(new Pair(p.i, p.j - 1));
-                queue.offer(new Pair(p.i, p.j + 1));
+                stack.push(new Pair(p.i - 1, p.j));
+                stack.push(new Pair(p.i + 1, p.j));
+                stack.push(new Pair(p.i, p.j - 1));
+                stack.push(new Pair(p.i, p.j + 1));
             }
         }
     }
