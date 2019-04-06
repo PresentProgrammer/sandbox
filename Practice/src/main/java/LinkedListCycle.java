@@ -1,22 +1,21 @@
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Problem #141
  * Time complexity: O(n)
- * Space complexity: O(n)
+ * Space complexity: O(1)
  **/
 public class LinkedListCycle {
 
     public boolean hasCycle(ListNode head) {
-		final Set<ListNode> nodes = new HashSet<>();
-		ListNode curr = head;
-		while (curr != null) {
-		    if (nodes.contains(curr)) {
-		        return true;
-            } else {
-		        nodes.add(curr);
-		        curr = curr.next;
+		ListNode fast = head, slow = head;
+		while (fast != null) {
+		    fast = fast.next;
+		    if (fast != null) {
+		        if (fast == slow) {
+		            return true;
+                } else {
+		            fast = fast.next;
+		            slow = slow.next;
+                }
             }
         }
 		return false;
