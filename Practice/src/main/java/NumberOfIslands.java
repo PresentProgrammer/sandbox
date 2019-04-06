@@ -1,4 +1,6 @@
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 
 /**
  * Problem #200
@@ -24,13 +26,18 @@ public class NumberOfIslands {
         return islandCount;
     }
 
-    private static void sinkIsland(final char[][] grid, final int i, final int j) {
-        if (0 <= i && i < grid.length && 0 <= j && j < grid[i].length && grid[i][j] == LAND) {
-            grid[i][j] = WATER;
-            sinkIsland(grid, i, j - 1);
-            sinkIsland(grid, i, j + 1);
-            sinkIsland(grid, i - 1, j);
-            sinkIsland(grid, i + 1, j);
+    private void sinkIsland(char[][] grid, int i, int j) {
+        final Deque<Pair> stack = new ArrayDeque<>();
+        stack.push(new Pair(i, j));
+        while (!stack.isEmpty()) {
+            final Pair p = stack.pop();
+            if (0 <= p.i && p.i < grid.length && 0 <= p.j && p.j < grid[p.i].length && grid[p.i][p.j] == LAND) {
+                grid[p.i][p.j] = WATER;
+                stack.push(new Pair(p.i - 1, p.j));
+                stack.push(new Pair(p.i + 1, p.j));
+                stack.push(new Pair(p.i, p.j - 1));
+                stack.push(new Pair(p.i, p.j + 1));
+            }
         }
     }
 
@@ -40,6 +47,17 @@ public class NumberOfIslands {
             copy[i] = Arrays.copyOf(input[i], input[i].length);
         }
         return copy;
+    }
+
+    private static class Pair {
+
+        private int i;
+        private int j;
+
+        private Pair(int i, int j) {
+            this.i = i;
+            this.j = j;
+        }
     }
 
     public static void main(final String[] args) {
