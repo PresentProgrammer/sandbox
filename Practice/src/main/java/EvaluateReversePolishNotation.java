@@ -3,8 +3,8 @@ import java.util.Deque;
 
 /**
  * Problem #150
- * Time complexity: O()
- * Space complexity: O()
+ * Time complexity: O(n)
+ * Space complexity: O(n)
  **/
 public class EvaluateReversePolishNotation {
 
