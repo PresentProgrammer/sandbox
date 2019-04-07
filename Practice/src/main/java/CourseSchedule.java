@@ -8,8 +8,8 @@ import java.util.Set;
 
 /**
  * Problem #207
- * Time complexity: O()
- * Space complexity: O()
+ * Time complexity: O(k), where k — number of vertices.
+ * Space complexity: O(n + k), where n — number of vertices, k — number of edges.
  **/
 public class CourseSchedule {
 
