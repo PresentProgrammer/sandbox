@@ -1,4 +1,9 @@
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
  * Problem #341
@@ -26,19 +31,20 @@ public class NestedIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        cleanUpStack();
-        if (stack.isEmpty()) {
-            return false;
+        while (!stack.isEmpty()) {
+            cleanUpStack();
+            if (!stack.isEmpty()) {
+                final ListIterator<NestedInteger> peekIter = stack.peek();
+                final NestedInteger nestedInt = peekIter.next();
+                if (nestedInt.isInteger()) {
+                    peekIter.previous();
+                    return true;
+                } else {
+                    stack.push(nestedInt.getList().listIterator());
+                }
+            }
         }
-        final ListIterator<NestedInteger> peekIter = stack.peek();
-        final NestedInteger nestedInt = peekIter.next();
-        if (nestedInt.isInteger()) {
-            peekIter.previous();
-            return true;
-        } else {
-            stack.push(nestedInt.getList().listIterator());
-            return hasNext();
-        }
+        return false;
     }
 
     private void cleanUpStack() {
