@@ -5,13 +5,14 @@
  **/
 public class NumberOf1Bits {
 
+    /**
+     * See https://leetcode.com/articles/number-1-bits/, approach #2
+     */
     public int hammingWeight(int n) {
-		int check = 0B1, result = 0;
-		while (check != 0) {
-		    if ((n & check) != 0) {
-		        result++;
-            }
-		    check <<= 1;
+		int result = 0;
+        while (n != 0) {
+            result++;
+            n &= (n - 1);
         }
 		return result;
     }
