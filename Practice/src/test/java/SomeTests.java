@@ -4,7 +4,10 @@ public class SomeTests {
 
     @Test
     public void m() {
-        System.out.println(Integer.MIN_VALUE);
-        System.out.println(Integer.MAX_VALUE);
+        int check = 0B1, result = 0;
+        while (check != 0) {
+            check <<= 1;
+            System.out.println(check);
+        }
     }
 }
