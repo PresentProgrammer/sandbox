@@ -1,31 +1,38 @@
-import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Problem #230
- * Time complexity: O(n log k)
- * Space complexity: O(n + k)
+ * Time complexity: O(n)
+ * Space complexity: O(n)
  **/
 public class KthSmallestElementInBst {
 
-    private TreeSet<Integer> treeSet;
+    private Map<TreeNode, Integer> nodeCounts;
     private int k;
 
     public int kthSmallest(final TreeNode root, final int k) {
-        this.treeSet = new TreeSet<>();
+        this.nodeCounts = new HashMap<>();
         this.k = k;
-		traverseFillingTreeSet(root);
-		return this.treeSet.last();
+        return kthSmallest(root);
     }
 
-    private void traverseFillingTreeSet(final TreeNode node) {
-        if (node != null) {
-            treeSet.add(node.val);
-            if (treeSet.size() > k) {
-                treeSet.pollLast();
-            }
-            traverseFillingTreeSet(node.left);
-            traverseFillingTreeSet(node.right);
+    private int kthSmallest(final TreeNode node) {
+        final int leftNodeCount = node.left == null ? 0 : nodeCounts.computeIfAbsent(node.left, this::countNodes);
+        if (k <= leftNodeCount) {
+            return kthSmallest(node.left);
+        } else if (k > leftNodeCount + 1) {
+            k -= leftNodeCount + 1;
+            return kthSmallest(node.right);
+        } else {
+            return node.val;
         }
+    }
+
+    private int countNodes(final TreeNode node) {
+        return (node.left == null ? 0 : nodeCounts.computeIfAbsent(node.left, this::countNodes))
+                + (node.right == null ? 0 : countNodes(node.right))
+                + 1;
     }
 
     private static class TreeNode {
