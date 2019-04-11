@@ -1,19 +1,17 @@
 /**
  * Problem #130
  * Time complexity: O(n)
- * Space complexity: O(n)
+ * Space complexity: O(1)
  **/
 public class SurroundedRegions {
 
     private char[][] board;
-    private boolean[][] visited;
 
     public void solve(char[][] board) {
         if (board.length == 0 || board[0].length == 0) {
             return;
         }
         this.board = board;
-		this.visited = new boolean[board.length][board[0].length];
 
 		for (int i = 0; i < board.length; i++) {
 		    saveRegion(i, 0);
@@ -26,7 +24,9 @@ public class SurroundedRegions {
 
 		for (int i = 0; i < board.length; i++) {
 		    for (int j = 0; j < board[i].length; j++) {
-		        if (!visited[i][j]) {
+		        if (board[i][j] == 'Y') {
+		            board[i][j] = 'O';
+                } else {
 		            board[i][j] = 'X';
                 }
             }
@@ -34,14 +34,12 @@ public class SurroundedRegions {
     }
 
     private void saveRegion(int i, int j) {
-        if (0 <= i && i < board.length && 0 <= j && j < board[i].length && !visited[i][j]) {
-            visited[i][j] = true;
-            if (board[i][j] == 'O') {
-                saveRegion(i - 1, j);
-                saveRegion(i + 1, j);
-                saveRegion(i, j - 1);
-                saveRegion(i, j + 1);
-            }
+        if (0 <= i && i < board.length && 0 <= j && j < board[i].length && board[i][j] == 'O') {
+            board[i][j] = 'Y';
+            saveRegion(i - 1, j);
+            saveRegion(i + 1, j);
+            saveRegion(i, j - 1);
+            saveRegion(i, j + 1);
         }
     }
 
