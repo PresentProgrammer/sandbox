@@ -1,29 +1,52 @@
+import javafx.util.Pair;
+
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 
 /**
  * Problem #127
- * Time complexity: O(n^2 * k), where n — number of words, k — length of words.
+ * Time complexity: O(n * k), where n — number of words, k — length of words.
  * Space complexity: O(n * k)
  **/
 public class WordLadder {
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-		final boolean[] inQueue = new boolean[wordList.size()];
-		final Queue<Node> queue = new ArrayDeque<>();
-		queue.offer(new Node(beginWord, 1));
+		final Map<String, List<String>> allComboDict = new HashMap<>();
+		for (final String word : wordList) {
+		    for (final String genericWord : genericWordsOf(word)) {
+		        allComboDict.compute(genericWord, (k, v) -> {
+		            final List<String> matchingWords = v == null ? new ArrayList<>() : v;
+		            matchingWords.add(word);
+		            return matchingWords;
+                });
+            }
+        }
+
+		final Set<String> visited = new HashSet<>();
+		final Queue<Pair<String, Integer>> queue = new ArrayDeque<>();
+		queue.offer(new Pair<>(beginWord, 1));
 		while (!queue.isEmpty()) {
-		    final Node curr = queue.poll();
-		    for (int i = 0; i < wordList.size(); i++) {
-		        if (!inQueue[i] && isTransformable(curr.word, wordList.get(i))) {
-                    if (wordList.get(i).equals(endWord)) {
-                        return curr.pathLength + 1;
-                    } else {
-                        inQueue[i] = true;
-                        queue.offer(new Node(wordList.get(i), curr.pathLength + 1));
+		    final Pair<String, Integer> curr = queue.poll();
+		    final String currWord = curr.getKey();
+		    final Integer currDepth = curr.getValue();
+		    for (final String currGenericWord : genericWordsOf(currWord)) {
+		        if (!visited.contains(currGenericWord)) {
+		            visited.add(currGenericWord);
+		            for (final String nextWord : allComboDict.getOrDefault(currGenericWord, Collections.emptyList())) {
+		                if (nextWord.equals(endWord)) {
+		                    return currDepth + 1;
+                        } else {
+		                    queue.offer(new Pair<>(nextWord, currDepth + 1));
+                        }
                     }
                 }
             }
@@ -31,29 +54,14 @@ public class WordLadder {
 		return 0;
     }
 
-    private static boolean isTransformable(final String left, final String right) {
-        int differentCharCount = 0;
-        for (int i = 0; i < left.length(); i++) {
-            if (left.charAt(i) != right.charAt(i)) {
-                differentCharCount++;
-                if (differentCharCount > 1) {
-                    break;
-                }
-            }
+    private static String[] genericWordsOf(final String word) {
+        final String[] genericWords = new String[word.length()];
+        for (int i = 0; i < word.length(); i++) {
+            genericWords[i] = word.substring(0, i) + "*" + word.substring(i + 1);
         }
-        return differentCharCount == 1;
+        return genericWords;
     }
 
-    private static class Node {
-        private String word;
-        private int pathLength;
-
-        private Node(String word, int pathLength) {
-            this.word = word;
-            this.pathLength = pathLength;
-        }
-    }
-    
     public static void main(final String[] args) {
         System.out.println("5 == " + new WordLadder().ladderLength(
                 "hit", "cog", asList("hot","dot","dog","lot","log","cog")));
