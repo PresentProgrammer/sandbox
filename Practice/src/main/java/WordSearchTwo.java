@@ -1,11 +1,8 @@
 import javafx.util.Pair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,67 +13,103 @@ import java.util.Set;
 public class WordSearchTwo {
 
     public List<String> findWords(char[][] board, String[] words) {
-        final Map<Character, Set<String>> firstCharWords = new HashMap<>();
+        final Trie trie = new Trie();
         for (final String word : words) {
-            final Character firstChar = word.charAt(0);
-            firstCharWords.put(firstChar, withElement(firstCharWords.getOrDefault(firstChar, new HashSet<>()), word));
+            trie.insert(word);
         }
-        final List<String> result = new ArrayList<>();
+        final Set<String> result = new HashSet<>();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (firstCharWords.containsKey(board[i][j])) {
-                    final List<String> notInBoard = new ArrayList<>();
-                    final Iterator<String> wordIter = firstCharWords.get(board[i][j]).iterator();
-                    while (wordIter.hasNext()) {
-                        final String currWord = wordIter.next();
-                        if (canBeInBoard(notInBoard, currWord) && findWord(currWord, board, new Pair<>(i, j), notInBoard)) {
-                            wordIter.remove();
-                            result.add(currWord);
-                        }
-                    }
-                }
+                findWords(board, new Pair<>(i, j), new HashSet<>(), trie, result);
             }
         }
-        return result;
+        return new ArrayList<>(result);
     }
 
-    private static boolean canBeInBoard(final List<String> notInBoard, final String word) {
-        for (final String wordNotInBoard : notInBoard) {
-            if (word.contains(wordNotInBoard)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean findWord(String word, char[][] board, Pair<Integer, Integer> cell, List<String> notInBoard) {
-        final boolean found = findWord(word, 0, board, cell, new HashSet<>());
-        if (!found) {
-            notInBoard.add(word);
-        }
-        return found;
-    }
-
-    private static boolean findWord(String word, int charIndex, char[][] board, Pair<Integer, Integer> cell,
-            Set<Pair<Integer, Integer>> visited) {
+    private static void findWords(char[][] board, Pair<Integer, Integer> cell, Set<Pair<Integer, Integer>> visited,
+            Trie trie, Set<String> result) {
         final int i = cell.getKey();
         final int j = cell.getValue();
-        if (charIndex == word.length()) {
-            return true;
-        } else if (0 <= i && i < board.length && 0 <= j && j < board[i].length
-                && board[i][j] == word.charAt(charIndex) && !visited.contains(cell)) {
-            return findWord(word, charIndex + 1, board, new Pair<>(i + 1, j), withElement(new HashSet<>(visited), cell))
-                    || findWord(word, charIndex + 1, board, new Pair<>(i - 1, j), withElement(new HashSet<>(visited), cell))
-                    || findWord(word, charIndex + 1, board, new Pair<>(i, j + 1), withElement(new HashSet<>(visited), cell))
-                    || findWord(word, charIndex + 1, board, new Pair<>(i, j - 1), withElement(new HashSet<>(visited), cell));
-        } else {
-            return false;
+        if (0 <= i && i < board.length && 0 <= j && j < board[i].length && !visited.contains(cell)) {
+            final Trie nextTrie = trie.getNext(board[i][j]);
+            if (nextTrie != null) {
+                if (nextTrie.isKey()) {
+                    result.add(nextTrie.getWord());
+                }
+                final Set<Pair<Integer, Integer>> visitedWithCurr = newWithElement(visited, cell);
+                findWords(board, new Pair<>(i - 1, j), visitedWithCurr, nextTrie, result);
+                findWords(board, new Pair<>(i + 1, j), visitedWithCurr, nextTrie, result);
+                findWords(board, new Pair<>(i, j - 1), visitedWithCurr, nextTrie, result);
+                findWords(board, new Pair<>(i, j + 1), visitedWithCurr, nextTrie, result);
+            }
         }
     }
 
-    private static <T> Set<T> withElement(final Set<T> set, final T elem) {
-        set.add(elem);
-        return set;
+    private static <T> Set<T> newWithElement(final Set<T> set, final T elem) {
+        final Set<T> newSet = new HashSet<>(set);
+        newSet.add(elem);
+        return newSet;
+    }
+
+    @SuppressWarnings("Duplicates")
+    private static class Trie {
+
+        private String word;
+        private final Trie[] children;
+
+        public Trie() {
+            this.word = null;
+            this.children = new Trie[26];
+        }
+
+        public void insert(String word) {
+            Trie curr = this;
+            for (int i = 0; i < word.length(); i++) {
+                final int letterInd = word.charAt(i) - 'a';
+                if (curr.children[letterInd] == null) {
+                    curr.children[letterInd] = new Trie();
+                }
+                curr = curr.children[letterInd];
+            }
+            curr.word = word;
+        }
+
+        public boolean search(String word) {
+            final Trie prefixTrie = getPrefixTrie(word);
+            return prefixTrie != null && prefixTrie.word != null;
+        }
+
+        public boolean startsWith(String prefix) {
+            return getPrefixTrie(prefix) != null;
+        }
+
+        public Trie getNext(final char letter) {
+            return children[letter - 'a'];
+        }
+
+        public boolean isKey() {
+            return this.word != null;
+        }
+
+        public String getWord() {
+            return this.word;
+        }
+
+        private Trie getPrefixTrie(final String prefix) {
+            Trie curr = this;
+            for (int i = 0; i < prefix.length(); i++) {
+                final int letterInd = prefix.charAt(i) - 'a';
+                if (curr.children[letterInd] == null) {
+                    return null;
+                } else {
+                    curr = curr.children[letterInd];
+                }
+            }
+            return curr;
+        }
+
+        public static void main(final String[] args) {
+        }
     }
 
     public static void main(final String[] args) {

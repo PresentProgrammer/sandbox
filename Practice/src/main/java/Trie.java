@@ -3,6 +3,7 @@
  * Time complexity: O(n)
  * Space complexity: O(n)
  **/
+@SuppressWarnings("Duplicates")
 public class Trie {
 
     private boolean key;
