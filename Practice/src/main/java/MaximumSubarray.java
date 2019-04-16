@@ -1,63 +1,17 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Problem #53
- * Time complexity: O(n^2)
- * Space complexity: O(n)
+ * Time complexity: O(n)
+ * Space complexity: O(1)
  **/
 public class MaximumSubarray {
 
     public int maxSubArray(int[] nums) {
-        int maxElement = nums[0];
-        final List<Integer> list = new ArrayList<>();
-        for (final int num : nums) {
-            maxElement = Math.max(maxElement, num);
-            list.add(num);
+        int maxSoFar = nums[0], maxEndingHere = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);
+            maxSoFar = Math.max(maxSoFar, maxEndingHere);
         }
-
-        if (maxElement <= 0) {
-            return maxElement;
-        }
-
-        int i = 0;
-        while (i + 1 < list.size()) {
-            final int curr = list.get(i);
-            final int next = list.get(i + 1);
-            if (curr <= 0 && next <= 0 || curr >= 0 && next >= 0) {
-                list.set(i, curr + next);
-                list.remove(i + 1);
-                maxElement = Math.max(maxElement, list.get(i));
-            } else {
-                i++;
-            }
-        }
-
-        if (list.size() > 2) {
-            int prevSize;
-            do {
-                prevSize = list.size();
-                int j = 1;
-                while (j < list.size() - 1) {
-                    final int left = list.get(j - 1);
-                    final int curr = list.get(j);
-                    final int right = list.get(j + 1);
-                    if (Math.abs(left) >= Math.abs(curr) && Math.abs(right) >= Math.abs(curr)) {
-                        list.set(j - 1, left + curr + right);
-                        list.remove(j);
-                        list.remove(j);
-                        maxElement = Math.max(maxElement, list.get(j - 1));
-                    } else {
-                        j++;
-                    }
-                }
-            } while (list.size() < prevSize);
-        }
-
-        for (final int el : list) {
-            maxElement = Math.max(maxElement, el);
-        }
-        return maxElement;
+        return maxSoFar;
     }
 
     public static void main(final String[] args) {
