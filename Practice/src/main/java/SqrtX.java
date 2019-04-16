@@ -1,6 +1,6 @@
 /**
  * Problem #69
- * Time complexity: O(?)
+ * Time complexity: O(log x)
  * Space complexity: O(1)
  **/
 public class SqrtX {
