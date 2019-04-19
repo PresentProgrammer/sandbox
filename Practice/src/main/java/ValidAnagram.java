@@ -6,15 +6,17 @@
 public class ValidAnagram {
 
     public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
         final int[] count = new int[26];
 		for (int i = 0; i < s.length(); i++) {
 		    count[s.charAt(i) - 'a']++;
         }
         for (int i = 0; i < t.length(); i++) {
-            count[t.charAt(i) - 'a']--;
-        }
-        for (final int c : count) {
-            if (c != 0) {
+            final int index = t.charAt(i) - 'a';
+            count[index]--;
+            if (count[index] < 0) {
                 return false;
             }
         }
