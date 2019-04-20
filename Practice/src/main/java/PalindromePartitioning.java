@@ -14,9 +14,11 @@ public class PalindromePartitioning {
 
     private List<List<String>> result;
     private Map<Pair<Integer, Integer>, Boolean> isPalindromeCache;
+    private Map<Pair<Integer, Integer>, String> substringCache;
 
     public List<List<String>> partition(final String s) {
         this.isPalindromeCache = new HashMap<>();
+        this.substringCache = new HashMap<>();
 		this.result = new ArrayList<>();
 		partition(s, new ArrayList<>(s.length()), 0, s.length());
 		return result;
@@ -25,8 +27,8 @@ public class PalindromePartitioning {
     private void partition(final String s, final List<Pair<Integer, Integer>> temp, final int start, final int endExcl) {
         if (start == endExcl) {
             final List<String> resultElem = new ArrayList<>();
-            for (final Pair<Integer, Integer> t : temp) {
-                resultElem.add(s.substring(t.getKey(), t.getValue()));
+            for (final Pair<Integer, Integer> beginEnd : temp) {
+                resultElem.add(cachedSubstring(s, beginEnd));
             }
             result.add(resultElem);
         } else {
@@ -63,6 +65,17 @@ public class PalindromePartitioning {
             right--;
         }
         return left >= right;
+    }
+
+    private String cachedSubstring(final String s, final Pair<Integer, Integer> beginEnd) {
+        final String cachedSubstring = substringCache.get(beginEnd);
+        if (cachedSubstring == null) {
+            final String calculatedSubstring =s.substring(beginEnd.getKey(), beginEnd.getValue());
+            substringCache.put(beginEnd, calculatedSubstring);
+            return calculatedSubstring;
+        } else {
+            return cachedSubstring;
+        }
     }
     
     public static void main(final String[] args) {
