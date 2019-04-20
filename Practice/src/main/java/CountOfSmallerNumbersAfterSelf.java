@@ -1,12 +1,10 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Problem #315
- * Time complexity: O()
- * Space complexity: O()
+ * Time complexity: O(n log n)
+ * Space complexity: O(n)
  **/
 public class CountOfSmallerNumbersAfterSelf {
 
@@ -16,12 +14,20 @@ public class CountOfSmallerNumbersAfterSelf {
 	private int[] nums;
 
 	public List<Integer> countSmaller(final int[] nums) {
-		this.indexes = IntStream.range(0, nums.length).toArray();
+		this.indexes = new int[nums.length];
+		for(int i = 0; i < nums.length; i++){
+			indexes[i] = i;
+		}
 		this.tempIndexes = new int[nums.length];
 		this.counts = new int[nums.length];
 		this.nums = nums;
+
 		mergeSort(0, nums.length);
-		return Arrays.stream(counts).boxed().collect(Collectors.toList());
+		final List<Integer> result = new ArrayList<>(nums.length);
+		for (final int count : counts) {
+			result.add(count);
+		}
+		return result;
 	}
 
 	private void mergeSort(final int start, final int endExcl) {
