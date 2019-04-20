@@ -1,7 +1,10 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * Problem #46
@@ -33,8 +36,10 @@ public class Permutations {
             }
         }
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println(new Permutations().permute(new int[]{ 1, 2, 3 }));
+        Instant start = Instant.now();
+        new Permutations().permute(IntStream.range(1, 10).toArray());
+        System.out.println("Execution took " + Duration.between(start, Instant.now()));
 	}
 }
