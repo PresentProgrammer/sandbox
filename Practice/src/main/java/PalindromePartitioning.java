@@ -1,65 +1,37 @@
-import javafx.util.Pair;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Problem #131
- * Time complexity: O(n ^ 3)
+ * Time complexity: O(n^3)
  * Space complexity: O(n)
  **/
 public class PalindromePartitioning {
 
     private List<List<String>> result;
-    private Map<Pair<Integer, Integer>, Boolean> isPalindromeCache;
-    private Map<Pair<Integer, Integer>, String> substringCache;
 
     public List<List<String>> partition(final String s) {
-        this.isPalindromeCache = new HashMap<>();
-        this.substringCache = new HashMap<>();
-		this.result = new ArrayList<>();
-		partition(s, new ArrayList<>(s.length()), 0, s.length());
-		return result;
+        this.result = new ArrayList<>();
+        partition(s, new ArrayList<>(s.length()), 0);
+        return result;
     }
 
-    private void partition(final String s, final List<Pair<Integer, Integer>> temp, final int start, final int endExcl) {
-        if (start == endExcl) {
-            final List<String> resultElem = new ArrayList<>();
-            for (final Pair<Integer, Integer> beginEnd : temp) {
-                resultElem.add(cachedSubstring(s, beginEnd));
-            }
-            result.add(resultElem);
+    private void partition(final String s, final List<String> temp, final int start) {
+        if (start == s.length()) {
+            result.add(new ArrayList<>(temp));
         } else {
-            for (int midExcl = endExcl; midExcl > start; midExcl--) {
+            for (int midExcl = s.length(); midExcl > start; midExcl--) {
                 if (isPalindrome(s, start, midExcl)) {
-                    temp.add(new Pair<>(start, midExcl));
-                    partition(s, temp, midExcl, endExcl);
+                    temp.add(s.substring(start, midExcl));
+                    partition(s, temp, midExcl);
                     temp.remove(temp.size() - 1);
                 }
             }
         }
     }
 
-    private boolean isPalindrome(final String s, final int start, final int endExcl) {
-        if (endExcl - start <= 1) {
-            return true;
-        } else {
-            final Pair<Integer, Integer> beginEnd = new Pair<>(start, endExcl);
-            final Boolean cachedIsPalindrome = isPalindromeCache.get(beginEnd);
-            if (cachedIsPalindrome == null) {
-                final boolean calculatedPalindrome =isPalindrome(s, beginEnd);
-                isPalindromeCache.put(beginEnd, calculatedPalindrome);
-                return calculatedPalindrome;
-            } else {
-                return cachedIsPalindrome;
-            }
-        }
-    }
-
-    private static boolean isPalindrome(final String s, final Pair<Integer, Integer> beginEnd) {
-        int left = beginEnd.getKey(), right = beginEnd.getValue() - 1;
+    private static boolean isPalindrome(final String s, final int start, final int endExcl) {
+        int left = start, right = endExcl - 1;
         while (left < right && s.charAt(left) == s.charAt(right)) {
             left++;
             right--;
@@ -67,18 +39,7 @@ public class PalindromePartitioning {
         return left >= right;
     }
 
-    private String cachedSubstring(final String s, final Pair<Integer, Integer> beginEnd) {
-        final String cachedSubstring = substringCache.get(beginEnd);
-        if (cachedSubstring == null) {
-            final String calculatedSubstring =s.substring(beginEnd.getKey(), beginEnd.getValue());
-            substringCache.put(beginEnd, calculatedSubstring);
-            return calculatedSubstring;
-        } else {
-            return cachedSubstring;
-        }
-    }
-    
     public static void main(final String[] args) {
         System.out.println("[\"aa\",\"b\"], " + "[\"a\",\"a\",\"b\"] == " + new PalindromePartitioning().partition("aab"));
-	}
+    }
 }
