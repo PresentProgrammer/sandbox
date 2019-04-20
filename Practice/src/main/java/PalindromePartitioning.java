@@ -1,21 +1,25 @@
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Problem #131
- * Time complexity: O(n^3)
+ * Time complexity: O(n ^ 3)
  * Space complexity: O(n)
  **/
 public class PalindromePartitioning {
 
     private List<List<String>> result;
+    private Map<Pair<Integer, Integer>, Boolean> isPalindromeCache;
 
     public List<List<String>> partition(final String s) {
-        this.result = new ArrayList<>();
-        partition(s, new ArrayList<>(s.length()), 0, s.length());
-        return result;
+        this.isPalindromeCache = new HashMap<>();
+		this.result = new ArrayList<>();
+		partition(s, new ArrayList<>(s.length()), 0, s.length());
+		return result;
     }
 
     private void partition(final String s, final List<Pair<Integer, Integer>> temp, final int start, final int endExcl) {
@@ -36,8 +40,24 @@ public class PalindromePartitioning {
         }
     }
 
-    private static boolean isPalindrome(final String s, final int start, final int endExcl) {
-        int left = start, right = endExcl - 1;
+    private boolean isPalindrome(final String s, final int start, final int endExcl) {
+        if (endExcl - start <= 1) {
+            return true;
+        } else {
+            final Pair<Integer, Integer> beginEnd = new Pair<>(start, endExcl);
+            final Boolean cachedIsPalindrome = isPalindromeCache.get(beginEnd);
+            if (cachedIsPalindrome == null) {
+                final boolean calculatedPalindrome =isPalindrome(s, beginEnd);
+                isPalindromeCache.put(beginEnd, calculatedPalindrome);
+                return calculatedPalindrome;
+            } else {
+                return cachedIsPalindrome;
+            }
+        }
+    }
+
+    private static boolean isPalindrome(final String s, final Pair<Integer, Integer> beginEnd) {
+        int left = beginEnd.getKey(), right = beginEnd.getValue() - 1;
         while (left < right && s.charAt(left) == s.charAt(right)) {
             left++;
             right--;
