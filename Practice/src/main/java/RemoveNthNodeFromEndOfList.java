@@ -1,26 +1,25 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Problem #19
  * Time complexity: O(n)
- * Space complexity: O(n)
+ * Space complexity: O(1)
  **/
 public class RemoveNthNodeFromEndOfList {
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        final List<ListNode> nodes = new ArrayList<>();
-        ListNode curr = head;
-        while (curr != null) {
-            nodes.add(curr);
-            curr = curr.next;
+        ListNode fast = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
         }
-
-        if (n == nodes.size()) {
+        if (fast == null) {
             return head.next;
         } else {
-            final ListNode prev = nodes.get(nodes.size() - n - 1);
-            prev.next = n > 1 ? nodes.get(nodes.size() - n + 1) : null;
+            ListNode slow = head;
+            fast = fast.next;
+            while (fast != null) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            slow.next = slow.next.next;
             return head;
         }
     }
