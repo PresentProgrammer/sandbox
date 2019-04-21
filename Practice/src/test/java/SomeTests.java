@@ -4,8 +4,7 @@ public class SomeTests {
 
     @Test
     public void m() {
-        int n = -7;
-        n /= 2;
-        System.out.println(n);
+        System.out.println((int) 'z');
+        System.out.println((int) 'Z');
     }
 }
