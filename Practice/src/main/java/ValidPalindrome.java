@@ -9,7 +9,7 @@ public class ValidPalindrome {
 		int left = 0, right = s.length() - 1;
 		while (left < right) {
 		    char leftChar = s.charAt(left);
-		    while (!(Character.isAlphabetic(leftChar) || Character.isDigit(leftChar)) && left + 1 < s.length()) {
+		    while (!Character.isLetterOrDigit(leftChar) && left + 1 < s.length()) {
 		        left++;
 		        leftChar = s.charAt(left);
             }
@@ -17,7 +17,7 @@ public class ValidPalindrome {
 		        return true;
             }
             char rightChar = s.charAt(right);
-            while (!(Character.isAlphabetic(rightChar) || Character.isDigit(rightChar)) && right - 1 >= 0) {
+            while (!Character.isLetterOrDigit(rightChar) && right - 1 >= 0) {
                 right--;
                 rightChar = s.charAt(right);
             }
