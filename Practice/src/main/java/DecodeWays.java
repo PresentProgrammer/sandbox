@@ -1,31 +1,38 @@
+import java.util.Arrays;
+
 /**
  * Problem #91
- * Time complexity: O(2 ^ n)
+ * Time complexity: O(n)
  * Space complexity: O(n)
  **/
 public class DecodeWays {
 
-    private int result;
     private String s;
+    private int[] waysFrom;
 
     public int numDecodings(final String s) {
-		this.result = 0;
 		this.s = s;
-		numDecodings(0);
-		return this.result;
+		this.waysFrom = new int[s.length()];
+		Arrays.fill(this.waysFrom, -1);
+		return numDecodings(0);
     }
 
-    private void numDecodings(final int left) {
+    private int numDecodings(final int left) {
         if (left == s.length()) {
-            result++;
+            return 1;
+        } else if (waysFrom[left] != -1) {
+            return waysFrom[left];
         } else {
+            int ways = 0;
             if (left + 1 < s.length() && (s.charAt(left) == '1'
                     || s.charAt(left) == '2' && '0' <= s.charAt(left + 1) && s.charAt(left + 1) <= '6')) {
-                numDecodings(left + 2);
+                ways += numDecodings(left + 2);
             }
             if (s.charAt(left) != '0') {
-                numDecodings(left + 1);
+                ways += numDecodings(left + 1);
             }
+            waysFrom[left] = ways;
+            return ways;
         }
     }
     
