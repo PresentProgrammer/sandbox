@@ -1,28 +1,37 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Problem #125
  * Time complexity: O(n)
- * Space complexity: O(n)
+ * Space complexity: O(1)
  **/
 public class ValidPalindrome {
 
     public boolean isPalindrome(String s) {
-		final List<Character> chars = new ArrayList<>(s.length());
-		for (int i = 0; i < s.length(); i++) {
-            final char curr = s.charAt(i);
-            if (Character.isAlphabetic(curr) || Character.isDigit(curr)) {
-                chars.add(Character.toLowerCase(curr));
+		int left = 0, right = s.length() - 1;
+		while (left < right) {
+		    char leftChar = s.charAt(left);
+		    while (!(Character.isAlphabetic(leftChar) || Character.isDigit(leftChar)) && left + 1 < s.length()) {
+		        left++;
+		        leftChar = s.charAt(left);
+            }
+		    if (left >= right) {
+		        return true;
+            }
+            char rightChar = s.charAt(right);
+            while (!(Character.isAlphabetic(rightChar) || Character.isDigit(rightChar)) && right - 1 >= 0) {
+                right--;
+                rightChar = s.charAt(right);
+            }
+            if (left >= right) {
+                return true;
+            }
+            if (Character.toLowerCase(leftChar) == Character.toLowerCase(rightChar)) {
+		        left++;
+		        right--;
+            } else {
+                return false;
             }
         }
-
-		int left = 0, right = chars.size() - 1;
-		while (left < right && chars.get(left) == chars.get(right)) {
-		    left++;
-		    right--;
-        }
-		return left >= right;
+		return true;
     }
     
     public static void main(final String[] args) {
