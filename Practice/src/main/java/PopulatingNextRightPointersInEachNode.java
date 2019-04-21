@@ -19,20 +19,20 @@ public class PopulatingNextRightPointersInEachNode {
             connect(curr.left, curr.right);
         }
     }
-}
 
-class Node {
-    int val;
-    Node left;
-    Node right;
-    Node next;
+    private static class Node {
+        int val;
+        Node left;
+        Node right;
+        Node next;
 
-    Node() {}
+        Node() {}
 
-    Node(int _val, Node _left, Node _right, Node _next) {
-        val = _val;
-        left = _left;
-        right = _right;
-        next = _next;
+        Node(int _val, Node _left, Node _right, Node _next) {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
     }
-};
+}

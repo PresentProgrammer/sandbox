@@ -45,6 +45,25 @@ public class MergeTwoSortedLists {
         }
         return res;
     }
+
+    private static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) {
+            val = x;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder builder = new StringBuilder();
+            ListNode current = this;
+            while (current != null) {
+                builder.insert(0, current.val);
+                current = current.next;
+            }
+            return builder.toString();
+        }
+    }
     
     public static void main(final String[] args) {
         final ListNode l1 = new ListNode(1);
