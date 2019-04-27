@@ -1,3 +1,6 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * Problem #236
  * Time complexity: O(n)
@@ -5,44 +8,52 @@
  **/
 public class LowestCommonAncestorOfBinaryTree {
 
-    private TreeNode lca;
-    private TreeNode p;
-    private TreeNode q;
-
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        this.lca = null;
-        this.p = p;
-        this.q = q;
-        findLowestCommonAncestor(root, 0);
-        return this.lca;
+        boolean oneFound = false;
+        final Deque<NodeAndState> stack = new ArrayDeque<>();
+        stack.push(new NodeAndState(root));
+        while (!stack.isEmpty()) {
+            final NodeAndState curr = stack.peek();
+            if (!curr.leftVisited) {
+                if (curr.node.val == p.val || curr.node.val == q.val) {
+                    if (oneFound) {
+                        NodeAndState candidate = stack.pop();
+                        while (!candidate.possibleAcs) {
+                            candidate = stack.pop();
+                        }
+                        return candidate.node;
+                    } else {
+                        oneFound = true;
+                        curr.possibleAcs = true;
+                    }
+                }
+                if (curr.node.left != null) {
+                    stack.push(new NodeAndState(curr.node.left));
+                }
+                curr.leftVisited = true;
+            } else if (!curr.rightVisited) {
+                if (curr.node.right != null) {
+                    stack.push(new NodeAndState(curr.node.right));
+                }
+                curr.rightVisited = true;
+            } else {
+                final boolean possibleAcs = stack.pop().possibleAcs;
+                if (possibleAcs && !stack.isEmpty()) {
+                    stack.peek().possibleAcs = true;
+                }
+            }
+        }
+        return null;
     }
 
-    private int findLowestCommonAncestor(TreeNode curr, int alreadyFound) {
-        if (curr == null) {
-            return 0;
-        } else {
-            int foundFromCurr = 0;
-            if (curr.val == p.val || curr.val == q.val) {
-                foundFromCurr++;
-                if (foundFromCurr + alreadyFound > 1) {
-                    return foundFromCurr;
-                }
-            }
-            foundFromCurr += findLowestCommonAncestor(curr.left, alreadyFound);
-            if (foundFromCurr > 1) {
-                if (lca == null) {
-                    lca = curr;
-                }
-                return foundFromCurr;
-            } else if (foundFromCurr + alreadyFound > 1) {
-                return foundFromCurr;
-            } else {
-                foundFromCurr += findLowestCommonAncestor(curr.right, alreadyFound);
-                if (foundFromCurr > 1 && lca == null) {
-                    lca = curr;
-                }
-                return foundFromCurr;
-            }
+    private static class NodeAndState {
+        TreeNode node;
+        boolean leftVisited = false;
+        boolean rightVisited = false;
+        boolean possibleAcs = false;
+
+        NodeAndState(TreeNode node) {
+            this.node = node;
         }
     }
 
