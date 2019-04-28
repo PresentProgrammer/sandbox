@@ -1,47 +1,30 @@
 import java.util.Arrays;
 
 /**
- * Problem #x
- * Time complexity: O(n log n)
- * Space complexity: O(1)
+ * Problem #238
+ * Time complexity: O(n)
+ * Space complexity: O(n)
  **/
 public class ProductOfArrayExceptSelf {
 
     public int[] productExceptSelf(int[] in) {
-		final int[] out = new int[in.length];
-		Arrays.fill(out, 1);
-        int left = 0, right = in.length - 1;
-        while (left < in.length) {
-            final int mid = (left + right + 1) / 2;
-
-            int subResult = out[left];
-            for (int i = left; i < mid; i++) {
-                subResult *= in[i];
-            }
-            out[mid] = subResult;
-
-            subResult = out[left];
-            for (int i = mid; i <= right; i++) {
-                subResult *= in[i];
-            }
-            out[left] = subResult;
-
-            if (mid - left > 1) {
-                out[right] = Integer.MAX_VALUE;
-                right = mid - 1;
-            } else if (right > mid) {
-                left = mid;
-            } else {
-                left = right + 1;
-                if (left < in.length) {
-                    right = left + 1;
-                    while (out[right] != Integer.MAX_VALUE) {
-                        right++;
-                    }
-                }
-            }
+		final int[] leftProducts = new int[in.length];
+		leftProducts[0] = 1;
+		for (int i = 1; i < in.length; i++) {
+		    leftProducts[i] = leftProducts[i - 1] * in[i - 1];
         }
-        return out;
+
+        final int[] rightProducts = new int[in.length];
+		rightProducts[in.length - 1] = 1;
+		for (int i = in.length - 2; i >= 0; i--) {
+		    rightProducts[i] = rightProducts[i + 1] * in[i + 1];
+        }
+
+		final int[] out = new int[in.length];
+		for (int i = 0; i < out.length; i++) {
+		    out[i] = leftProducts[i] * rightProducts[i];
+        }
+		return out;
     }
 
     public static void main(final String[] args) {
