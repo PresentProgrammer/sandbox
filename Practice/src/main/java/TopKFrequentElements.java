@@ -19,7 +19,12 @@ public class TopKFrequentElements {
 		    frequencies.put(num, frequencies.getOrDefault(num, 0) + 1);
         }
 
-		final PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.comparingInt(frequencies::get));
+		final PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+		    @Override
+            public int compare(Integer n1, Integer n2) {
+		        return frequencies.get(n1) - frequencies.get(n2);
+            }
+        });
 		for (final Integer element : frequencies.keySet()) {
 			queue.offer(element);
 			if (queue.size() > k) {
