@@ -1,12 +1,14 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.PriorityQueue;
 
 /**
  * Problem #347
- * Time complexity: O(n log n)
+ * Time complexity: O(n log k)
  * Space complexity: O(n)
  **/
 public class TopKFrequentElements {
@@ -17,23 +19,19 @@ public class TopKFrequentElements {
 		    frequencies.put(num, frequencies.getOrDefault(num, 0) + 1);
         }
 
-		final TreeMap<Integer, List<Integer>> sortedByFrequency = new TreeMap<>();
-		for (final Map.Entry<Integer, Integer> frequency : frequencies.entrySet()) {
-			final List<Integer> elements = sortedByFrequency.getOrDefault(frequency.getValue(), new ArrayList<>());
-			elements.add(frequency.getKey());
-		    sortedByFrequency.put(frequency.getValue(), elements);
+		final PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.comparingInt(frequencies::get));
+		for (final Integer element : frequencies.keySet()) {
+			queue.offer(element);
+			if (queue.size() > k) {
+				queue.poll();
+			}
         }
 
 		final List<Integer> result = new ArrayList<>();
-		while (result.size() < k) {
-			final List<Integer> elements = sortedByFrequency.pollLastEntry().getValue();
-			for (final Integer element : elements) {
-				result.add(element);
-				if (result.size() >= k) {
-					return result;
-				}
-			}
+		while (!queue.isEmpty()) {
+			result.add(queue.poll());
 		}
+		Collections.reverse(result);
 		return result;
     }
 
