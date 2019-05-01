@@ -1,6 +1,5 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
@@ -12,38 +11,19 @@ import java.util.List;
 public class BinaryTreeInorderTraversal {
 
     public List<Integer> inorderTraversal(TreeNode root) {
-        if (root == null) {
-            return Collections.emptyList();
-        }
         final List<Integer> inorder = new ArrayList<>();
-        final Deque<NodeWithState> stack = new ArrayDeque<>();
-        stack.push(new NodeWithState(root));
-        while (!stack.isEmpty()) {
-            final NodeWithState curr = stack.peek();
-            if (!curr.leftVisited && curr.node.left != null) {
-                curr.leftVisited = true;
-                stack.push(new NodeWithState(curr.node.left));
-            } else if (!curr.rightVisited) {
-                inorder.add(curr.node.val);
-                curr.rightVisited = true;
-                if (curr.node.right != null) {
-                    stack.push(new NodeWithState(curr.node.right));
-                }
-            } else {
-                stack.pop();
+        final Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode curr = root;
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
             }
+            curr = stack.pop();
+            inorder.add(curr.val);
+            curr = curr.right;
         }
         return inorder;
-    }
-
-    private static class NodeWithState {
-        TreeNode node;
-        boolean leftVisited;
-        boolean rightVisited;
-
-        NodeWithState(TreeNode node) {
-            this.node = node;
-        }
     }
 
     private static class TreeNode {
