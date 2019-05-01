@@ -1,16 +1,20 @@
 /**
  * Problem #142
- * Time complexity: O(n ^ 2)
+ * Time complexity: O(n)
  * Space complexity: O(1)
  **/
 public class LinkedListCycleII {
 
+    /**
+     * See https://leetcode.com/problems/linked-list-cycle-ii/discuss/44774/Java-O(1)-space-solution-with-detailed-explanation.
+     */
     public ListNode detectCycle(ListNode head) {
-        if (head == null) {
+        if (head == null || head.next == null) {
             return null;
         }
-        ListNode hare = head.next;
-        ListNode turtle = head;
+        final ListNode handle = new ListNode(-1);
+        ListNode hare = head.next.next;
+        ListNode turtle = head.next;
         while (hare != null && hare != turtle) {
             turtle = turtle.next;
             hare = hare.next == null ? null : hare.next.next;
@@ -18,16 +22,12 @@ public class LinkedListCycleII {
         if (hare == null) {
             return null;
         } else {
-            ListNode snail = head;
-            while (hare != snail) {
-                do {
-                    hare = hare.next;
-                } while (hare != snail && hare != turtle);
-                if (hare != snail) {
-                    snail = snail.next;
-                }
+            turtle = head;
+            while (hare != turtle) {
+                hare = hare.next;
+                turtle = turtle.next;
             }
-            return snail;
+            return turtle;
         }
     }
 
