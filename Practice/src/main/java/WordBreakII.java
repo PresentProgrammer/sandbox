@@ -8,7 +8,7 @@ import static java.util.Collections.singletonList;
 /**
  * Problem #140
  * Time complexity: O(n * m), where n — string length, m — dictionary size.
- * Space complexity: O(n)
+ * Space complexity: O(n * m)
  **/
 public class WordBreakII {
 
