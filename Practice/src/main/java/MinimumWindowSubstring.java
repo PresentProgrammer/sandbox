@@ -3,7 +3,7 @@ import java.util.Map;
 
 /**
  * Problem #76
- * Time complexity: O(n + k ^ 2), where n — s.length(), k — unique character count in t
+ * Time complexity: O(n + k), where n — s.length(), k — unique character count in t
  * Space complexity: O(k)
  **/
 public class MinimumWindowSubstring {
@@ -13,20 +13,21 @@ public class MinimumWindowSubstring {
         for (int i = 0; i < t.length(); i++) {
             counts.put(t.charAt(i), counts.getOrDefault(t.charAt(i), 0) - 1);
         }
+        int missingCounts = counts.size();
 
         int left = 0, right = 0;
-        while (right < s.length()) {
+        while (right < s.length() && missingCounts > 0) {
             final char charAtRight = s.charAt(right);
             final Integer charAtRightCount = counts.get(charAtRight);
             right++;
             if (charAtRightCount != null) {
                 counts.put(charAtRight, charAtRightCount + 1);
-                if (allNonNegative(counts)) {
-                    break;
+                if (charAtRightCount + 1 == 0) {
+                    missingCounts--;
                 }
             }
         }
-        if (!allNonNegative(counts)) {
+        if (missingCounts > 0) {
             return "";
         }
 
@@ -57,15 +58,6 @@ public class MinimumWindowSubstring {
 		return s.substring(resultLeft, resultRight);
     }
 
-    private static boolean allNonNegative(final Map<Character, Integer> counts) {
-        for (int value : counts.values()) {
-            if (value < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
     public static void main(final String[] args) {
         System.out.println("BANC == " + new MinimumWindowSubstring().minWindow("ADOBECODEBANC", "ABC"));
         System.out.println("BECODEBA == " + new MinimumWindowSubstring().minWindow("ADXOBECODEBANC", "ABCB"));
