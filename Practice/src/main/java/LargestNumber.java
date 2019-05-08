@@ -8,21 +8,14 @@ import java.util.Arrays;
 public class LargestNumber {
 
     public String largestNumber(int[] nums) {
-		return removeTrailingZeros(Arrays.stream(nums)
+        final String result = Arrays.stream(nums)
                 .boxed()
                 .map(Object::toString)
                 .sorted((s1, s2) -> (s2 + s1).compareTo(s1 + s2))
-                .reduce("0", (s1, s2) -> s1 + s2));
+                .reduce("", (s1, s2) -> s1 + s2);
+        return result.isEmpty() || result.charAt(0) == '0' ? "0" : result;
     }
 
-    private static String removeTrailingZeros(final String s) {
-        int i = 0;
-        while (i < s.length() && s.charAt(i) == '0') {
-            i++;
-        }
-        return i < s.length() ? s.substring(i) : s.substring(i - 1);
-    }
-    
     public static void main(final String[] args) {
         System.out.println("210 == " + new LargestNumber().largestNumber(new int[]{10,2}));
         System.out.println("9534330 == " + new LargestNumber().largestNumber(new int[]{3,30,34,5,9}));
