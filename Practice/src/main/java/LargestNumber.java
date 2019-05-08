@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Problem #179
@@ -8,12 +9,21 @@ import java.util.Arrays;
 public class LargestNumber {
 
     public String largestNumber(int[] nums) {
-        final String result = Arrays.stream(nums)
-                .boxed()
-                .map(Object::toString)
-                .sorted((s1, s2) -> (s2 + s1).compareTo(s1 + s2))
-                .reduce("", (s1, s2) -> s1 + s2);
-        return result.isEmpty() || result.charAt(0) == '0' ? "0" : result;
+        final String[] numsAsStrs = new String[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            numsAsStrs[i] = Integer.toString(nums[i]);
+        }
+        Arrays.sort(numsAsStrs, new Comparator<String>(){
+            @Override
+            public int compare(String s1, String s2) {
+                return (s2 + s1).compareTo(s1 + s2);
+            }
+        });
+        final StringBuilder builder = new StringBuilder();
+        for (final String num : numsAsStrs) {
+            builder.append(num);
+        }
+        return builder.length() == 0 || builder.charAt(0) == '0' ? "0" : builder.toString();
     }
 
     public static void main(final String[] args) {
