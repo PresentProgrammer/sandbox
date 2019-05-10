@@ -1,28 +1,44 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
- * Problem 295
+ * Problem: 295
  * Space complexity: O(n)
  */
 class MedianFinder {
 
-    final List<Integer> list = new ArrayList<>();
+    private final Queue<Integer> lower = new PriorityQueue<>(Comparator.reverseOrder());
+    private final Queue<Integer> higher = new PriorityQueue<>();
 
     /**
-     * Time complexity: O(log n) + O(n) → O(n)
+     * Time complexity: O(log n), where n — previously added element count.
      */
     public void addNum(int num) {
-        list.add(Math.abs(Collections.binarySearch(list, num) + 1), num);
+        if (lower.peek() == null || lower.peek() < num) {
+            addNum(num, higher, lower);
+        } else {
+            addNum(num, lower, higher);
+        }
     }
 
     /**
      * Time complexity: O(1)
      */
     public double findMedian() {
-        return list.size() % 2 == 0
-                ? (list.get(list.size() / 2 - 1) + list.get(list.size() / 2)) / 2.0
-                : list.get(list.size() / 2);
+        if (lower.size() == higher.size()) {
+            return (lower.peek() + higher.peek()) / 2.0;
+        } else if (lower.size() > higher.size()) {
+            return lower.peek();
+        } else {
+            return higher.peek();
+        }
+    }
+
+    private static void addNum(final int num, final Queue<Integer> whereToInsert, final Queue<Integer> other) {
+        whereToInsert.offer(num);
+        if (whereToInsert.size() - other.size() > 1) {
+            other.offer(whereToInsert.poll());
+        }
     }
 }
