@@ -4,6 +4,6 @@ public class SomeTests {
 
     @Test
     public void m() {
-        System.out.println("1111".compareTo("111"));
+        System.out.println(-2 % 2);
     }
 }
