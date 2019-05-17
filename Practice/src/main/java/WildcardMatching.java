@@ -24,14 +24,8 @@ public class WildcardMatching {
         } else {
             final boolean isMatch;
             if (pattern.charAt(j) == '*') {
-                int k = str.length();
-                while (k >= i && !isMatch(k, j + 1)) {
-                    k--;
-                }
-                isMatch = k >= i;
-            } else if (i == str.length()) {
-                isMatch = false;
-            } else if (pattern.charAt(j) == '?' || pattern.charAt(j) == str.charAt(i)) {
+                isMatch = isMatch(i, j + 1) || i < str.length() && isMatch(i + 1, j);
+            } else if (i < str.length() && (pattern.charAt(j) == '?' || pattern.charAt(j) == str.charAt(i))) {
                 isMatch = isMatch(i + 1, j + 1);
             } else {
                 isMatch = false;
