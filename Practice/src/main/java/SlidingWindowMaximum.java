@@ -1,9 +1,10 @@
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.TreeMap;
+import java.util.Deque;
 
 /**
  * Problem #239
- * Time complexity: O(n log k)
+ * Time complexity: O(n)
  * Space complexity: O(k)
  **/
 public class SlidingWindowMaximum {
@@ -12,25 +13,41 @@ public class SlidingWindowMaximum {
 		if (nums == null || nums.length == 0) {
 		    return new int[]{};
         }
-        int left = 0, rightExcl = left + k;
-		final TreeMap<Integer, Integer> treeMap = new TreeMap<>();
-		for (int i = left; i < rightExcl - 1; i++) {
-		    treeMap.put(nums[i], treeMap.getOrDefault(nums[i], 0) + 1);
+        final DecreasingMonotonicQueue queue = new DecreasingMonotonicQueue();
+        for (int i = 0; i < k - 1; i++) {
+            queue.offer(nums[i]);
         }
-		final int[] result = new int[nums.length + 1 - k];
-		while (rightExcl <= nums.length) {
-            treeMap.put(nums[rightExcl - 1], treeMap.getOrDefault(nums[rightExcl - 1], 0) + 1);
-            result[left] = treeMap.lastKey();
-            final int leftCount = treeMap.get(nums[left]);
-            if (leftCount == 1) {
-                treeMap.remove(nums[left]);
-            } else {
-                treeMap.put(nums[left], leftCount - 1);
+        final int[] result = new int[nums.length - k + 1];
+        for (int i = k - 1; i < nums.length; i++) {
+            queue.offer(nums[i]);
+            result[i - k + 1] = queue.poll();
+        }
+        return result;
+    }
+
+    private static class DecreasingMonotonicQueue {
+
+        private final Deque<int[]> deque = new ArrayDeque<>();
+
+        /**
+         * Time complexity: O(1) amortized.
+         */
+        void offer(int val) {
+            int countPopped = 0;
+            while (!deque.isEmpty() && deque.peekLast()[0] <= val) {
+                countPopped += deque.pollLast()[1] + 1;
             }
-            left++;
-            rightExcl++;
+            deque.offerLast(new int[]{ val, countPopped });
         }
-		return result;
+
+        int poll() {
+            final int[] max = deque.peekFirst();
+            max[1]--;
+            if (max[1] < 0) {
+                deque.pollFirst();
+            }
+            return max[0];
+        }
     }
     
     public static void main(final String[] args) {
