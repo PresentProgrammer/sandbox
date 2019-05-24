@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Problem #316
  * Time complexity: O(n)
@@ -5,26 +7,32 @@
  **/
 public class RemoveDuplicateLetters {
 
-    private static final int SIZE = 128;
+    private static final int FIRST_LETTER_INDEX = 97;
+    private static final int SIZE = 123;
 
-    public String removeDuplicateLetters(final String s) {
-    	if (s.isEmpty()) {
-    		return "";
-		}
+    public String removeDuplicateLetters(final String input) {
     	final int[] counts = new int[SIZE];
-    	for (int i = 0; i < s.length(); i++) {
-    		counts[s.charAt(i)]++;
-		}
-    	int minInd = 0;
-    	for (int i = 0; i < s.length(); i++) {
-    		if (s.charAt(i) < s.charAt(minInd)) {
-    			minInd = i;
-			}
-    		if (--counts[s.charAt(i)] == 0) {
-    			break;
-			}
-		}
-		return s.isEmpty() ? "" : s.charAt(minInd) + removeDuplicateLetters(removeAll(s.substring(minInd + 1), s.charAt(minInd)));
+
+    	final StringBuilder resultBuilder = new StringBuilder();
+    	String s = input;
+    	while (!s.isEmpty()) {
+    	    Arrays.fill(counts, FIRST_LETTER_INDEX, SIZE, 0);
+            for (int i = 0; i < s.length(); i++) {
+                counts[s.charAt(i)]++;
+            }
+            int minInd = 0;
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) < s.charAt(minInd)) {
+                    minInd = i;
+                }
+                if (--counts[s.charAt(i)] == 0) {
+                    break;
+                }
+            }
+            resultBuilder.append(s.charAt(minInd));
+            s = removeAll(s.substring(minInd + 1), s.charAt(minInd));
+        }
+    	return resultBuilder.toString();
 	}
 
 	private static String removeAll(final String s, final char removed) {
