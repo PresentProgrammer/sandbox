@@ -1,57 +1,50 @@
 /**
  * Problem #160
  * Time complexity: O(n)
- * Space complexity: O(n), but we modify only input structure.
+ * Space complexity: O(1)
  **/
 public class IntersectionOfTwoLinkedLists {
 
     public ListNode getIntersectionNode(final ListNode headA, final ListNode headB) {
-        final int lengthFromAToTail = pathLength(headA);
-        final int lengthFromBToTail = pathLength(headB);
-        final ListNode tail = reverse(headA);
-        final ListNode intersectionNode;
-        if (isPathBetween(headB, headA)) {
-            final int lengthFromBToA = pathLength(headB);
-            final int intersectionNodeNumber = (lengthFromAToTail + lengthFromBToTail - lengthFromBToA + 1) / 2;
-            ListNode curr = tail;
-            for (int i = 1; i < intersectionNodeNumber; i++) {
-                curr = curr.next;
-            }
-            intersectionNode = curr;
-        } else {
-            intersectionNode = null;
+        if (headA == null || headB == null) {
+            return null;
         }
-        reverse(tail);
-        return intersectionNode;
+        final TailAndLength a = getTailAndLength(headA);
+        final TailAndLength b = getTailAndLength(headB);
+        if (a.tail == b.tail) {
+            ListNode longer = a.length >= b.length ? headA : headB;
+            ListNode shorter = a.length < b.length ? headA : headB;
+            for (int i = 0; i < Math.abs(a.length - b.length); i++) {
+                longer = longer.next;
+            }
+            while (longer != shorter) {
+                longer = longer.next;
+                shorter = shorter.next;
+            }
+            return longer;
+        } else {
+            return null;
+        }
     }
 
-    private static int pathLength(final ListNode head) {
-        int length = 0;
+    private static TailAndLength getTailAndLength(final ListNode head) {
+        int length = 1;
         ListNode curr = head;
-        while (curr != null) {
+        while (curr.next != null) {
             length++;
             curr = curr.next;
         }
-        return length;
+        return new TailAndLength(curr, length);
     }
 
-    private static ListNode reverse(final ListNode head) {
-        ListNode prev = null, curr = head;
-        while (curr != null) {
-            final ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-    }
+    private static class TailAndLength {
+        ListNode tail;
+        int length;
 
-    private static boolean isPathBetween(final ListNode a, final ListNode b) {
-        ListNode curr = a;
-        while (curr != null && curr != b) {
-            curr = curr.next;
+        TailAndLength(ListNode tail, int length) {
+            this.tail = tail;
+            this.length = length;
         }
-        return curr == b;
     }
 
     private static class ListNode {
