@@ -1,30 +1,27 @@
 /**
  * Problem #2.2
  * Time complexity: O(n)
- * Space complexity: O(1)
+ * Space complexity: O(n)
  **/
 public class ReturnKthToLast {
-    
+
+    private LinkedListNode<Integer> result;
+    private int k;
+
     public LinkedListNode<Integer> kthToLast(final LinkedListNode<Integer> head, final int k) {
-		if (head == null) {
-		    return null;
+		if (head != null) {
+		    this.k = k;
+		    backTrack(head);
         }
-		LinkedListNode<Integer> fast = head;
-		int ahead = 0;
-		while (fast != null && ahead < k) {
-		    fast = fast.next;
-		    ahead++;
+		return result;
+    }
+
+    private int backTrack(final LinkedListNode<Integer> node) {
+        final int toLast = node.next == null ? 0 : backTrack(node.next) + 1;
+        if (toLast == k) {
+            result = node;
         }
-		if (fast == null) {
-		    return null;
-        } else {
-            LinkedListNode<Integer> slow = head;
-            while (fast.next != null) {
-                fast = fast.next;
-                slow = slow.next;
-            }
-            return slow;
-        }
+        return toLast;
     }
     
     public static void main(final String[] args) {
