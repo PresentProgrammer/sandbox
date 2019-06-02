@@ -4,8 +4,8 @@ import static java.util.Arrays.fill;
 
 /**
  * Problem #3.1
- * Time complexity: O()
- * Space complexity: O()
+ * Time complexity: O(1) for push, O(n) on average for pop.
+ * Space complexity: O(n)
  **/
 public class ThreeStacksInOne {
     
