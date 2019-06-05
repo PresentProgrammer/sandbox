@@ -7,6 +7,7 @@ import java.util.Queue;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.reverse;
+import static java.util.Collections.singletonList;
 
 /**
  * Problem #4.1
@@ -20,6 +21,9 @@ import static java.util.Collections.reverse;
 public class RouteBetweenNodes {
     
     public List<Integer> findPath(final int[][] edges, final int start, final int end) {
+        if (start == end) {
+            return singletonList(start);
+        }
         final int[][] adjacencyMatrix = createAdjacencyMatrix(edges);
         final Map<Integer, Integer> leftPrev = new HashMap<>();
         final Queue<Integer> leftQ = new ArrayDeque<>();
@@ -108,7 +112,7 @@ public class RouteBetweenNodes {
         };
         System.out.println("[1, 4, 8, 9/12, 10] == " + new RouteBetweenNodes().findPath(edges, 1, 10));
         System.out.println("[1, 4, 8, 12] == " + new RouteBetweenNodes().findPath(edges, 1, 12));
-        System.out.println("[] == " + new RouteBetweenNodes().findPath(edges, 1, 1));
+        System.out.println("[1] == " + new RouteBetweenNodes().findPath(edges, 1, 1));
         System.out.println("[13, 14] == " + new RouteBetweenNodes().findPath(edges, 13, 14));
         System.out.println("[] == " + new RouteBetweenNodes().findPath(edges, 1, 14));
 	}
