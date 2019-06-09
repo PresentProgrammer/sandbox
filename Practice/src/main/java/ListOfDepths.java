@@ -7,28 +7,28 @@ import static java.util.Collections.singletonList;
 /**
  * Problem #4.3
  * Time complexity: O(n)
- * Space complexity: O(log n)
+ * Space complexity: O(1)
  **/
 public class ListOfDepths {
     
     public List<List<MinimalTree.Node>> generateLists(final MinimalTree.Node root) {
-		return root == null ? emptyList() : generateLists(singletonList(root));
-    }
-
-    private static List<List<MinimalTree.Node>> generateLists(final List<MinimalTree.Node> currLevel) {
-        final List<List<MinimalTree.Node>> result = new ArrayList<>();
-        result.add(currLevel);
-        final List<MinimalTree.Node> nextLevel = new ArrayList<>();
-        for (final MinimalTree.Node node : currLevel) {
-            if (node.left != null) {
-                nextLevel.add(node.left);
-            }
-            if (node.right != null) {
-                nextLevel.add(node.right);
-            }
+        if (root == null) {
+            return emptyList();
         }
-        if (!nextLevel.isEmpty()) {
-            result.addAll(generateLists(nextLevel));
+        final List<List<MinimalTree.Node>> result = new ArrayList<>();
+        List<MinimalTree.Node> currLevel = singletonList(root);
+        while (!currLevel.isEmpty()) {
+            result.add(currLevel);
+            final List<MinimalTree.Node> nextLevel = new ArrayList<>();
+            for (final MinimalTree.Node node : currLevel) {
+                if (node.left != null) {
+                    nextLevel.add(node.left);
+                }
+                if (node.right != null) {
+                    nextLevel.add(node.right);
+                }
+            }
+            currLevel = nextLevel;
         }
         return result;
     }
