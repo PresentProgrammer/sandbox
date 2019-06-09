@@ -1,6 +1,3 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 /**
  * Problem #236
  * Time complexity: O(n)
@@ -8,52 +5,41 @@ import java.util.Deque;
  **/
 public class LowestCommonAncestorOfBinaryTree {
 
+    private TreeNode result;
+    private TreeNode first;
+    private TreeNode second;
+
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        boolean oneFound = false;
-        final Deque<NodeAndState> stack = new ArrayDeque<>();
-        stack.push(new NodeAndState(root));
-        while (!stack.isEmpty()) {
-            final NodeAndState curr = stack.peek();
-            if (!curr.leftVisited) {
-                if (curr.node.val == p.val || curr.node.val == q.val) {
-                    if (oneFound) {
-                        NodeAndState candidate = stack.pop();
-                        while (!candidate.possibleAcs) {
-                            candidate = stack.pop();
-                        }
-                        return candidate.node;
-                    } else {
-                        oneFound = true;
-                        curr.possibleAcs = true;
-                    }
-                }
-                if (curr.node.left != null) {
-                    stack.push(new NodeAndState(curr.node.left));
-                }
-                curr.leftVisited = true;
-            } else if (!curr.rightVisited) {
-                if (curr.node.right != null) {
-                    stack.push(new NodeAndState(curr.node.right));
-                }
-                curr.rightVisited = true;
-            } else {
-                final boolean possibleAcs = stack.pop().possibleAcs;
-                if (possibleAcs && !stack.isEmpty()) {
-                    stack.peek().possibleAcs = true;
-                }
-            }
-        }
-        return null;
+        this.first = p;
+        this.second = q;
+        lowestCommonAncestor(root, false);
+        return result;
     }
 
-    private static class NodeAndState {
-        TreeNode node;
-        boolean leftVisited = false;
-        boolean rightVisited = false;
-        boolean possibleAcs = false;
-
-        NodeAndState(TreeNode node) {
-            this.node = node;
+    private boolean lowestCommonAncestor(final TreeNode node, final boolean oneFound) {
+        if (node == null) {
+            return false;
+        } else if (node == first || node == second) {
+            if (oneFound) {
+                return true;
+            } else if (lowestCommonAncestor(node.left, true) || lowestCommonAncestor(node.right, true)) {
+                result = node;
+                return true;
+            } else {
+                return true;
+            }
+        } else if (oneFound) {
+            return lowestCommonAncestor(node.left, true) || lowestCommonAncestor(node.right, true);
+        } else {
+            final boolean foundInLeft = lowestCommonAncestor(node.left, false);
+            if (result == null) {
+                final boolean foundInRight = lowestCommonAncestor(node.right, foundInLeft);
+                if (foundInLeft && foundInRight && result == null) {
+                    result = node;
+                }
+                return foundInLeft || foundInRight;
+            }
+            return foundInLeft;
         }
     }
 
