@@ -19,7 +19,7 @@ public class MinimalTree {
         return new Node(array[mid], construct(array, left, mid), construct(array, mid + 1, rightExcl));
     }
 
-    private static class Node {
+    static class Node {
 
         int val;
         Node left;
@@ -43,6 +43,11 @@ public class MinimalTree {
                 strBuilder.append(node.val).append(":").append(depth).append(", ");
                 inOrderWithDepth(strBuilder, node.right, depth + 1);
             }
+        }
+
+        @Override
+        public String toString() {
+            return Integer.toString(val);
         }
     }
     
