@@ -1,22 +1,22 @@
 /**
- * Problem #4.10
+ * Problem #4.10, #572
  * Time complexity: O(n)
  * Space complexity: O(log n)
  **/
 public class CheckSubtree {
 
     private boolean subtreeFound = false;
-    private MinimalTree.Node t2;
+    private TreeNode t2;
     private int t2Size;
     
-    public boolean check(final MinimalTree.Node t1, final MinimalTree.Node t2) {
+    public boolean isSubtree(final TreeNode t1, final TreeNode t2) {
         this.t2 = t2;
         this.t2Size = size(t2);
 		searchSubtree(t1);
 		return subtreeFound;
     }
 
-    private Integer searchSubtree(final MinimalTree.Node node) {
+    private Integer searchSubtree(final TreeNode node) {
         if (node == null) {
             return 0;
         } else {
@@ -40,7 +40,7 @@ public class CheckSubtree {
         }
     }
 
-    private static int size(final MinimalTree.Node node) {
+    private static int size(final TreeNode node) {
         if (node == null) {
             return 0;
         } else {
@@ -48,7 +48,7 @@ public class CheckSubtree {
         }
     }
 
-    private static boolean areIdentical(final MinimalTree.Node t1, final MinimalTree.Node t2) {
+    private static boolean areIdentical(final TreeNode t1, final TreeNode t2) {
         if (t1 == null && t2 == null) {
             return true;
         } else if (t1 == null || t2 == null) {
@@ -58,19 +58,10 @@ public class CheckSubtree {
         }
     }
 
-    public static void main(final String[] args) {
-        final MinimalTree.Node t1 = new MinimalTree().construct(new int[]{1, 2, 3, 4, 5, 6, 7});
-        System.out.println("true == " + new CheckSubtree().check(t1, new MinimalTree().construct(new int[]{5, 6, 7})));
-        System.out.println("true == " + new CheckSubtree().check(t1, new MinimalTree().construct(new int[]{5})));
-        System.out.println("false == " + new CheckSubtree().check(t1, new MinimalTree().construct(new int[]{6})));
-        System.out.println("false == " + new CheckSubtree().check(t1, new MinimalTree().construct(new int[]{7, 6, 5})));
-        System.out.println("false == " + new CheckSubtree().check(t1, null));
-
-        final MinimalTree.Node t2 = new MinimalTree.Node(7,
-                new MinimalTree.Node(5,
-                        null,
-                        new MinimalTree.Node(6, null, null)),
-                null);
-        System.out.println("false == " + new CheckSubtree().check(t1, t2));
-	}
+    private static class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+  }
 }
