@@ -1,7 +1,7 @@
 /**
  * Problem #4.10, #572
  * Time complexity: O(n)
- * Space complexity: O(log n)
+ * Space complexity: O(log n), and O(n) the worst; or O(d), where d is depth.
  **/
 public class CheckSubtree {
 
@@ -59,9 +59,12 @@ public class CheckSubtree {
     }
 
     private static class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
-  }
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
 }
