@@ -15,17 +15,16 @@ public class RandomNodeBinaryTree {
 
     /**
      * Time: O(log n), O(n) in the worst case.
-     * Space: O(log n), O(n) in the worst case.
+     * Space: O(1).
      */
     public boolean insert(final int val) {
         if (root == null) {
             root = new Node(val);
         } else {
-            final List<AtomicInteger> toIncrement = new ArrayList<>();
             Node curr = root;
             while (true) {
                 if (val <= curr.val) {
-                    toIncrement.add(curr.leftSize);
+                    curr.leftSize.incrementAndGet();
                     if (curr.left == null) {
                         curr.left = new Node(val);
                         break;
@@ -33,7 +32,7 @@ public class RandomNodeBinaryTree {
                         curr = curr.left;
                     }
                 } else {
-                    toIncrement.add(curr.rightSize);
+                    curr.rightSize.incrementAndGet();
                     if (curr.right == null) {
                         curr.right = new Node(val);
                         break;
@@ -41,9 +40,6 @@ public class RandomNodeBinaryTree {
                         curr = curr.right;
                     }
                 }
-            }
-            for (final AtomicInteger incrementable : toIncrement) {
-                incrementable.incrementAndGet();
             }
         }
         return true;
