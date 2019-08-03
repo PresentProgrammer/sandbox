@@ -1,11 +1,8 @@
 package present.programmer.hibernate;
 
-import java.util.Date;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
 import present.programmer.hibernate.domain.User;
 
 public class HibernateTest {
@@ -16,7 +13,7 @@ public class HibernateTest {
 		try (final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory()) {
 			try (final Session session = sessionFactory.openSession()) {
 				session.beginTransaction();
-				session.save(user());
+				session.save(User.builder().id(ID).name("Peppa").build());
 				session.getTransaction().commit();
 			}
 			try (final Session session = sessionFactory.openSession()) {
@@ -24,12 +21,5 @@ public class HibernateTest {
 				System.out.println(retrievedUser.toString());
 			}
 		}
-	}
-
-	private static User user() {
-		final User user = new User();
-		user.setId(ID);
-		user.setName(ID + "th User");
-		return user;
 	}
 }
