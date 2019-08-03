@@ -10,7 +10,7 @@ import present.programmer.hibernate.domain.User;
 
 public class HibernateTest {
 
-	private static final int ID = 6;
+	private static final int ID = 1;
 
 	public static void main(String[] args) {
 		try (final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory()) {
@@ -30,9 +30,6 @@ public class HibernateTest {
 		final User user = new User();
 		user.setId(ID);
 		user.setName(ID + "th User");
-		user.setAddress(ID + "th user's address");
-		user.setJoined(new Date());
-		user.setDescription(ID + "th description goes here");
 		return user;
 	}
 }
