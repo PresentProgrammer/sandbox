@@ -8,7 +8,7 @@ import present.programmer.hibernate.domain.User.UserBuilder;
 
 public class HibernateTest {
 
-	private static final int ID = 2;
+	private static final int ID = 6;
 
 	public static void main(String[] args) {
 		try (final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory()) {

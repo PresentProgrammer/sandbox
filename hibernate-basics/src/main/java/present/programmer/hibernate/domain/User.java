@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("JpaDataSourceORMInspection")
 public class User {
 
 	@Id

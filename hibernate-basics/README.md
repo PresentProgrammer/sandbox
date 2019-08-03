@@ -1,0 +1,1 @@
+Put any valid path in `hibernate.cfg.xml` → `hibernate.connection.url` property.
