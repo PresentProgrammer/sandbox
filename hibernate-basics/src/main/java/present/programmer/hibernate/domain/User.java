@@ -22,7 +22,7 @@ public class User {
 
 	@Id
 	@Column(name = "ID")
-	private int id;
+	private Long id;
 
 	@Column(name = "USER_NAME")
 	@Basic()

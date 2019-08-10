@@ -6,9 +6,11 @@ import org.hibernate.cfg.Configuration;
 import present.programmer.hibernate.domain.User;
 import present.programmer.hibernate.domain.User.UserBuilder;
 
+import java.util.List;
+
 public class HibernateTest {
 
-	private static final int ID = 6;
+	private static final Long ID = 9L;
 
 	public static void main(String[] args) {
 		try (final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory()) {
@@ -18,14 +20,14 @@ public class HibernateTest {
 				session.getTransaction().commit();
 			}
 			try (final Session session = sessionFactory.openSession()) {
-				User retrievedUser = session.get(User.class, ID);
-				System.out.println(retrievedUser.toString());
+				List<User> users = session.createQuery("select u from User u order by u.id", User.class).getResultList();
+				System.out.println(users.toString());
 			}
 		}
 	}
 
 	private static User buildUser() {
 		final UserBuilder builder = User.builder();
-		return builder.id(ID).name("Peppa").build();
+		return builder.id(ID).name("Zopa").build();
 	}
 }

@@ -6,7 +6,7 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">org.h2.Driver</property>
 		<property name="hibernate.connection.url">
-			jdbc:h2:file:C:/Java/Projects/toilet/h2-hibernate-sandbox-database-2
+			jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
 		</property>
 		<property name="hibernate.connection.username">sa</property>
 		<property name="hibernate.connection.password"/>
@@ -15,8 +15,10 @@
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
 		<property name="use_sql_comments">true</property>
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 
 		<mapping class="present.programmer.hibernate.domain.User"/>
+		<mapping class="present.programmer.hibernate.domain.Book"/>
+		<mapping class="present.programmer.hibernate.domain.Library"/>
 	</session-factory>
 </hibernate-configuration>
