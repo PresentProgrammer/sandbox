@@ -7,7 +7,8 @@ import present.programmer.hibernate.domain.Book;
 import present.programmer.hibernate.domain.Library;
 
 import static org.hibernate.testing.transaction.TransactionUtil.doInJPA;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HibernateTests {
 
@@ -26,17 +27,25 @@ public class HibernateTests {
             final Book book2 = new Book();
             book2.setTitle("Java Persistence with Hibernate");
 
-            final Library library =doInJPA(() -> sessionFactory, session -> {
+            doInJPA(() -> sessionFactory, session -> {
                 Library _library = session.find(Library.class, 1L);
                 _library.getBooks().add(book1);
                 _library.getBooks().add(book2);
                 session.flush();
-                return _library;
+                System.out.println();
             });
 
-            assertFalse(library.getBooks().contains(book1));
-            assertFalse(library.getBooks().contains(book2));
-            System.out.println("Hello!");
+            doInJPA(() -> sessionFactory, session -> {
+                Library _library = session.find(Library.class, 1L);
+                _library.getBooks().remove(book1);
+                session.flush();
+            });
+
+            doInJPA(() -> sessionFactory, session -> {
+                Library _library = session.find(Library.class, 1L);
+                assertEquals(1, _library.getBooks().size());
+                assertTrue(_library.getBooks().contains(book2));
+            });
         }
     }
 }

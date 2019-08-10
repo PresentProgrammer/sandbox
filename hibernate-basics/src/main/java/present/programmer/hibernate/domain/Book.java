@@ -15,6 +15,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name = "BOOK")
 @Data
+@EqualsAndHashCode(exclude = "id")
 @SuppressWarnings("JpaDataSourceORMInspection")
 public class Book {
 
@@ -25,22 +26,4 @@ public class Book {
     private String title;
 
     private String author;
-
-
-    @Override
-    public boolean equals(Object o) {
-        if ( this == o ) {
-            return true;
-        }
-        if ( o == null || getClass() != o.getClass() ) {
-            return false;
-        }
-        Book book = (Book) o;
-        return Objects.equals( id, book.id );
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash( id );
-    }
 }
