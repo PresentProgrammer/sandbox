@@ -2,7 +2,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Problem #388
@@ -32,9 +31,7 @@ public class LongestAbsoluteFilePath {
 
     private static List<Pair<String, Integer>> nodesAndLevels(final String input) {
         final List<Pair<String, Integer>> pairs = new ArrayList<>();
-        final StringTokenizer tokenizer = new StringTokenizer(input, "\n");
-        while (tokenizer.hasMoreTokens()) {
-            final String token = tokenizer.nextToken();
+        for (final String token : input.split("\\n")) {
             int level = 0;
             while (level < token.length() && token.charAt(level) == '\t') {
                 level++;
