@@ -14,9 +14,6 @@ public class OddEvenJump {
         final int[] oddWhere = calcWhereToJump(arr, Comparator.naturalOrder());
         final int[] evenWhere = calcWhereToJump(arr, Comparator.comparingInt((Integer i) -> i).reversed());
 
-        System.out.println(Arrays.toString(oddWhere));
-        System.out.println(Arrays.toString(evenWhere));
-
         final Boolean[] oddReachable = new Boolean[arr.length];
         oddReachable[oddReachable.length - 1] = true;
         final Boolean[] evenReachable = Arrays.copyOf(oddReachable, oddReachable.length);
@@ -69,16 +66,32 @@ public class OddEvenJump {
 
     private static int[] calcWhereToJump(final int[] arr, final Comparator<Integer> comparator) {
         final int[] result = new int[arr.length];
+        Arrays.fill(result, -1);
+        final IndexValue[] aux = new IndexValue[arr.length];
         for (int i = 0; i < arr.length; i++) {
-            Integer where = null;
-            for (int j = i + 1; j < arr.length; j++) {
-                if (comparator.compare(arr[i], arr[j]) <= 0
-                        && (where == null || comparator.compare(arr[where], arr[j]) > 0)) {
-                    where = j;
-                }
+            aux[i] = new IndexValue(i, arr[i]);
+        }
+        Arrays.sort(aux, ((Comparator<IndexValue>) (left, right) -> comparator.compare(left.value, right.value))
+                .thenComparingInt(indexValue -> indexValue.index));
+        for (int i = 0; i < aux.length - 1; i++) {
+            int j = i + 1;
+            while (j < aux.length && aux[i].index > aux[j].index) {
+                j++;
             }
-            result[i] = where == null ? -1 : where;
+            if (j < aux.length) {
+                result[aux[i].index] = aux[j].index;
+            }
         }
         return result;
+    }
+
+    private static class IndexValue {
+        final int index;
+        final int value;
+
+        IndexValue(final int index, final int value) {
+            this.index = index;
+            this.value = value;
+        }
     }
 }
