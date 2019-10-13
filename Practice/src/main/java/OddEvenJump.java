@@ -1,18 +1,18 @@
 import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Deque;
+import java.util.TreeMap;
 
 /**
  * Problem #975
- * Time complexity: O()
- * Space complexity: O()
+ * Time complexity: O(N log N)
+ * Space complexity: O(N)
  **/
 public class OddEvenJump {
 
     public int oddEvenJumps(int[] arr) {
-        final int[] oddWhere = calcWhereToJump(arr, Comparator.naturalOrder());
-        final int[] evenWhere = calcWhereToJump(arr, Comparator.comparingInt((Integer i) -> i).reversed());
+        final int[] oddWhere = calcWhereToJump(arr, true);
+        final int[] evenWhere = calcWhereToJump(arr, false);
 
         final Boolean[] oddReachable = new Boolean[arr.length];
         oddReachable[oddReachable.length - 1] = true;
@@ -64,34 +64,22 @@ public class OddEvenJump {
         }
     }
 
-    private static int[] calcWhereToJump(final int[] arr, final Comparator<Integer> comparator) {
+    private static int[] calcWhereToJump(final int[] arr, final boolean odd) {
         final int[] result = new int[arr.length];
         Arrays.fill(result, -1);
-        final IndexValue[] aux = new IndexValue[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            aux[i] = new IndexValue(i, arr[i]);
-        }
-        Arrays.sort(aux, ((Comparator<IndexValue>) (left, right) -> comparator.compare(left.value, right.value))
-                .thenComparingInt(indexValue -> indexValue.index));
-        for (int i = 0; i < aux.length - 1; i++) {
-            int j = i + 1;
-            while (j < aux.length && aux[i].index > aux[j].index) {
-                j++;
+        final TreeMap<Integer, Integer> valuePos = new TreeMap<>();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            final Integer identicalValue = valuePos.get(arr[i]);
+            if (identicalValue != null) {
+                result[i] = identicalValue;
+            } else {
+                final Integer closestKey = odd ? valuePos.higherKey(arr[i]) : valuePos.lowerKey(arr[i]);
+                if (closestKey != null) {
+                    result[i] = valuePos.get(closestKey);
+                }
             }
-            if (j < aux.length) {
-                result[aux[i].index] = aux[j].index;
-            }
+            valuePos.put(arr[i], i);
         }
         return result;
-    }
-
-    private static class IndexValue {
-        final int index;
-        final int value;
-
-        IndexValue(final int index, final int value) {
-            this.index = index;
-            this.value = value;
-        }
     }
 }
