@@ -11,8 +11,8 @@ import java.util.Deque;
 public class OddEvenJump {
 
     public int oddEvenJumps(int[] arr) {
-        final int[] oddWhere = calcWhereToJump(arr, (left, right) -> left - right);
-        final int[] evenWhere = calcWhereToJump(arr, (left, right) -> right - left);
+        final int[] oddWhere = calcWhereToJump(arr, Comparator.naturalOrder());
+        final int[] evenWhere = calcWhereToJump(arr, Comparator.comparingInt((Integer i) -> i).reversed());
 
         System.out.println(Arrays.toString(oddWhere));
         System.out.println(Arrays.toString(evenWhere));
@@ -68,27 +68,17 @@ public class OddEvenJump {
     }
 
     private static int[] calcWhereToJump(final int[] arr, final Comparator<Integer> comparator) {
-        final Deque<IndexValue> stack = new ArrayDeque<>();
         final int[] result = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
-            while (!stack.isEmpty() && comparator.compare(stack.peek().value, arr[i]) <= 0) {
-                result[stack.pop().index] = i;
+            Integer where = null;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (comparator.compare(arr[i], arr[j]) <= 0
+                        && (where == null || comparator.compare(arr[where], arr[j]) > 0)) {
+                    where = j;
+                }
             }
-            stack.push(new IndexValue(i, arr[i]));
-        }
-        while (!stack.isEmpty()) {
-            result[stack.pop().index] = -1;
+            result[i] = where == null ? -1 : where;
         }
         return result;
-    }
-
-    private static class IndexValue {
-        final int index;
-        final int value;
-
-        IndexValue(final int index, final int value) {
-            this.index = index;
-            this.value = value;
-        }
     }
 }
