@@ -1,12 +1,14 @@
 package present.programmer.misc.classloader;
 
-class ClassWithStaticVariable {
+import java.util.Date;
 
-    private static String myName = initMyName();
+public class ClassWithStaticVariable {
+
+    public static String myName = initMyName();
 
     private static String initMyName() {
-        final String myName = "PresentProgrammer";
-//        throw new RuntimeException();
+        final String myName = "I was loaded by " + ClassWithStaticVariable.class.getClassLoader().toString();
+        // throw new RuntimeException(); -- will result in ExceptionInInitializerError.
         System.out.println(myName);
         return myName;
     }
