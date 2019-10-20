@@ -44,10 +44,10 @@ public class CustomClassLoader extends ClassLoader {
     public static void main(String[] args) throws Exception {
         System.out.println(new CustomClassLoader("whatIsMyParent").getParent());
 
-        final Class firstLoadedByCustom = new CustomClassLoader("first").loadClass(CLASS_NAME);
-        final Class secondLoadedByCustom = new CustomClassLoader("second").loadClass(CLASS_NAME);
-        System.out.println("classes are not the same: " + (firstLoadedByCustom != secondLoadedByCustom));
-        System.out.println(firstLoadedByCustom.getField("myName").get(null));
-        System.out.println(secondLoadedByCustom.getField("myName").get(null));
+        final Class loadedByFirst = new CustomClassLoader("first").loadClass(CLASS_NAME);
+        final Class loadedBySecond = new CustomClassLoader("second").loadClass(CLASS_NAME);
+        System.out.println("classes are not the same: " + (loadedByFirst != loadedBySecond));
+        System.out.println(loadedByFirst.getField("myName").get(null));
+        System.out.println(loadedBySecond.getField("myName").get(null));
     }
 }
