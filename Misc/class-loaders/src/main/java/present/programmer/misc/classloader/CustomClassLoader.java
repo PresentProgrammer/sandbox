@@ -2,10 +2,19 @@ package present.programmer.misc.classloader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class CustomClassLoader extends ClassLoader {
+
+    private static final String CLASS_NAME = "present.programmer.misc.classloader.ClassWithStaticVariable";
+
+    private final String classLoaderName;
+
+    private CustomClassLoader(final String classLoaderName) {
+        this.classLoaderName = classLoaderName;
+    }
 
     @Override
     public Class findClass(final String name) throws ClassNotFoundException {
@@ -14,8 +23,8 @@ public class CustomClassLoader extends ClassLoader {
     }
 
     private byte[] loadClassFromFile(final String name) {
-        try (final InputStream is = getClass().getClassLoader().getResourceAsStream(
-                name.replace('.', File.separatorChar) + ".class")) {
+        try (final InputStream is = new FileInputStream(new File("C:/dev/toilet/classes/" +
+                name.replace('.', '/') + ".class"))) {
             final ByteArrayOutputStream bos = new ByteArrayOutputStream();
             int nextVal = 0;
             while ((nextVal = is.read()) != -1) {
@@ -29,24 +38,16 @@ public class CustomClassLoader extends ClassLoader {
 
     @Override
     public String toString() {
-        return "PresentProgrammer Enterprises Class Loader";
+        return "Custom class loader with name: " + classLoaderName;
     }
 
     public static void main(String[] args) throws Exception {
-        final CustomClassLoader customClassLoader = new CustomClassLoader();
-        System.out.println(customClassLoader.getParent());
+        System.out.println(new CustomClassLoader("whatIsMyParent").getParent());
 
-        final Class foundByCustomWithoutDelegation = customClassLoader.findClass(
-                "present.programmer.misc.classloader.ClassWithStaticVariable");
-        final Class loadedByDef = PrintClassLoaders.class.getClassLoader().loadClass("present.programmer.misc.classloader.ClassWithStaticVariable");
-        System.out.println(foundByCustomWithoutDelegation.getClassLoader());
-        System.out.println(loadedByDef.getClassLoader());
-        System.out.println("classes are not the same: " + (foundByCustomWithoutDelegation == loadedByDef));
-
-        foundByCustomWithoutDelegation.newInstance();
-        loadedByDef.newInstance();
-
-        System.out.println(foundByCustomWithoutDelegation.getField("myName").get(null));
-        System.out.println(loadedByDef.getField("myName").get(null));
+        final Class firstLoadedByCustom = new CustomClassLoader("first").loadClass(CLASS_NAME);
+        final Class secondLoadedByCustom = new CustomClassLoader("second").loadClass(CLASS_NAME);
+        System.out.println("classes are not the same: " + (firstLoadedByCustom != secondLoadedByCustom));
+        System.out.println(firstLoadedByCustom.getField("myName").get(null));
+        System.out.println(secondLoadedByCustom.getField("myName").get(null));
     }
 }

@@ -1,7 +1,5 @@
 package present.programmer.misc.classloader;
 
-import java.util.Date;
-
 public class ClassWithStaticVariable {
 
     public static String myName = initMyName();
