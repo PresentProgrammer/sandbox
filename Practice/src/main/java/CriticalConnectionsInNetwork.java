@@ -9,7 +9,7 @@ import java.util.List;
  **/
 public class CriticalConnectionsInNetwork {
 
-    private List<Integer>[] adjacencyList;
+    private AdjacencyNode[] adjacencyList;
     private int currIndex;
     private int[] index;
     private int[] lowlink;
@@ -29,7 +29,9 @@ public class CriticalConnectionsInNetwork {
         index[v] = currIndex;
         lowlink[v] = currIndex;
         currIndex++;
-        for (final Integer w : adjacencyList[v]) {
+        AdjacencyNode wNode = adjacencyList[v];
+        while (wNode != null) {
+            Integer w = wNode.node;
             if (index[w] == 0) {
                 dfs(w, v);
                 lowlink[v] = Math.min(lowlink[v], lowlink[w]);
@@ -39,18 +41,39 @@ public class CriticalConnectionsInNetwork {
             } else if (w != prev) {
                 lowlink[v] = Math.min(lowlink[v], index[w]);
             }
+            wNode = wNode.next;
         }
     }
 
-    private static List<Integer>[] generateAdjacencyList(int n, List<List<Integer>> connections) {
-        final List<Integer>[] adjacencyList = new List[n];
-        for (int i = 0; i < n; i++) {
-            adjacencyList[i] = new ArrayList<>();
-        }
+    private static AdjacencyNode[] generateAdjacencyList(int n, List<List<Integer>> connections) {
+        final AdjacencyNode[] adjacencyList = new AdjacencyNode[n];
+        final AdjacencyNode[] lastInAdjacencyList = new AdjacencyNode[n];
         for (final List<Integer> con : connections) {
-            adjacencyList[con.get(0)].add(con.get(1));
-            adjacencyList[con.get(1)].add(con.get(0));
+            final AdjacencyNode first = new AdjacencyNode(con.get(0));
+            final AdjacencyNode second = new AdjacencyNode(con.get(1));
+            updateAdjacencyList(adjacencyList, lastInAdjacencyList, first, second);
+            updateAdjacencyList(adjacencyList, lastInAdjacencyList, second, first);
         }
         return adjacencyList;
+    }
+
+    private static void updateAdjacencyList(AdjacencyNode[] adjacencyList, AdjacencyNode[] lastInAdjacencyList,
+            AdjacencyNode out, AdjacencyNode in) {
+        if (adjacencyList[out.node] == null) {
+            adjacencyList[out.node] = in;
+            lastInAdjacencyList[out.node] = in;
+        } else {
+            lastInAdjacencyList[out.node].next = in;
+            lastInAdjacencyList[out.node] = in;
+        }
+    }
+
+    private static class AdjacencyNode {
+        final Integer node;
+        AdjacencyNode next;
+
+        AdjacencyNode(final Integer node) {
+            this.node = node;
+        }
     }
 }
