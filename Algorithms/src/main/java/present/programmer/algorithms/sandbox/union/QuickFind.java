@@ -2,11 +2,11 @@ package present.programmer.algorithms.sandbox.union;
 
 import java.util.stream.IntStream;
 
-public class EagerQuickFind implements UnionFind {
+public class QuickFind implements UnionFind {
 
     private final int[] id;
 
-    public EagerQuickFind(final int n) {
+    public QuickFind(final int n) {
         this.id = IntStream.range(0, n).toArray();
     }
 

@@ -5,10 +5,10 @@ import org.junit.Test;
 import static present.programmer.algorithms.sandbox.union.UnionFindTestCommons.N;
 import static present.programmer.algorithms.sandbox.union.UnionFindTestCommons.testImplementation;
 
-public class EagerQuickFindTest {
+public class QuickUnionTest {
 
     @Test
     public void myFirstUnionFind() {
-        testImplementation(new EagerQuickFind(N));
+        testImplementation(new QuickUnion(N));
     }
 }

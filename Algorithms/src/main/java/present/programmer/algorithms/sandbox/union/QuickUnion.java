@@ -1,6 +1,6 @@
 package present.programmer.algorithms.sandbox.union;
 
-public class LazyQuickUnion implements UnionFind {
+public class QuickUnion implements UnionFind {
 
     /**
      * E.g., i-th element's value j means that j is the parent of i.
@@ -8,7 +8,7 @@ public class LazyQuickUnion implements UnionFind {
      */
     private final Integer[] parentOf;
 
-    public LazyQuickUnion(final int numberOfNodes) {
+    public QuickUnion(final int numberOfNodes) {
         this.parentOf = new Integer[numberOfNodes];
     }
 
