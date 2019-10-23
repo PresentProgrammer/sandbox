@@ -1,4 +1,4 @@
-package present.programmer.algorithms.sandbox.union;
+package present.programmer.algorithms.sandbox.collection.list;
 
 public class ArrayBasedLinkedList {
 
