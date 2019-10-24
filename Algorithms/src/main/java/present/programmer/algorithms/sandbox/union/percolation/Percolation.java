@@ -8,203 +8,96 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
  */
 public class Percolation {
 
+    private static final int[][] DIRS = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+    private static final int TOP_VIRTUAL_LAYER_SITE = 0;
+
+    private final int n;
     /**
-     * true — open; false — blocked.
+     * grid[0] and grid[n + 1] are reserved for virtual layers: top and bottom correspondingly.
      */
-    private final boolean[][] sites;
+    private final boolean[][] grid;
+    private int openCount = 0;
+    private final WeightedQuickUnionUF fullUnionFind;
+    private final WeightedQuickUnionUF percolationUnionFind;
+    private final int bottomVirtualLayerSite;
 
-    private int openSiteCount;
-    private final PercolationWeightedQuickUnion weightedQuickUnion;
-
-    public Percolation(final int n) {
-        mustBePositive(n);
-        sites = squareMatrixAllSitesBlocked(n);
-        openSiteCount = 0;
-        weightedQuickUnion = new PercolationWeightedQuickUnion(n);
+    // creates n-by-n grid, with all sites initially blocked
+    public Percolation(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("n should be positive.");
+        }
+        this.n = n;
+        this.grid = new boolean[n + 2][n];
+        this.fullUnionFind = new WeightedQuickUnionUF((n + 1) * n);
+        this.percolationUnionFind = new WeightedQuickUnionUF((n + 2) * n);
+        for (int col = 0; col < n; col++) {
+            open0(0, col);
+            open0(n + 1, col);
+        }
+        this.openCount = 0;
+        this.bottomVirtualLayerSite = (n + 2) * n - 1;
     }
 
-    public void open(final int row, final int col) {
-        mustBeInsideBoundaries(row, col);
-        if (!isOpen(row, col)) {
-            sites[asIndex(row)][asIndex(col)] = true;
-            openSiteCount++;
-            final boolean belowSiteRootReachedBottom = tryUnionBelowSite(row, col);
-            final boolean aboveSiteRootReachedBottom = tryUnionAboveSite(row, col);
-            final boolean leftSiteRootReachedBottom = tryUnionLeftSite(row, col);
-            final boolean rightSiteRootReachedBottom = tryUnionRightSite(row, col);
-            if (belowSiteRootReachedBottom || aboveSiteRootReachedBottom ||
-                    leftSiteRootReachedBottom || rightSiteRootReachedBottom) {
-                weightedQuickUnion.makeRootReachBottom(row, col);
+    // opens the site (row, col) if it is not open already
+    public void open(int row, int col) {
+        assertArgumentsInRange(row, col);
+        open0(row, col - 1);
+    }
+
+    // is the site (row, col) open?
+    public boolean isOpen(int row, int col) {
+        assertArgumentsInRange(row, col);
+        return grid[row][col - 1];
+    }
+
+    // is the site (row, col) full?
+    public boolean isFull(int row, int col) {
+        assertArgumentsInRange(row, col);
+        return fullUnionFind.connected(TOP_VIRTUAL_LAYER_SITE, convertToNodeId(row, col - 1));
+    }
+
+    // returns the number of open sites
+    public int numberOfOpenSites() {
+        return openCount;
+    }
+
+    // does the system percolate?
+    public boolean percolates() {
+        return percolationUnionFind.connected(TOP_VIRTUAL_LAYER_SITE, bottomVirtualLayerSite);
+    }
+
+    private void assertArgumentsInRange(final int row, final int col) {
+        if (!(1 <= row && row <= n && 1 <= col && col <= n)) {
+            throw new IllegalArgumentException("row, col should be in range [1, " + grid.length + "]");
+        }
+    }
+
+    private void open0(final int row, final int col) {
+        if (!grid[row][col]) {
+            grid[row][col] = true;
+            openCount++;
+            for (final int[] dir : DIRS) {
+                final int adjRow = row + dir[0];
+                final int adjCol = col + dir[1];
+                updateFullUnionFind(row, col, adjRow, adjCol);
+                updatePercolationUnionFind(row, col, adjRow, adjCol);
             }
         }
     }
 
-    public boolean isOpen(final int row, final int col)  {
-        mustBeInsideBoundaries(row, col);
-        return sites[asIndex(row)][asIndex(col)];
-    }
-
-    public boolean isFull(int row, int col) {
-        mustBeInsideBoundaries(row, col);
-        return weightedQuickUnion.connectedToTop(row, col);
-    }
-
-    public int numberOfOpenSites() {
-        return openSiteCount;
-    }
-
-    public boolean percolates() {
-        return weightedQuickUnion.isPercolate();
-    }
-
-    // Auxiliary Methods
-
-    private static boolean[][] squareMatrixAllSitesBlocked(final int n) {
-        final boolean[][] sites = new boolean[n][];
-        for (int i = 0; i < n; i++) {
-            sites[i] = new boolean[n];
-        }
-        return sites;
-    }
-
-    private static void mustBePositive(final int n) {
-        if (n < 1) {
-            throw new IllegalArgumentException("grid size must be positive");
+    private void updateFullUnionFind(final int row, final int col, final int adjRow, final int adjCol) {
+        if (row < n + 1 && 0 <= adjRow && adjRow < n + 1 && 0 <= adjCol && adjCol < n && grid[adjRow][adjCol]) {
+            fullUnionFind.union(convertToNodeId(row, col), convertToNodeId(adjRow, adjCol));
         }
     }
 
-    private void mustBeInsideBoundaries(final int row, final int col) {
-        if (outsideOfBoundaries(row) || (outsideOfBoundaries(col))) {
-            throw new IllegalArgumentException(
-                    "passed arguments must be inside the boundaries: [1, " + sites.length + "); " +
-                            "row = " + row + ", col = " + col);
+    private void updatePercolationUnionFind(final int row, final int col, final int adjRow, final int adjCol) {
+        if (row < n + 2 && 0 <= adjRow && adjRow < n + 2 && 0 <= adjCol && adjCol < n && grid[adjRow][adjCol]) {
+            percolationUnionFind.union(convertToNodeId(row, col), convertToNodeId(adjRow, adjCol));
         }
     }
 
-    private boolean outsideOfBoundaries(final int index) {
-        return index < 1 || index > (sites.length);
-    }
-
-    private boolean tryUnionBelowSite(final int row, final int col) {
-        try {
-            return unionIfSecondIsOpen(row, col, row + 1, col);
-        } catch (final IllegalArgumentException e) {
-            weightedQuickUnion.unionWithBottom(col);
-            return true;
-        }
-    }
-
-    private boolean tryUnionAboveSite(final int row, final int col) {
-        try {
-            return unionIfSecondIsOpen(row, col, row - 1, col);
-        } catch (final IllegalArgumentException e) {
-            final boolean previousRootReachedBottom = weightedQuickUnion.topVirtualRootReachesBottom();
-            weightedQuickUnion.unionWithTopVirtual(col);
-            return previousRootReachedBottom;
-        }
-    }
-
-    private boolean tryUnionLeftSite(final int row, final int col) {
-        try {
-            return unionIfSecondIsOpen(row, col, row, col - 1);
-        } catch (final IllegalArgumentException e) {
-            return false;
-        }
-    }
-
-    private boolean tryUnionRightSite(final int row, final int col) {
-        try {
-            return unionIfSecondIsOpen(row, col, row, col + 1);
-        } catch (final IllegalArgumentException e) {
-            return false;
-        }
-    }
-
-    private boolean unionIfSecondIsOpen(final int pRow, final int pCol, final int qRow, final int qCol) {
-        if (isOpen(qRow, qCol)) {
-            final boolean previousRootReachedBottom = weightedQuickUnion.rootReachesBottom(qRow, qCol);
-            weightedQuickUnion.union(pRow, pCol, qRow, qCol);
-            return previousRootReachedBottom;
-        } else {
-            return false;
-        }
-    }
-
-    private int asIndex(final int rowOrCol) {
-        return rowOrCol - 1;
-    }
-
-    /**
-     * Wrapper of WeightedQuickUnionUF, provides convenient API for solving Percolation task.
-     * Tracks not only all grid sites, but also 1 virtual site at the top of the grid.
-     * Objects from 0 through n - 1 are considered grid sites, n-th is the top virtual site.
-     * Field {@link PercolationWeightedQuickUnion#rootReachesBottom} is added to keep track whether root
-     * belongs to the tree which reaches bottom.
-     */
-    private static class PercolationWeightedQuickUnion {
-
-        private final WeightedQuickUnionUF target;
-        private final boolean[] rootReachesBottom;
-        private final int gridSize;
-
-        PercolationWeightedQuickUnion(final int size) {
-            target = new WeightedQuickUnionUF(gridPlusVirtual(size));
-            this.gridSize = size;
-            this.rootReachesBottom = new boolean[gridPlusVirtual(size)];
-        }
-
-        boolean connectedToTop(final int row, final int col) {
-            return target.connected(asIndex(row, col), topVirtual());
-        }
-
-        boolean isPercolate() {
-            return topVirtualRootReachesBottom();
-        }
-
-        boolean topVirtualRootReachesBottom() {
-            return rootReachesBottom[rootOf(topVirtual())];
-        }
-
-        boolean rootReachesBottom(final int row, final int col) {
-            return rootReachesBottom[rootOf(row, col)];
-        }
-
-        void makeRootReachBottom(final int row, final int col) {
-            rootReachesBottom[rootOf(row, col)] = true;
-        }
-
-        void union(final int pRow, final int pCol, final int qRow, final int qCol) {
-            target.union(asIndex(pRow, pCol), asIndex(qRow, qCol));
-        }
-
-        void unionWithTopVirtual(final int col) {
-            target.union(asIndex(1, col), topVirtual());
-        }
-
-        void unionWithBottom(final int col) {
-            rootReachesBottom[rootOf(gridSize, col)] = true;
-        }
-
-        // Auxiliary Methods
-
-        private static int gridPlusVirtual(final int gridSize) {
-            return gridSize * gridSize + 1;
-        }
-
-        private int rootOf(final int row, final int col) {
-            return target.find(asIndex(row, col));
-        }
-
-        private int rootOf(final int index) {
-            return target.find(index);
-        }
-
-        private int asIndex(final int row, final int col) {
-            return (row - 1) * gridSize + (col - 1);
-        }
-
-        private int topVirtual() {
-            return gridSize * gridSize;
-        }
+    private int convertToNodeId(final int row, final int col) {
+        return n * row + col;
     }
 }
