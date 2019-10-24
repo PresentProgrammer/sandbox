@@ -21,7 +21,6 @@ public class Percolation {
     private final WeightedQuickUnionUF percolationUnionFind;
     private final int bottomVirtualLayerSite;
 
-    // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
         if (n <= 0) {
             throw new IllegalArgumentException("n should be positive.");
@@ -38,30 +37,25 @@ public class Percolation {
         this.bottomVirtualLayerSite = (n + 2) * n - 1;
     }
 
-    // opens the site (row, col) if it is not open already
     public void open(int row, int col) {
         assertArgumentsInRange(row, col);
         open0(row, col - 1);
     }
 
-    // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
         assertArgumentsInRange(row, col);
         return grid[row][col - 1];
     }
 
-    // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         assertArgumentsInRange(row, col);
         return fullUnionFind.connected(TOP_VIRTUAL_LAYER_SITE, convertToNodeId(row, col - 1));
     }
 
-    // returns the number of open sites
     public int numberOfOpenSites() {
         return openCount;
     }
 
-    // does the system percolate?
     public boolean percolates() {
         return percolationUnionFind.connected(TOP_VIRTUAL_LAYER_SITE, bottomVirtualLayerSite);
     }
