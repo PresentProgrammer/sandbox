@@ -16,7 +16,7 @@ public class Percolation {
      * grid[0] and grid[n + 1] are reserved for virtual layers: top and bottom correspondingly.
      */
     private final boolean[][] grid;
-    private int openCount = 0;
+    private int openCount;
     private final WeightedQuickUnionUF fullUnionFind;
     private final WeightedQuickUnionUF percolationUnionFind;
     private final int bottomVirtualLayerSite;
