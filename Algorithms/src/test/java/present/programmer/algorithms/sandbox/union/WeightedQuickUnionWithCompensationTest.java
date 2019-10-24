@@ -5,10 +5,12 @@ import org.junit.Test;
 import static present.programmer.algorithms.sandbox.union.UnionFindTestCommons.N;
 import static present.programmer.algorithms.sandbox.union.UnionFindTestCommons.testImplementation;
 
-public class WeightedQuickUnionTest {
+public class WeightedQuickUnionWithCompensationTest {
 
     @Test
     public void myFirstUnionFind() {
-        testImplementation(new WeightedQuickUnion(N));
+        final WeightedQuickUnionWithCompensation unionFind = new WeightedQuickUnionWithCompensation(N);
+        testImplementation(unionFind);
+        System.out.println(unionFind);
     }
 }

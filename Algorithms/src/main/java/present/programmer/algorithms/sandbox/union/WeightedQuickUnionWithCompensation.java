@@ -1,8 +1,9 @@
 package present.programmer.algorithms.sandbox.union;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class WeightedQuickUnion implements UnionFind {
+public class WeightedQuickUnionWithCompensation implements UnionFind {
 
     /**
      * E.g., i-th element's value j means that j is the parent of i.
@@ -11,7 +12,7 @@ public class WeightedQuickUnion implements UnionFind {
     private final Integer[] parentOf;
     private final int[] sizeOfTree;
 
-    public WeightedQuickUnion(final int numberOfNodes) {
+    public WeightedQuickUnionWithCompensation(final int numberOfNodes) {
         this.parentOf = new Integer[numberOfNodes];
         this.sizeOfTree = IntStream.generate(() -> 1).limit(numberOfNodes).toArray();
     }
@@ -39,8 +40,22 @@ public class WeightedQuickUnion implements UnionFind {
         return rootOf(p) == rootOf(q);
     }
 
+    /**
+     * While looking for the root, path is compensated.
+     */
     private int rootOf(final int p) {
         final Integer parent = parentOf[p];
-        return parent == null ? p : rootOf(parent);
+        if (parent == null) {
+            return p;
+        } else {
+            final Integer root = rootOf(parent);
+            parentOf[p] = root;
+            return root;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(parentOf);
     }
 }
