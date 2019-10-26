@@ -1,6 +1,7 @@
 package present.programmer.algorithms.sandbox.collection.stack;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static java.lang.System.arraycopy;
 
@@ -8,95 +9,92 @@ import static java.lang.System.arraycopy;
 public class ArrayBasedStack<E> implements Stack<E> {
 
     private static final int INITIAL_CAPACITY = 4;
+    private static final int SHRINK_THRESHOLD = 4;
+    private static final int GROW_AND_SHRINK_COEF = 2;
 
     private E[] elements;
-    private int currentSize;
+    private int size;
 
     @SuppressWarnings("unchecked")
-    public ArrayBasedStack(final int size) {
-        elements = (E[]) new Object[size];
-        currentSize = 0;
+    public ArrayBasedStack(final int initialCapacity) {
+        this.elements = (E[]) new Object[initialCapacity];
     }
 
     public ArrayBasedStack() {
         this(INITIAL_CAPACITY);
     }
 
-    public void push(E element) {
-        ensureEnoughCapacity();
-        elements[currentSize++] = element;
+    @Override
+    public void push(final E element) {
+        ensureCapacity();
+        elements[size++] = element;
     }
 
+    @Override
     public E pop() {
-        final E result = elements[--currentSize];
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        final E element = elements[--size];
         avoidLoitering();
-        ensureCapacityNotTooBig();
-        return result;
+        avoidMemoryLeak();
+        return element;
     }
 
+    @Override
     public boolean isEmpty() {
-        return currentSize == 0;
+        return size == 0;
     }
 
+    @Override
     public int size() {
-        return currentSize;
+        return size;
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new PrimitiveIterator();
+        return new IteratorImpl();
     }
 
-    private void ensureEnoughCapacity() {
-        if (currentSize == elements.length) {
-            grow();
-            System.out.println("[INFO] Stack capacity grew to " + elements.length);
+    private void ensureCapacity() {
+        if (size == elements.length) {
+            resize(elements.length * GROW_AND_SHRINK_COEF);
         }
     }
 
-    private void ensureCapacityNotTooBig() {
-        if (currentSize < elements.length / 4) {
-            shrink();
-            System.out.println("[INFO] Stack capacity shrank to " + elements.length);
+    private void avoidMemoryLeak() {
+        if (size * SHRINK_THRESHOLD < elements.length && elements.length > INITIAL_CAPACITY * GROW_AND_SHRINK_COEF) {
+            resize(elements.length / GROW_AND_SHRINK_COEF);
         }
-    }
-
-    private void grow() {
-        resize(elements.length * 2);
-    }
-
-
-    private void shrink() {
-        resize(elements.length / 2);
     }
 
     @SuppressWarnings("unchecked")
-    private void resize(final int newSize) {
-        final E[] newArray = (E[]) new Object[newSize];
-        arraycopy(elements, 0, newArray, 0, currentSize);
+    private void resize(final int newCapacity) {
+        final E[] newArray = (E[]) new Object[newCapacity];
+        arraycopy(elements, 0, newArray, 0, size);
         elements = newArray;
+        System.out.println("New stack capacity: " + elements.length);
     }
 
     private void avoidLoitering() {
-        elements[currentSize] = null;
+        elements[size] = null;
     }
 
-    private class PrimitiveIterator implements Iterator<E> {
+    private class IteratorImpl implements Iterator<E> {
 
-        private int nextIndex;
+        private int prevIndex = size;
 
-        PrimitiveIterator() {
-            this.nextIndex = currentSize;
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return elements[--prevIndex];
         }
 
         @Override
         public boolean hasNext() {
-            return nextIndex > 0;
-        }
-
-        @Override
-        public E next() {
-            return elements[--nextIndex];
+            return prevIndex > 0;
         }
     }
 }

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class StackClient {
 
     public static void main(final String... args) {
-        final Stack<String> stack = new LinkedListBasedStack<>();
+        final Stack<String> stack = new ArrayBasedStack<>();
         interactWith(stack);
     }
 
@@ -26,6 +26,10 @@ public class StackClient {
             System.out.println(stack.size());
         } else if ("isEmpty".equals(input)) {
             System.out.println(stack.isEmpty());
+        } else if ("iterate".equals(input)) {
+            for (final String elem : stack) {
+                System.out.println(elem);
+            }
         } else {
             stack.push(input);
         }
