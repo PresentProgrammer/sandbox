@@ -1,6 +1,7 @@
 package present.programmer.algorithms.sandbox.collection.stack;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 @SuppressWarnings("WeakerAccess")
 public class LinkedListBasedStack<E> implements Stack<E> {
@@ -16,6 +17,9 @@ public class LinkedListBasedStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
         final E result = head.item;
         head = head.next;
         currentSize--;
@@ -34,7 +38,7 @@ public class LinkedListBasedStack<E> implements Stack<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new PrimitiveIterator();
+        return new PrimitiveIterator<>(head);
     }
 
     private static class Node<E> {
@@ -48,11 +52,11 @@ public class LinkedListBasedStack<E> implements Stack<E> {
         }
     }
 
-    private class PrimitiveIterator implements Iterator<E> {
+    private static class PrimitiveIterator<E> implements Iterator<E> {
 
         private Node<E> nextNode;
 
-        PrimitiveIterator() {
+        PrimitiveIterator(final Node<E> head) {
             this.nextNode = head;
         }
 
