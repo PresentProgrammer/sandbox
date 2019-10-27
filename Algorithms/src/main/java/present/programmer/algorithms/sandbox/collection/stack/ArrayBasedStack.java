@@ -63,7 +63,7 @@ public class ArrayBasedStack<E> implements Stack<E> {
     }
 
     private void avoidMemoryLeak() {
-        if (size * SHRINK_THRESHOLD < elements.length && elements.length > INITIAL_CAPACITY * GROW_AND_SHRINK_COEF) {
+        if (size * SHRINK_THRESHOLD <= elements.length && elements.length >= INITIAL_CAPACITY * GROW_AND_SHRINK_COEF) {
             resize(elements.length / GROW_AND_SHRINK_COEF);
         }
     }
