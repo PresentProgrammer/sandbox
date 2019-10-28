@@ -5,120 +5,117 @@ import edu.princeton.cs.algs4.StdRandom;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static java.lang.System.arraycopy;
+
 @SuppressWarnings("WeakerAccess")
-public class RandomizedQueue<Item> implements Queue<Item> {
+public class RandomizedQueue<E> implements Queue<E> {
 
     private static final int INITIAL_CAPACITY = 4;
+    private static final int SHRINK_THRESHOLD = 4;
+    private static final int GROW_AND_SHRINK_COEF = 2;
 
-    private Item[] items;
+    private E[] items;
     private int size;
 
     @SuppressWarnings("unchecked")
     public RandomizedQueue() {
-        items = (Item[]) new Object[INITIAL_CAPACITY];
-        size = 0;
+        this.items = (E[]) new Object[INITIAL_CAPACITY];
     }
 
-    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override
     public int size() {
         return size;
     }
 
-    @Override
-    public void enqueue(Item item) {
-        requireNonNull(item);
-        ensureEnoughCapacity();
-        items[size++] = item;
+    public void enqueue(E item) {
+        ensureCapacity();
+        items[size++] = requireNonNull(item);
     }
 
-    @Override
-    public Item dequeue() {
+    /**
+     * Remove and return a random item
+     */
+    public E dequeue() {
         requireNotEmpty();
-        final Item item = items[--size];
-        items[size] = null;
-        ensureCapacityNotTooBig();
-        return item;
+        final int dequeueIndex = StdRandom.uniform(size--);
+        final E dequeueItem = items[dequeueIndex];
+        items[dequeueIndex] = items[size];
+        avoidLoitering();
+        avoidMemoryLeak();
+        return dequeueItem;
     }
 
-    @Override
-    public Iterator<Item> iterator() {
-        return new RandomizedIterator();
-    }
-
-    public Item sample() {
+    public E sample() {
         requireNotEmpty();
         return items[StdRandom.uniform(size)];
     }
 
-    private static <E> void requireNonNull(final E item) {
-        if (item == null) {
-            throw new IllegalArgumentException("item must not be null");
+    /**
+     * Return an independent iterator over items in random order
+     */
+    public Iterator<E> iterator() {
+        return new IteratorImpl<>(items, size);
+    }
+
+    private void ensureCapacity() {
+        if (size == items.length) {
+            resize(items.length * GROW_AND_SHRINK_COEF);
         }
+    }
+
+    private void avoidMemoryLeak() {
+        if (size * SHRINK_THRESHOLD <= items.length && items.length >= INITIAL_CAPACITY * GROW_AND_SHRINK_COEF) {
+            resize(items.length / GROW_AND_SHRINK_COEF);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resize(final int newCapacity) {
+        final E[] newArray = (E[]) new Object[newCapacity];
+        arraycopy(items, 0, newArray, 0, size);
+        items = newArray;
+    }
+
+    private void avoidLoitering() {
+        items[size] = null;
     }
 
     private void requireNotEmpty() {
         if (isEmpty()) {
-            throw new NoSuchElementException("cannot call on empty collection");
+            throw new NoSuchElementException();
         }
     }
 
-    private void ensureEnoughCapacity() {
-        if (size == items.length) {
-            grow();
+    private static <E> E requireNonNull(final E item) {
+        if (item == null) {
+            throw new IllegalArgumentException();
         }
+        return item;
     }
 
-    private void ensureCapacityNotTooBig() {
-        if (size < items.length / 4) {
-            shrink();
-        }
-    }
+    private static class IteratorImpl<E> implements Iterator<E> {
 
-    private void grow() {
-        resize(items.length * 2);
-    }
-
-    private void shrink() {
-        resize(items.length / 2);
-    }
-
-    @SuppressWarnings({"unchecked", "ManualArrayCopy"})
-    private void resize(final int newSize) {
-        final Item[] newArray = (Item[]) new Object[newSize];
-        for (int i = 0; i < size; i++) {
-            newArray[i] = items[i];
-        }
-        items = newArray;
-    }
-
-    private class RandomizedIterator implements Iterator<Item> {
-
-        private final int[] randomizedIndexes;
+        private final E[] shuffledItems;
         private int nextIndex;
 
-        RandomizedIterator() {
-            randomizedIndexes = sequenceFromZeroToN(size);
-            StdRandom.shuffle(randomizedIndexes);
-            nextIndex = 0;
-        }
-
-        @Override
-        public Item next() {
-            if (hasNext()) {
-                return items[randomizedIndexes[nextIndex++]];
-            } else {
-                throw new NoSuchElementException("there are no more items to return");
-            }
+        private IteratorImpl(final E[] items, final int size) {
+            this.shuffledItems = shuffle(copy(items, size));
         }
 
         @Override
         public boolean hasNext() {
-            return nextIndex < randomizedIndexes.length;
+            return nextIndex < shuffledItems.length;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return shuffledItems[nextIndex++];
         }
 
         @Override
@@ -126,12 +123,24 @@ public class RandomizedQueue<Item> implements Queue<Item> {
             throw new UnsupportedOperationException();
         }
 
-        private int[] sequenceFromZeroToN(final int n) {
-            final int[] sequence = new int[n];
-            for (int i = 0; i < n; i++) {
-                sequence[i] = i;
+        @SuppressWarnings("unchecked")
+        private static <E> E[] copy(final E[] items, final int size) {
+            final E[] copy = (E[]) new Object[size];
+            System.arraycopy(items, 0, copy, 0, size);
+            return copy;
+        }
+
+        private static <E> E[] shuffle(final E[] items) {
+            for (int i = 0; i < items.length - 1; i++) {
+                swap(items, i, i + StdRandom.uniform(items.length - i));
             }
-            return sequence;
+            return items;
+        }
+
+        private static <E> void swap(final E[] items, final int first, final int second) {
+            final E firstItem = items[first];
+            items[first] = items[second];
+            items[second] = firstItem;
         }
     }
 }

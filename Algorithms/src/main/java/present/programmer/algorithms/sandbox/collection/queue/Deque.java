@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 @SuppressWarnings("WeakerAccess")
-public class Deque<Item> implements Iterable<Item> {
+public class Deque<E> implements Iterable<E> {
 
-    private Node<Item> first;
-    private Node<Item> last;
+    private Node<E> first;
+    private Node<E> last;
     private int size;
 
     public boolean isEmpty() {
@@ -18,109 +18,83 @@ public class Deque<Item> implements Iterable<Item> {
         return size;
     }
 
-    public void addFirst(Item item) {
-        final Node<Item> oldFirst = first;
-        first = new Node<>(requireNonNull(item), null, oldFirst);
-        if (size == 0) {
-            last = first;
+    public void addFirst(final E item) {
+        requireNonNull(item);
+        if (isEmpty()) {
+            addTheVeryFirstItem(item);
         } else {
-            oldFirst.previous = first;
+            first = new Node<>(item, first, null);
+            first.next.prev = first;
         }
         size++;
     }
 
-    public void addLast(Item item) {
-        final Node<Item> oldLast = last;
-        last = new Node<>(requireNonNull(item), oldLast, null);
-        if (size == 0) {
-            first = last;
+    public void addLast(final E item) {
+        requireNonNull(item);
+        if (isEmpty()) {
+            addTheVeryFirstItem(item);
         } else {
-            oldLast.next = last;
+            last = new Node<>(item, null, last);
+            last.prev.next = last;
         }
         size++;
     }
 
-    public Item removeFirst() {
-        tryDecrementingSize();
-        final Item item = first.item;
+    public E removeFirst() {
+        requireNotEmpty();
+        final E item = first.item;
         first = first.next;
-        handleEmptyDeque_first();
+        updateStateAfterRemove();
         return item;
     }
 
-    public Item removeLast() {
-        tryDecrementingSize();
-        final Item item = last.item;
-        last = last.previous;
-        handleEmptyDeque_last();
+    public E removeLast() {
+        requireNotEmpty();
+        final E item = last.item;
+        last = last.prev;
+        updateStateAfterRemove();
         return item;
     }
 
-    public Iterator<Item> iterator() {
-        return new DequeIterator();
+    // return an iterator over items in order from front to back
+    public Iterator<E> iterator() {
+        return new IteratorImpl<>(first);
     }
 
-    private static <E> E requireNonNull(final E item) {
-        if (item == null) {
-            throw new IllegalArgumentException("item must not be null");
-        }
-        return item;
+    private void addTheVeryFirstItem(final E item) {
+        first = new Node<>(item, null, null);
+        last = first;
     }
 
-    private void tryDecrementingSize() {
-        if (size == 0) {
-            throw new NoSuchElementException();
-        } else {
-            size--;
-        }
-    }
-
-    private void handleEmptyDeque_first() {
-        if (first != null) {
-            first.previous = null;
-        } else {
-            last = null;
-        }
-    }
-
-    private void handleEmptyDeque_last() {
-        if (last != null) {
-            last.next = null;
-        } else {
+    private void updateStateAfterRemove() {
+        size--;
+        if (isEmpty()) {
             first = null;
+            last = null;
+        } else {
+            first.prev = null;
+            last.next = null;
         }
     }
 
-    private static class Node<E> {
-
-        E item;
-        Node<E> previous;
-        Node<E> next;
-
-        Node(final E item, final Node<E> previous, final Node<E> next) {
-            this.item = item;
-            this.previous = previous;
-            this.next = next;
+    private void requireNotEmpty() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
         }
     }
 
-    private class DequeIterator implements Iterator<Item> {
-
-        private Node<Item> nextNode;
-
-        DequeIterator() {
-            this.nextNode = first;
+    private static <E> void requireNonNull(final E item) {
+        if (item == null) {
+            throw new IllegalArgumentException();
         }
+    }
 
-        @Override
-        public Item next() {
-            if (hasNext()) {
-                final Item result = nextNode.item;
-                nextNode = nextNode.next;
-                return result;
-            } else {
-                throw new NoSuchElementException("there are no more items to return");
-            }
+    private static class IteratorImpl<E> implements Iterator<E> {
+
+        private Node<E> nextNode;
+
+        private IteratorImpl(final Node<E> nextNode) {
+            this.nextNode = nextNode;
         }
 
         @Override
@@ -129,8 +103,31 @@ public class Deque<Item> implements Iterable<Item> {
         }
 
         @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            final E item = nextNode.item;
+            nextNode = nextNode.next;
+            return item;
+        }
+
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
+        }
+    }
+
+    private static class Node<E> {
+
+        private final E item;
+        private Node<E> next;
+        private Node<E> prev;
+
+        private Node(final E item, final Node<E> next, final Node<E> prev) {
+            this.item = item;
+            this.next = next;
+            this.prev = prev;
         }
     }
 }

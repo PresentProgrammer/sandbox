@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class QueueClient {
 
     public static void main(final String... args) {
-        final Queue<String> queue = new LinkedListQueue<>();
+        final Queue<String> queue = new RandomizedQueue<>();
         interactWith(queue);
     }
 
