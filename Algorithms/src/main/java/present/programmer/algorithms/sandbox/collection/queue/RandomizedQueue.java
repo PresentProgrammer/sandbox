@@ -5,21 +5,18 @@ import edu.princeton.cs.algs4.StdRandom;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static java.lang.System.arraycopy;
-
 @SuppressWarnings("WeakerAccess")
-public class RandomizedQueue<E> implements Queue<E> {
+public class RandomizedQueue<Item> implements Queue<Item> {
 
     private static final int INITIAL_CAPACITY = 4;
     private static final int SHRINK_THRESHOLD = 4;
     private static final int GROW_AND_SHRINK_COEF = 2;
 
-    private E[] items;
+    private Item[] items;
     private int size;
 
-    @SuppressWarnings("unchecked")
     public RandomizedQueue() {
-        this.items = (E[]) new Object[INITIAL_CAPACITY];
+        this.items = (Item[]) new Object[INITIAL_CAPACITY];
     }
 
     public boolean isEmpty() {
@@ -30,7 +27,7 @@ public class RandomizedQueue<E> implements Queue<E> {
         return size;
     }
 
-    public void enqueue(E item) {
+    public void enqueue(Item item) {
         ensureCapacity();
         items[size++] = requireNonNull(item);
     }
@@ -38,17 +35,17 @@ public class RandomizedQueue<E> implements Queue<E> {
     /**
      * Remove and return a random item
      */
-    public E dequeue() {
+    public Item dequeue() {
         requireNotEmpty();
         final int dequeueIndex = StdRandom.uniform(size--);
-        final E dequeueItem = items[dequeueIndex];
+        final Item dequeueItem = items[dequeueIndex];
         items[dequeueIndex] = items[size];
         avoidLoitering();
         avoidMemoryLeak();
         return dequeueItem;
     }
 
-    public E sample() {
+    public Item sample() {
         requireNotEmpty();
         return items[StdRandom.uniform(size)];
     }
@@ -56,8 +53,12 @@ public class RandomizedQueue<E> implements Queue<E> {
     /**
      * Return an independent iterator over items in random order
      */
-    public Iterator<E> iterator() {
+    public Iterator<Item> iterator() {
         return new IteratorImpl<>(items, size);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Tested separately");
     }
 
     private void ensureCapacity() {
@@ -72,10 +73,9 @@ public class RandomizedQueue<E> implements Queue<E> {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void resize(final int newCapacity) {
-        final E[] newArray = (E[]) new Object[newCapacity];
-        arraycopy(items, 0, newArray, 0, size);
+        final Item[] newArray = (Item[]) new Object[newCapacity];
+        System.arraycopy(items, 0, newArray, 0, size);
         items = newArray;
     }
 
@@ -89,19 +89,19 @@ public class RandomizedQueue<E> implements Queue<E> {
         }
     }
 
-    private static <E> E requireNonNull(final E item) {
+    private static <Item> Item requireNonNull(final Item item) {
         if (item == null) {
             throw new IllegalArgumentException();
         }
         return item;
     }
 
-    private static class IteratorImpl<E> implements Iterator<E> {
+    private static class IteratorImpl<Item> implements Iterator<Item> {
 
-        private final E[] shuffledItems;
+        private final Item[] shuffledItems;
         private int nextIndex;
 
-        private IteratorImpl(final E[] items, final int size) {
+        private IteratorImpl(final Item[] items, final int size) {
             this.shuffledItems = shuffle(copy(items, size));
         }
 
@@ -111,7 +111,7 @@ public class RandomizedQueue<E> implements Queue<E> {
         }
 
         @Override
-        public E next() {
+        public Item next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -123,22 +123,21 @@ public class RandomizedQueue<E> implements Queue<E> {
             throw new UnsupportedOperationException();
         }
 
-        @SuppressWarnings("unchecked")
-        private static <E> E[] copy(final E[] items, final int size) {
-            final E[] copy = (E[]) new Object[size];
+        private static <Item> Item[] copy(final Item[] items, final int size) {
+            final Item[] copy = (Item[]) new Object[size];
             System.arraycopy(items, 0, copy, 0, size);
             return copy;
         }
 
-        private static <E> E[] shuffle(final E[] items) {
+        private static <Item> Item[] shuffle(final Item[] items) {
             for (int i = 0; i < items.length - 1; i++) {
                 swap(items, i, i + StdRandom.uniform(items.length - i));
             }
             return items;
         }
 
-        private static <E> void swap(final E[] items, final int first, final int second) {
-            final E firstItem = items[first];
+        private static <Item> void swap(final Item[] items, final int first, final int second) {
+            final Item firstItem = items[first];
             items[first] = items[second];
             items[second] = firstItem;
         }
