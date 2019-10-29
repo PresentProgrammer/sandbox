@@ -130,8 +130,8 @@ public class RandomizedQueue<Item> implements Queue<Item> {
         }
 
         private static <Item> Item[] shuffle(final Item[] items) {
-            for (int i = 0; i < items.length - 1; i++) {
-                swap(items, i, i + StdRandom.uniform(items.length - i));
+            for (int i = 1; i < items.length; i++) {
+                swap(items, i, StdRandom.uniform(i + 1));
             }
             return items;
         }
