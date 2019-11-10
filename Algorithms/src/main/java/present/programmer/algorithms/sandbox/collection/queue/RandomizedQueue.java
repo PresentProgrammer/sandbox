@@ -15,6 +15,7 @@ public class RandomizedQueue<Item> implements Queue<Item> {
     private Item[] items;
     private int size;
 
+    @SuppressWarnings("unchecked")
     public RandomizedQueue() {
         this.items = (Item[]) new Object[INITIAL_CAPACITY];
     }
@@ -73,6 +74,7 @@ public class RandomizedQueue<Item> implements Queue<Item> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void resize(final int newCapacity) {
         final Item[] newArray = (Item[]) new Object[newCapacity];
         System.arraycopy(items, 0, newArray, 0, size);
@@ -123,6 +125,7 @@ public class RandomizedQueue<Item> implements Queue<Item> {
             throw new UnsupportedOperationException();
         }
 
+        @SuppressWarnings("unchecked")
         private static <Item> Item[] copy(final Item[] items, final int size) {
             final Item[] copy = (Item[]) new Object[size];
             System.arraycopy(items, 0, copy, 0, size);

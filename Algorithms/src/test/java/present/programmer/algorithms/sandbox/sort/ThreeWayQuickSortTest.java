@@ -4,27 +4,22 @@ import org.junit.Test;
 
 import static present.programmer.algorithms.sandbox.sort.CommonTests.commonTests;
 
-public class QuickSortAsInCourseTest {
+public class ThreeWayQuickSortTest {
 
     private static final int NUMBER_OF_INTEGERS = 1_000_000;
 
     @Test
     public void applySelectionSort_sortWords() {
-        commonTests().sortWords(new QuickSortAsInCourse());
+        commonTests().sortWords(new ThreeWayQuickSort<>());
     }
 
     @Test
     public void applySelectionSort_sortIntegers() {
-        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new QuickSortAsInCourse());
-    }
-
-    @Test
-    public void applySelectionSort_onAlreadySortedIntegers() {
-        commonTests().sortAlreadySortedIntegers(NUMBER_OF_INTEGERS, new QuickSortAsInCourse());
+        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new ThreeWayQuickSort<>());
     }
 
     @Test
     public void applySelectionSort_sortEmptyArray_noExceptionsThrown() {
-        commonTests().sortEmptyArray(new QuickSortAsInCourse());
+        commonTests().sortEmptyArray(new ThreeWayQuickSort<>());
     }
 }

@@ -1,29 +1,29 @@
 package present.programmer.algorithms.sandbox.sort;
 
-public class ShellSort extends InsertionSort {
-
-    @Override
-    <T extends Comparable<T>> void applySortingMethodTo(final T[] array) {
-        sortWithStep(array, 1);
-    }
+public class ShellSort<T extends Comparable<T>> extends SortMethod<T> {
 
     /**
-     * The method of increasing the step can be overridden for (possibly) better performance of the algorithm.
+     * 3x + 1 is used for the sequence, i.e., 1, 4, 13, 40, ...
      */
-    protected int increaseStep(final int previousStep) {
-        return previousStep * 3 + 1;
-    }
+    private static final int SEQ_COEF = 3;
 
-    // Auxiliary Methods
+    @Override
+    public T[] sort(final T[] arr) {
+        int h = 1;
+        while (h < arr.length) {
+            h = h * SEQ_COEF + 1;
+        }
 
-    private <T extends Comparable<T>> void sortWithStep(final T[] array, final int step) {
-        if (step < array.length) {
-            sortWithStep(array, increaseStep(step));
-            for (int i = 0; i < step; i++) {
-                for (int j = i + step; j < array.length; j += step) {
-                    pushElementUntilLeftSideIsSorted(array, j, step);
+        while (h > 0) {
+            for (int i = h; i < arr.length; i++) {
+                int j = i;
+                while (j - h >= 0 && less(arr[j], arr[j - h])) {
+                    swap(arr, j, j - h);
+                    j -= h;
                 }
             }
+            h /= SEQ_COEF;
         }
+        return arr;
     }
 }

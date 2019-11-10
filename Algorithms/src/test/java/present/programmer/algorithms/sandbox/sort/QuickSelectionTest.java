@@ -78,7 +78,7 @@ public class QuickSelectionTest {
     }
 
     private static <T extends Comparable<T>> T[] quickFirstElementsSelection(final T[] unsortedInput, final int k) {
-        final T[] firstKElements = new QuickSelection().selectFirstKElements(unsortedInput, k);
+        final T[] firstKElements = new QuickSelection<T>().selectFirstKElements(unsortedInput, k);
         sort(firstKElements);
         return firstKElements;
     }
@@ -94,7 +94,7 @@ public class QuickSelectionTest {
     }
 
     private static <T extends Comparable<T>> T quickElementSelection(final T[] unsortedInput, final int k) {
-        return new QuickSelection().selectKElement(unsortedInput, k);
+        return new QuickSelection<T>().selectKElement(unsortedInput, k);
     }
 
     private static <T extends Comparable<T>> T selectElementWithSorting(final T[] unsortedInput, final int k) {

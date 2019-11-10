@@ -25,11 +25,15 @@ class Inputs {
 
     Integer[] getUnsortedIntegers(final int size) {
         final Random random = new Random();
-        return generate(() -> random.nextInt(size)).limit(size).toArray(Integer[]::new);
+        return generate(() -> random.nextInt(size))
+                .limit(size)
+                .toArray(Integer[]::new);
     }
 
     Integer[] getSortedIntegers(final int size) {
-        return IntStream.range(0, size).boxed().toArray(Integer[]::new);
+        return IntStream.range(0, size)
+                .boxed()
+                .toArray(Integer[]::new);
     }
 
     // Auxiliary Methods

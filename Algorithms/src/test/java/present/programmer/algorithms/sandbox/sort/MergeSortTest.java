@@ -10,16 +10,16 @@ public class MergeSortTest {
 
     @Test
     public void applyMergeSort_sortWords() {
-        commonTests().sortWords(new MergeSort());
+        commonTests().sortWords(new MergeSort<>());
     }
 
     @Test
     public void applyMergeSort_sortIntegers() {
-        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new MergeSort());
+        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new MergeSort<>());
     }
 
     @Test
     public void applyMergeSort_sortEmptyArray_noExceptionsThrown() {
-        commonTests().sortEmptyArray(new MergeSort());
+        commonTests().sortEmptyArray(new MergeSort<>());
     }
 }

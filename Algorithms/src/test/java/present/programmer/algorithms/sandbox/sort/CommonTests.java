@@ -16,25 +16,25 @@ class CommonTests {
         return new CommonTests();
     }
 
-    void sortWords(final SortMethod sortMethod) {
+    void sortWords(final SortMethod<String> sortMethod) {
         assertSortingWorksCorrectly(sortMethod, inputWords());
     }
 
-    void sortIntegers(final int size, final SortMethod sortMethod) {
+    void sortIntegers(final int size, final SortMethod<Integer> sortMethod) {
         assertSortingWorksCorrectly(sortMethod, inputIntegers(size));
     }
 
-    void sortAlreadySortedIntegers(final int size, final SortMethod sortMethod) {
+    void sortAlreadySortedIntegers(final int size, final SortMethod<Integer> sortMethod) {
         assertSortingWorksCorrectly(sortMethod, inputSortedIntegers(size));
     }
 
-    void sortEmptyArray(final SortMethod sortMethod) {
+    void sortEmptyArray(final SortMethod<Integer> sortMethod) {
         sortMethod.sort(new Integer[0]);
     }
 
     // Auxiliary Methods
 
-    private static <T extends Comparable<T>> void assertSortingWorksCorrectly(final SortMethod sortMethod, final T[] unsortedArray) {
+    private static <T extends Comparable<T>> void assertSortingWorksCorrectly(final SortMethod<T> sortMethod, final T[] unsortedArray) {
         final T[] arraySortedByJavaApi = sortByJavaApi(unsortedArray);
         final T[] sortedArray = sortByMethod(sortMethod, unsortedArray);
         assertArrayEquals(arraySortedByJavaApi, sortedArray);
@@ -48,7 +48,7 @@ class CommonTests {
         return arrayCopy;
     }
 
-    private static <T extends Comparable<T>> T[] sortByMethod(final SortMethod sortMethod, final T[] unsortedArray) {
+    private static <T extends Comparable<T>> T[] sortByMethod(final SortMethod<T> sortMethod, final T[] unsortedArray) {
         final LocalTime timeBeforeSorting = now();
         final T[] sorted = sortMethod.sort(unsortedArray);
         System.out.println("Sorting took: " + Duration.between(timeBeforeSorting, now()));

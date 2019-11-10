@@ -10,16 +10,16 @@ public class QuickSortTest {
 
     @Test
     public void applySelectionSort_sortWords() {
-        commonTests().sortWords(new QuickSort());
+        commonTests().sortWords(new QuickSort<>());
     }
 
     @Test
     public void applySelectionSort_sortIntegers() {
-        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new QuickSort());
+        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new QuickSort<>());
     }
 
     @Test
     public void applySelectionSort_sortEmptyArray_noExceptionsThrown() {
-        commonTests().sortEmptyArray(new QuickSort());
+        commonTests().sortEmptyArray(new QuickSort<>());
     }
 }

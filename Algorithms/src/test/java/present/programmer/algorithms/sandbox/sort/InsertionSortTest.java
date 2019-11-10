@@ -10,16 +10,16 @@ public class InsertionSortTest {
 
     @Test
     public void applyInsertionSort_sortWords() {
-        commonTests().sortWords(new InsertionSort());
+        commonTests().sortWords(new InsertionSort<>());
     }
 
     @Test
     public void applyInsertionSort_sortIntegers() {
-        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new InsertionSort());
+        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new InsertionSort<>());
     }
 
     @Test
     public void applyInsertionSort_sortEmptyArray_noExceptionsThrown() {
-        commonTests().sortEmptyArray(new InsertionSort());
+        commonTests().sortEmptyArray(new InsertionSort<>());
     }
 }

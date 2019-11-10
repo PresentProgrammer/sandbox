@@ -1,66 +1,78 @@
 package present.programmer.algorithms.sandbox.sort;
 
-import present.programmer.algorithms.sandbox.sort.QuickSort.QuickSorter;
+import java.util.Arrays;
+import java.util.Random;
 
-import static java.util.Arrays.copyOf;
+public class QuickSelection<T extends Comparable<T>> extends SortMethod<T> {
 
-public class QuickSelection {
+    private T[] arr;
+    private int k;
 
-    <T extends Comparable<T>> T[] selectFirstKElements(final T[] array, final int k) {
-        final T[] copyOfInput = copyInputNotToChangeIt(array);
-        return new QuickSelector<>(copyOfInput, k).selectFirstKElements();
+    /**
+     * @param k1 one-based k
+     */
+    public T[] selectFirstKElements(final T[] arr, final int k1) {
+        this.arr = arr;
+        this.k = k1 - 1; // convert to zero-based.
+        shuffle();
+        select();
+        return Arrays.copyOf(arr, k1);
     }
 
-    <T extends Comparable<T>> T selectKElement(final T[] array, final int k) {
-        final T[] copyOfInput = copyInputNotToChangeIt(array);
-        return new QuickSelector<>(copyOfInput, k).selectKElement();
+    /**
+     *
+     * @param k0 zero-based k
+     */
+    public T selectKElement(final T[] arr, final int k0) {
+        selectFirstKElements(arr, k0 + 1);
+        return arr[k];
     }
 
-    private <T extends Comparable<T>> T[] copyInputNotToChangeIt(final T[] array) {
-        return copyOf(array, array.length);
+    @Override
+    public T[] sort(final T[] arr) {
+        throw new UnsupportedOperationException("Use other methods.");
     }
 
-    static class QuickSelector<T extends Comparable<T>> extends QuickSorter<T> {
-
-        private final int k;
-
-        QuickSelector(final T[] array, final int k) {
-            super(array);
-            this.k = k;
-        }
-
-        T[] selectFirstKElements() {
-            shuffle();
-            return partitionUntilKFirstElementsFound(ARRAY_BEGINNING, array.length);
-        }
-
-        T selectKElement() {
-            shuffle();
-            return partitionUntilKElementsFound(ARRAY_BEGINNING, array.length);
-        }
-
-        // Auxiliary Methods
-
-        private T[] partitionUntilKFirstElementsFound(final int begin, final int end) {
-            final int indexOfElementInPlace = partition(begin, end);
-            if (indexOfElementInPlace == k) {
-                return copyOf(array, k);
-            } else if (indexOfElementInPlace > k) {
-                return partitionUntilKFirstElementsFound(begin, indexOfElementInPlace);
+    private void select() {
+        int lo = 0;
+        int hi = arr.length - 1;
+        while (lo < hi) {
+            final int j = partition(lo, hi);
+            if (j < k) {
+                lo = j + 1;
+            } else if (j > k) {
+                hi = j - 1;
             } else {
-                return partitionUntilKFirstElementsFound(indexOfElementInPlace + 1, end);
+                return;
             }
         }
+    }
 
-        private T partitionUntilKElementsFound(final int begin, final int end) {
-            final int indexOfElementInPlace = partition(begin, end);
-            if (indexOfElementInPlace == k) {
-                return array[k];
-            } else if (indexOfElementInPlace > k) {
-                return partitionUntilKElementsFound(begin, indexOfElementInPlace);
-            } else {
-                return partitionUntilKElementsFound(indexOfElementInPlace + 1, end);
+    private int partition(final int lo, final int hi) {
+        int i = lo + 1;
+        int j = hi;
+        while (true) {
+            while (i <= hi && less(arr[i], arr[lo])) {
+                i++;
             }
+            while (less(arr[lo], arr[j])) {
+                j--;
+            }
+            if (i < j) {
+                swap(arr, i, j);
+                i++;
+                j--;
+            } else {
+                swap(arr, lo, j);
+                return j;
+            }
+        }
+    }
+
+    private void shuffle() {
+        final Random random = new Random();
+        for (int i = 1; i < arr.length; i++) {
+            swap(arr, i, random.nextInt(i + 1));
         }
     }
 }

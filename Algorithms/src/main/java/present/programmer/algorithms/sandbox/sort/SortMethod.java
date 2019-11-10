@@ -1,14 +1,16 @@
 package present.programmer.algorithms.sandbox.sort;
 
-import static java.util.Arrays.copyOf;
+public abstract class SortMethod<T extends Comparable<T>> {
 
-abstract class SortMethod {
+    public abstract T[] sort(T[] arr);
 
-    <T extends Comparable<T>> T[] sort(T[] unsortedArray) {
-        final T[] array = copyOf(unsortedArray, unsortedArray.length);
-        applySortingMethodTo(array);
-        return array;
+    protected static <T> void swap(final T[] arr, final int i, final int j) {
+        final T temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
-    abstract <T extends Comparable<T>> void applySortingMethodTo(T[] array);
+    protected static <T extends Comparable<T>> boolean less(final T a, final T b) {
+        return a.compareTo(b) < 0;
+    }
 }

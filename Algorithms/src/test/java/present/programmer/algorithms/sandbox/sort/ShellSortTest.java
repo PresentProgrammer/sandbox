@@ -10,16 +10,16 @@ public class ShellSortTest {
 
     @Test
     public void applyShellSort_sortWords() {
-        commonTests().sortWords(new ShellSort());
+        commonTests().sortWords(new ShellSort<>());
     }
 
     @Test
     public void applyShellSort_sortIntegers() {
-        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new ShellSort());
+        commonTests().sortIntegers(NUMBER_OF_INTEGERS, new ShellSort<>());
     }
 
     @Test
     public void applyShellSort_sortEmptyArray_noExceptionsThrown() {
-        commonTests().sortEmptyArray(new ShellSort());
+        commonTests().sortEmptyArray(new ShellSort<>());
     }
 }

@@ -1,34 +1,18 @@
 package present.programmer.algorithms.sandbox.sort;
 
-import static present.programmer.algorithms.sandbox.sort.util.Compare.less;
-
-public class SelectionSort extends SortMethod {
+public class SelectionSort<T extends Comparable<T>> extends SortMethod<T> {
 
     @Override
-    <T extends Comparable<T>> void applySortingMethodTo(final T[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            final int minIndex = findMinIndexInSubArray(array, i);
-            swap(array, i, minIndex);
-        }
-    }
-
-    // Auxiliary Methods
-
-    private <T extends Comparable<T>> int findMinIndexInSubArray(final T[] array, final int i) {
-        int minIndex = i;
-        T minValue = array[i];
-        for (int j = i + 1; j < array.length; j++) {
-            if (less(array[j], minValue)) {
-                minIndex = j;
-                minValue = array[j];
+    public T[] sort(final T[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            int minInd = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (less(arr[j], arr[minInd])) {
+                    minInd = j;
+                }
             }
+            swap(arr, i, minInd);
         }
-        return minIndex;
-    }
-
-    private static <T> void swap(final T[] array, final int firstIndex, final int secondIndex) {
-        final T temp = array[firstIndex];
-        array[firstIndex] = array[secondIndex];
-        array[secondIndex] = temp;
+        return arr;
     }
 }
