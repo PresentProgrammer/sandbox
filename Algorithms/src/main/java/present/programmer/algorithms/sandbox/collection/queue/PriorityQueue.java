@@ -15,7 +15,7 @@ public class PriorityQueue<E extends Comparable<E>> {
     private E[] arr = (E[]) new Comparable[INITIAL_CAPACITY];
 
     /**
-     * 0th element in array is kept untouched to simplify arithmetics (see notes on Binary Heap).
+     * 0th element in array is kept untouched to simplify arithmetic (see notes on Binary Heap).
      */
     private int size = FIRST;
 
