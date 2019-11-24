@@ -6,14 +6,14 @@ package present.programmer.algorithms.sandbox.collection.map;
  */
 public class BinarySearchTree<K extends Comparable<K>, V> {
 
-    private Node<K, V> root;
+    private Node root;
 
     public void put(K key, V value) {
         root = put(root, key, value);
     }
 
     public V get(K key) {
-        Node<K, V> curr = root;
+        Node curr = root;
         while (curr != null) {
             final int cmp = key.compareTo(curr.key);
             if (cmp < 0) {
@@ -32,7 +32,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
      */
     public K floor(K key) {
         K candidate = null;
-        Node<K, V> curr = root;
+        Node curr = root;
         while (curr != null) {
             final int cmp = key.compareTo(curr.key);
             if (cmp < 0) {
@@ -62,9 +62,9 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         return rank(key, root);
     }
 
-    private static <K extends Comparable<K>, V> Node<K, V> put(Node<K, V> curr, K key, V value) {
+    private Node put(Node curr, K key, V value) {
         if (curr == null) {
-            return new Node<>(key, value);
+            return new Node(key, value);
         } else {
             final int cmp = key.compareTo(curr.key);
             if (cmp < 0) {
@@ -79,11 +79,11 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         }
     }
 
-    private static <K extends Comparable<K>, V> int size(Node<K, V> node) {
+    private int size(Node node) {
         return node == null ? 0 : node.size;
     }
 
-    private static <K extends Comparable<K>, V> int rank(K key, Node<K, V> curr) {
+    private int rank(K key, Node curr) {
         if (curr == null) {
             return 0;
         } else {
@@ -98,12 +98,12 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         }
     }
 
-    private static class Node<K extends Comparable<K>, V> {
+    private class Node {
 
         final K key;
         V value;
-        Node<K, V> left;
-        Node<K, V> right;
+        Node left;
+        Node right;
         int size = 1;
 
         Node(K key, V value) {
