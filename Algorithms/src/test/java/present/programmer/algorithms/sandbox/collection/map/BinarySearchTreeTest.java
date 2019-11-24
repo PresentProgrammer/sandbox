@@ -39,5 +39,16 @@ public class BinarySearchTreeTest {
         assertEquals('S', bst.floor('S').charValue());
         assertEquals('S', bst.floor('T').charValue());
         assertNull(bst.floor('A'));
+
+        assertEquals(8, bst.rank('Z'));
+        assertEquals(7, bst.rank('X'));
+        assertEquals(6, bst.rank('S'));
+        assertEquals(5, bst.rank('R'));
+        assertEquals(4, bst.rank('M'));
+        assertEquals(3, bst.rank('H'));
+        assertEquals(2, bst.rank('E'));
+        assertEquals(1, bst.rank('C'));
+        assertEquals(0, bst.rank('B'));
+        assertEquals(0, bst.rank('A'));
     }
 }

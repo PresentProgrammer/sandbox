@@ -52,7 +52,14 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     }
 
     public int size() {
-        return root == null ? 0 : root.size;
+        return size(root);
+    }
+
+    /**
+     * How many keys < given key.
+     */
+    public int rank(K key) {
+        return rank(key, root);
     }
 
     private static <K extends Comparable<K>, V> Node<K, V> put(Node<K, V> curr, K key, V value) {
@@ -61,25 +68,35 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         } else {
             final int cmp = key.compareTo(curr.key);
             if (cmp < 0) {
-                final int prevSize = curr.left == null ? 0 : curr.left.size;
                 curr.left = put(curr.left, key, value);
-                if (curr.left.size > prevSize) {
-                    curr.size++;
-                }
             } else if (cmp > 0) {
-                final int prevSize = curr.right == null ? 0 : curr.right.size;
                 curr.right = put(curr.right, key, value);
-                if (curr.right.size > prevSize) {
-                    curr.size++;
-                }
             } else {
                 curr.value = value;
             }
+            curr.size = 1 + size(curr.left) + size(curr.right);
             return curr;
         }
     }
 
+    private static <K extends Comparable<K>, V> int size(Node<K, V> node) {
+        return node == null ? 0 : node.size;
+    }
 
+    private static <K extends Comparable<K>, V> int rank(K key, Node<K, V> curr) {
+        if (curr == null) {
+            return 0;
+        } else {
+            final int cmp = key.compareTo(curr.key);
+            if (cmp < 0) {
+                return rank(key, curr.left);
+            } else if (cmp > 0) {
+                return 1 + size(curr.left) + rank(key, curr.right);
+            } else {
+                return size(curr.left);
+            }
+        }
+    }
 
     private static class Node<K extends Comparable<K>, V> {
 
@@ -87,12 +104,11 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         V value;
         Node<K, V> left;
         Node<K, V> right;
-        int size;
+        int size = 1;
 
         Node(K key, V value) {
             this.key = key;
             this.value = value;
-            this.size = 1;
         }
     }
 }
