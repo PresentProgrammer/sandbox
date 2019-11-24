@@ -53,5 +53,26 @@ public class BinarySearchTreeTest {
         assertEquals(0, bst.rank('A'));
 
         assertEquals(asList('B', 'C', 'E', 'H', 'M', 'R', 'S', 'X'), bst.keys());
+
+        bst.delete('Z');
+        assertEquals(asList('B', 'C', 'E', 'H', 'M', 'R', 'S', 'X'), bst.keys());
+        assertEquals(8, bst.size());
+        bst.delete('X');
+        assertEquals(asList('B', 'C', 'E', 'H', 'M', 'R', 'S'), bst.keys());
+        assertEquals(7, bst.size());
+        bst.delete('E');
+        assertEquals(asList('B', 'C', 'H', 'M', 'R', 'S'), bst.keys());
+        assertEquals(6, bst.size());
+        bst.delete('R');
+        assertEquals(asList('B', 'C', 'H', 'M', 'S'), bst.keys());
+        assertEquals(5, bst.size());
+        bst.delete('M');
+        assertEquals(asList('B', 'C', 'H', 'S'), bst.keys());
+        assertEquals(4, bst.size());
+
+        bst.put('M', 10);
+        assertEquals(asList('B', 'C', 'H', 'M', 'S'), bst.keys());
+        assertEquals(5, bst.size());
+        assertEquals(10, bst.get('M').intValue());
     }
 }

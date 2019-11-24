@@ -51,7 +51,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     }
 
     public void delete(K key) {
-
+        root = delete(key, root);
     }
 
     public int size() {
@@ -112,6 +112,45 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             gatherKeys(curr.left, keys);
             keys.add(curr.key);
             gatherKeys(curr.right, keys);
+        }
+    }
+
+    private Node delete(K key, Node curr) {
+        if (curr == null) {
+            return null;
+        }
+        final int cmp = key.compareTo(curr.key);
+        if (cmp < 0) {
+            curr.left = delete(key, curr.left);
+        } else if (cmp > 0) {
+            curr.right = delete(key, curr.right);
+        } else {
+            if (curr.left == null) {
+                return curr.right;
+            } else if (curr.right == null) {
+                return curr.left;
+            } else {
+                final Node min = min(curr.right);
+                min.right = deleteMin(curr.right);
+                min.left = curr.left;
+                curr = min;
+            }
+        }
+        curr.size = 1 + size(curr.left) + size(curr.right);
+        return curr;
+    }
+
+    private Node min(Node curr) {
+        return curr.left == null ? curr : min(curr.left);
+    }
+
+    private Node deleteMin(Node curr) {
+        if (curr.left == null) {
+            return curr.right;
+        } else {
+            curr.left = deleteMin(curr.left);
+            curr.size = 1 + size(curr.left) + size(curr.right);
+            return curr;
         }
     }
 
