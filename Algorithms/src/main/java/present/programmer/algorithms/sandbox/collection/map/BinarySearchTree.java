@@ -1,5 +1,8 @@
 package present.programmer.algorithms.sandbox.collection.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Note: keys to the left are *strictly* less than the node's key;
  * keys to the right are *strictly* greater than the node's key.
@@ -62,6 +65,12 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         return rank(key, root);
     }
 
+    public Iterable<K> keys() {
+        final List<K> keys = new ArrayList<>();
+        gatherKeys(root, keys);
+        return keys;
+    }
+
     private Node put(Node curr, K key, V value) {
         if (curr == null) {
             return new Node(key, value);
@@ -95,6 +104,14 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             } else {
                 return size(curr.left);
             }
+        }
+    }
+
+    private void gatherKeys(Node curr, List<K> keys) {
+        if (curr != null) {
+            gatherKeys(curr.left, keys);
+            keys.add(curr.key);
+            gatherKeys(curr.right, keys);
         }
     }
 
