@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class BinarySearchTree<K extends Comparable<K>, V> {
 
-    private Node root;
+    protected Node root;
 
     public void put(K key, V value) {
         root = put(root, key, value);
@@ -19,12 +19,10 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         Node curr = root;
         while (curr != null) {
             final int cmp = key.compareTo(curr.key);
-            if (cmp < 0) {
-                curr = curr.left;
-            } else if (cmp > 0) {
-                curr = curr.right;
-            } else {
+            if (cmp == 0) {
                 return curr.value;
+            } else {
+                curr = cmp < 0 ? curr.left : curr.right;
             }
         }
         return null;
@@ -83,9 +81,13 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             } else {
                 curr.value = value;
             }
-            curr.size = 1 + size(curr.left) + size(curr.right);
+            curr.size = calculateSize(curr);
             return curr;
         }
+    }
+
+    protected int calculateSize(Node node) {
+        return 1 + size(node.left) + size(node.right);
     }
 
     private int size(Node node) {
@@ -136,7 +138,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
                 curr = min;
             }
         }
-        curr.size = 1 + size(curr.left) + size(curr.right);
+        curr.size = calculateSize(curr);
         return curr;
     }
 
@@ -149,12 +151,12 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             return curr.right;
         } else {
             curr.left = deleteMin(curr.left);
-            curr.size = 1 + size(curr.left) + size(curr.right);
+            curr.size = calculateSize(curr);
             return curr;
         }
     }
 
-    private class Node {
+    class Node {
 
         final K key;
         V value;
