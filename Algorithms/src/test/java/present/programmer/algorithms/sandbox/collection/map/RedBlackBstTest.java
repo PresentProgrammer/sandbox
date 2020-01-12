@@ -55,9 +55,19 @@ public class RedBlackBstTest {
         assertEquals(asList('B', 'C', 'E', 'H', 'M', 'R', 'S', 'X'), bst.keys());
 
         assertEquals(asList(), bst.range('J', 'L'));
+        assertEquals(asList(), bst.range('A', 'A'));
+        assertEquals(asList(), bst.range('B', 'B'));
         assertEquals(asList('B'), bst.range('A', 'C'));
         assertEquals(asList('B'), bst.range('B', 'C'));
         assertEquals(asList('C', 'E', 'H', 'M'), bst.range('C', 'N'));
         assertEquals(asList('B', 'C', 'E', 'H', 'M', 'R', 'S', 'X'), bst.range('A', 'Z'));
+
+        assertEquals(0, bst.rangeSize('J', 'L'));
+        assertEquals(0, bst.rangeSize('A', 'A'));
+        assertEquals(0, bst.rangeSize('B', 'B'));
+        assertEquals(1, bst.rangeSize('A', 'C'));
+        assertEquals(1, bst.rangeSize('B', 'C'));
+        assertEquals(4, bst.rangeSize('C', 'N'));
+        assertEquals(8, bst.rangeSize('A', 'Z'));
     }
 }

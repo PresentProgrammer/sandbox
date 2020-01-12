@@ -50,12 +50,17 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> range(K fromIncl, K toExcl) {
-        final List<K> keys = keys0();
-        final int bsFromIndex = Collections.binarySearch(keys, fromIncl);
-        final int fromInd = bsFromIndex >= 0 ? bsFromIndex : -bsFromIndex - 1;
-        final int bsToIndex = Collections.binarySearch(keys, toExcl);
-        final int toInd = bsToIndex >= 0 ? bsToIndex : -bsToIndex - 1;
-        return keys.subList(fromInd, toInd);
+        final List<K> keys = new ArrayList<>();
+        gatherKeys(root, keys, fromIncl, toExcl);
+        return keys;
+    }
+
+    public int rangeSize(K fromIncl, K toExcl) {
+        if (fromIncl.compareTo(toExcl) >= 0) {
+            return 0;
+        } else {
+            return rank(toExcl) - rank(fromIncl);
+        }
     }
 
     public void delete(K key) {
@@ -74,7 +79,9 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> keys() {
-        return keys0();
+        final List<K> keys = new ArrayList<>();
+        gatherKeys(root, keys);
+        return keys;
     }
 
     private Node put(Node curr, K key, V value) {
@@ -117,18 +124,30 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         }
     }
 
-    private List<K> keys0() {
-        final List<K> keys = new ArrayList<>();
-        gatherKeys(root, keys);
-        return keys;
-    }
-
     private void gatherKeys(Node curr, List<K> keys) {
         if (curr != null) {
             gatherKeys(curr.left, keys);
             keys.add(curr.key);
             gatherKeys(curr.right, keys);
         }
+    }
+
+    private void gatherKeys(Node curr, List<K> keys, K from, K to) {
+        if (curr != null) {
+            if (curr.key.compareTo(from) > 0) {
+                gatherKeys(curr.left, keys, from, to);
+            }
+            if (inRange(curr.key, from, to)) {
+                keys.add(curr.key);
+            }
+            if (curr.key.compareTo(to) < 0) {
+                gatherKeys(curr.right, keys, from, to);
+            }
+        }
+    }
+
+    private boolean inRange(K key, K from, K to) {
+        return from.compareTo(key) <= 0 && key.compareTo(to) < 0;
     }
 
     private Node delete(K key, Node curr) {

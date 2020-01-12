@@ -77,8 +77,18 @@ public class BinarySearchTreeTest {
 
         assertEquals(asList(), bst.range('J', 'L'));
         assertEquals(asList('B'), bst.range('A', 'C'));
+        assertEquals(asList(), bst.range('B', 'B'));
+        assertEquals(asList(), bst.range('A', 'A'));
         assertEquals(asList('B'), bst.range('B', 'C'));
         assertEquals(asList('C', 'H', 'M'), bst.range('C', 'N'));
         assertEquals(asList('B', 'C', 'H', 'M', 'S'), bst.range('A', 'Z'));
+
+        assertEquals(0, bst.rangeSize('J', 'L'));
+        assertEquals(1, bst.rangeSize('A', 'C'));
+        assertEquals(1, bst.rangeSize('B', 'C'));
+        assertEquals(0, bst.rangeSize('B', 'B'));
+        assertEquals(0, bst.rangeSize('A', 'A'));
+        assertEquals(3, bst.rangeSize('C', 'N'));
+        assertEquals(5, bst.rangeSize('A', 'Z'));
     }
 }
