@@ -1,6 +1,7 @@
 package present.programmer.algorithms.sandbox.collection.map;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,6 +49,15 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         return candidate;
     }
 
+    public Iterable<K> range(K fromIncl, K toExcl) {
+        final List<K> keys = keys0();
+        final int bsFromIndex = Collections.binarySearch(keys, fromIncl);
+        final int fromInd = bsFromIndex >= 0 ? bsFromIndex : -bsFromIndex - 1;
+        final int bsToIndex = Collections.binarySearch(keys, toExcl);
+        final int toInd = bsToIndex >= 0 ? bsToIndex : -bsToIndex - 1;
+        return keys.subList(fromInd, toInd);
+    }
+
     public void delete(K key) {
         root = delete(key, root);
     }
@@ -64,9 +74,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> keys() {
-        final List<K> keys = new ArrayList<>();
-        gatherKeys(root, keys);
-        return keys;
+        return keys0();
     }
 
     private Node put(Node curr, K key, V value) {
@@ -107,6 +115,12 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
                 return size(curr.left);
             }
         }
+    }
+
+    private List<K> keys0() {
+        final List<K> keys = new ArrayList<>();
+        gatherKeys(root, keys);
+        return keys;
     }
 
     private void gatherKeys(Node curr, List<K> keys) {
