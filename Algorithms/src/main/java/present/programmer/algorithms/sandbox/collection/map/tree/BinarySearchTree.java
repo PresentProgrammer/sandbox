@@ -1,4 +1,4 @@
-package present.programmer.algorithms.sandbox.collection.map;
+package present.programmer.algorithms.sandbox.collection.map.tree;
 
 import java.util.ArrayList;
 import java.util.Collections;

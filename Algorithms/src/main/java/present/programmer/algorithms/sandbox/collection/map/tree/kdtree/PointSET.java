@@ -1,4 +1,4 @@
-package present.programmer.algorithms.sandbox.collection.map.kdtree;
+package present.programmer.algorithms.sandbox.collection.map.tree.kdtree;
 
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;

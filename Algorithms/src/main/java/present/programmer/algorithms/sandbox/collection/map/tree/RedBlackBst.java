@@ -1,4 +1,4 @@
-package present.programmer.algorithms.sandbox.collection.map;
+package present.programmer.algorithms.sandbox.collection.map.tree;
 
 /**
  * Note: search and order-operations (`floor`, `rank`, etc.) are the same as for simple BST.
