@@ -1,7 +1,6 @@
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Problem #843
@@ -19,9 +18,10 @@ public class GuessTheWord {
     public void findSecretWord(String[] wordList, Master master) {
         init(wordList);
         int depth = 0;
-        List<Integer> currWords = allWords();
+        boolean[] currWords = new boolean[words.length];
+        Arrays.fill(currWords, true);
         while (depth < MAX_DEPTH) {
-            final Integer chosen = chooseWord(currWords, depth);
+            final int chosen = chooseWord(currWords, depth);
             final int matches = master.guess(words[chosen]);
             if (matches == 6) {
                 return;
@@ -45,33 +45,28 @@ public class GuessTheWord {
         }
     }
 
-    private List<Integer> allWords() {
-        final List<Integer> currWords = new ArrayList<>();
-        for (int i = 0; i < words.length; i++) {
-            currWords.add(i);
-        }
-        return currWords;
-    }
-
-    private Integer chooseWord(List<Integer> words, int depth) {
-        for (final Integer word : words) {
-            if (goodToGo(words, word, depth + 1)) {
-                return word;
+    private int chooseWord(boolean[] currWords, int depth) {
+        for (int chosen = 0; chosen < currWords.length; chosen++) {
+            if (currWords[chosen]) {
+                if (goodToGo(currWords, chosen, depth + 1)) {
+                    return chosen;
+                }
             }
         }
-        return null;
+        return -1;
     }
 
-    private boolean goodToGo(List<Integer> currWords, Integer chosen, int depth) {
+    private boolean goodToGo(boolean[] currWords, int chosen, int depth) {
         if (depth > MAX_DEPTH) {
             return false;
         } else {
             for (int match = 0; match < STR_LENGTH; match++) {
-                final List<Integer> filteredWords = filterByMatches(currWords, chosen, match);
-                if (!filteredWords.isEmpty()) {
-                    final Integer nextChosen = chooseWord(filteredWords, depth);
-                    if (nextChosen == null) {
-                        return false;
+                final boolean[][] matchToFilteredWords = filterByMatches(currWords, chosen);
+                for (final boolean[] filteredWords : matchToFilteredWords) {
+                    if (hasWords(filteredWords)) {
+                        if (chooseWord(filteredWords, depth) == -1) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -79,11 +74,21 @@ public class GuessTheWord {
         }
     }
 
-    private List<Integer> filterByMatches(List<Integer> currWords, Integer chosen, int match) {
-        final List<Integer> filtered = new ArrayList<>();
-        for (final Integer word : currWords) {
-            if (matches[word][chosen] == match) {
-                filtered.add(word);
+    private boolean[][] filterByMatches(boolean[] currWords, int chosen) {
+        final boolean[][] filtered = new boolean[STR_LENGTH][words.length];
+        for (int word = 0; word < words.length; word++) {
+            if (currWords[word] && word != chosen) {
+                filtered[matches[word][chosen]][word] = true;
+            }
+        }
+        return filtered;
+    }
+
+    private boolean[] filterByMatches(boolean[] currWords, int chosen, int match) {
+        final boolean[] filtered = new boolean[words.length];
+        for (int word = 0; word < words.length; word++) {
+            if (currWords[word] && word != chosen) {
+                filtered[word] = matches[word][chosen] == match;
             }
         }
         return filtered;
@@ -95,6 +100,15 @@ public class GuessTheWord {
             count += s1.charAt(i) == s2.charAt(i) ? 1 : 0;
         }
         return count;
+    }
+
+    private static boolean hasWords(boolean[] currWords) {
+        for (final boolean word : currWords) {
+            if (word) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(final String[] args) {
