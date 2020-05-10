@@ -1,8 +1,14 @@
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Problem #843
@@ -14,10 +20,13 @@ public class GuessTheWord {
     private static final int STR_LENGTH = 6;
     private static final int MAX_DEPTH = 10;
 
+    private Map<String, Map<Integer, Set<String>>> matchMap;
 
     public void findSecretWord(String[] wordList, Master master) {
+        initMatchMap(wordList);
         int depth = 0;
-        List<String> currWords = Arrays.asList(wordList);
+        Set<String> currWords = Arrays.stream(wordList)
+                .collect(Collectors.toSet());
 
         // pick first
 //        for (int i = 0; i < 0; i++) {
@@ -37,13 +46,29 @@ public class GuessTheWord {
             if (matches == 6) {
                 return;
             } else {
-                currWords = filterByMatch(currWords, chosen, matches);
+                currWords = cachedDivideByMatches(currWords, chosen, matches);
                 depth++;
             }
         }
     }
 
-    private static String chooseWord(List<String> words, int depth) {
+    private void initMatchMap(String[] wordList) {
+        matchMap = new HashMap<>();
+        for (final String word : wordList) {
+            matchMap.put(word, divideByMatches(wordList, word));
+        }
+    }
+
+    private static Map<Integer, Set<String>> divideByMatches(String[] words, String chosen) {
+        final Map<Integer, Set<String>> map = new HashMap<>();
+        for (final String word : words) {
+            map.computeIfAbsent(countMatches(word, chosen), key -> new HashSet<>())
+                    .add(word);
+        }
+        return map;
+    }
+
+    private String chooseWord(Set<String> words, int depth) {
         for (final String word : words) {
             if (goodToGo(words, word, depth + 1)) {
                 return word;
@@ -52,13 +77,13 @@ public class GuessTheWord {
         return null;
     }
 
-    private static boolean goodToGo(List<String> words, String chosen, int depth) {
+    private boolean goodToGo(Set<String> words, String chosen, int depth) {
         if (depth > MAX_DEPTH) {
             return false;
         } else {
-            final List<List<String>> map = divideByMatches(words, chosen);
+            final Map<Integer, Set<String>> map = cachedDivideByMatches(words, chosen);
             for (int matches = 0; matches < STR_LENGTH; matches++) {
-                final List<String> filteredWords = map.get(matches);
+                final Set<String> filteredWords = map.get(matches);
                 if (!filteredWords.isEmpty()) {
                     final String nextChosen = chooseWord(filteredWords, depth);
                     if (nextChosen == null) {
@@ -70,25 +95,29 @@ public class GuessTheWord {
         }
     }
 
-    private static List<List<String>> divideByMatches(List<String> words, String chosen) {
-        final List<List<String>> map = new ArrayList<>();
-        for (int i = 0; i <= STR_LENGTH; i++) {
-            map.add(new ArrayList<>());
-        }
-        for (final String word : words) {
-            map.get(countMatches(word, chosen)).add(word);
-        }
-        return map;
+    private Map<Integer, Set<String>> cachedDivideByMatches(Set<String> currWords, String chosen) {
+        return IntStream.range(0, STR_LENGTH + 1)
+                .boxed()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        matches -> cachedDivideByMatches(currWords, chosen, matches)));
+
+//        final Map<Integer, Set<String>> unfiltered = matchMap.get(chosen);
+//        final Map<Integer, Set<String>> filtered = new HashMap<>();
+//        for (final Integer matches : unfiltered.keySet()) {
+//            filtered.put(matches, unfiltered.get(matches).stream()
+//                    .filter(currWords::contains)
+//                    .collect(Collectors.toSet()));
+//        }
+//        return filtered;
     }
 
-    private static List<String> filterByMatch(List<String> words, String chosen, int matches) {
-        final List<String> filtered = new ArrayList<>();
-        for (final String word : words) {
-            if (countMatches(word, chosen) == matches) {
-                filtered.add(word);
-            }
-        }
-        return filtered;
+    private Set<String> cachedDivideByMatches(Set<String> currWords, String chosen, int matches) {
+        return matchMap.get(chosen)
+                .getOrDefault(matches, Collections.emptySet())
+                .stream()
+                .filter(currWords::contains)
+                .collect(Collectors.toSet());
     }
 
     private static int countMatches(String s1, String s2) {
