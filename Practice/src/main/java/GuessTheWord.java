@@ -1,97 +1,65 @@
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Problem #843
- * Time complexity: O()
- * Space complexity: O()
+ * Time complexity: O(? * N ^ 2)
+ * Space complexity: O(N ^ 2)
  **/
 public class GuessTheWord {
 
     private static final int STR_LENGTH = 6;
-    private static final int MAX_DEPTH = 10;
-
-    private String[] words;
-    private int[][] matches;
 
     public void findSecretWord(String[] wordList, Master master) {
-        init(wordList);
-        int depth = 0;
-        boolean[] currWords = new boolean[words.length];
-        Arrays.fill(currWords, true);
-        while (depth < MAX_DEPTH) {
-            final int chosen = chooseWord(currWords, depth);
-            final int matches = master.guess(words[chosen]);
-            if (matches == 6) {
+        final int[][] matches = initMatches(wordList);
+        List<Integer> currWords = IntStream.range(0, wordList.length)
+                .boxed()
+                .collect(Collectors.toList());
+        while (true) {
+            int maxChildren = Integer.MAX_VALUE;
+            int maxWord = -1;
+            List<List<Integer>> maxWordChildren = null;
+            for (final Integer currWord : currWords) {
+                List<List<Integer>> children = initEmptyChildren();
+                for (final Integer secondWord : currWords) {
+                    children.get(matches[currWord][secondWord]).add(secondWord);
+                }
+                final int currMaxChildren = children.stream()
+                        .map(List::size)
+                        .max(Comparator.naturalOrder())
+                        .orElseThrow(RuntimeException::new);
+                if (currMaxChildren < maxChildren) {
+                    maxChildren = currMaxChildren;
+                    maxWord = currWord;
+                    maxWordChildren = children;
+                }
+            }
+            final int guessed = master.guess(wordList[maxWord]);
+            if (guessed == STR_LENGTH) {
                 return;
             } else {
-                currWords = filterByMatches(currWords, chosen, matches);
-                depth++;
+                currWords = maxWordChildren.get(guessed);
             }
         }
     }
 
-    private void init(String[] words) {
-        this.words = words;
-        this.matches = new int[words.length][words.length];
+    private int[][] initMatches(String[] words) {
+        final int[][] matches = new int[words.length][words.length];
         for (int i = 0; i < words.length; i++) {
-            this.matches[i][i] = STR_LENGTH;
+            matches[i][i] = STR_LENGTH;
             for (int j = i + 1; j < words.length; j++) {
                 final int ijMatches = countMatches(words[i], words[j]);
-                this.matches[i][j] = ijMatches;
-                this.matches[j][i] = ijMatches;
+                matches[i][j] = ijMatches;
+                matches[j][i] = ijMatches;
             }
         }
-    }
-
-    private int chooseWord(boolean[] currWords, int depth) {
-        for (int chosen = 0; chosen < currWords.length; chosen++) {
-            if (currWords[chosen]) {
-                if (goodToGo(currWords, chosen, depth + 1)) {
-                    return chosen;
-                }
-            }
-        }
-        return -1;
-    }
-
-    private boolean goodToGo(boolean[] currWords, int chosen, int depth) {
-        if (depth > MAX_DEPTH) {
-            return false;
-        } else {
-            for (int match = 0; match < STR_LENGTH; match++) {
-                final boolean[][] matchToFilteredWords = filterByMatches(currWords, chosen);
-                for (final boolean[] filteredWords : matchToFilteredWords) {
-                    if (hasWords(filteredWords)) {
-                        if (chooseWord(filteredWords, depth) == -1) {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-    }
-
-    private boolean[][] filterByMatches(boolean[] currWords, int chosen) {
-        final boolean[][] filtered = new boolean[STR_LENGTH][words.length];
-        for (int word = 0; word < words.length; word++) {
-            if (currWords[word] && word != chosen) {
-                filtered[matches[word][chosen]][word] = true;
-            }
-        }
-        return filtered;
-    }
-
-    private boolean[] filterByMatches(boolean[] currWords, int chosen, int match) {
-        final boolean[] filtered = new boolean[words.length];
-        for (int word = 0; word < words.length; word++) {
-            if (currWords[word] && word != chosen) {
-                filtered[word] = matches[word][chosen] == match;
-            }
-        }
-        return filtered;
+        return matches;
     }
 
     private static int countMatches(String s1, String s2) {
@@ -102,13 +70,10 @@ public class GuessTheWord {
         return count;
     }
 
-    private static boolean hasWords(boolean[] currWords) {
-        for (final boolean word : currWords) {
-            if (word) {
-                return true;
-            }
-        }
-        return false;
+    private static List<List<Integer>> initEmptyChildren() {
+        return Stream.generate(ArrayList<Integer>::new)
+                .limit(STR_LENGTH + 1)
+                .collect(Collectors.toList());
     }
 
     public static void main(final String[] args) {
