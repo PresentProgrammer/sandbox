@@ -14,19 +14,22 @@ public class GuessTheWord {
     private static final int STR_LENGTH = 6;
     private static final int MAX_DEPTH = 10;
 
+
     public void findSecretWord(String[] wordList, Master master) {
         int depth = 0;
         List<String> currWords = Arrays.asList(wordList);
-        for (int i = 0; i < 0; i++) {
-            final String chosen = currWords.get(0);
-            final int matches = master.guess(chosen);
-            if (matches == 6) {
-                return;
-            } else {
-                currWords = filterByMatch(currWords, chosen, matches);
-                depth++;
-            }
-        }
+
+        // pick first
+//        for (int i = 0; i < 0; i++) {
+//            final String chosen = currWords.get(0);
+//            final int matches = master.guess(chosen);
+//            if (matches == 6) {
+//                return;
+//            } else {
+//                currWords = filterByMatch(currWords, chosen, matches);
+//                depth++;
+//            }
+//        }
 
         while (depth < MAX_DEPTH) {
             final String chosen = chooseWord(currWords, depth);
@@ -53,8 +56,9 @@ public class GuessTheWord {
         if (depth > MAX_DEPTH) {
             return false;
         } else {
+            final List<List<String>> map = divideByMatches(words, chosen);
             for (int matches = 0; matches < STR_LENGTH; matches++) {
-                final List<String> filteredWords = filterByMatch(words, chosen, matches);
+                final List<String> filteredWords = map.get(matches);
                 if (!filteredWords.isEmpty()) {
                     final String nextChosen = chooseWord(filteredWords, depth);
                     if (nextChosen == null) {
@@ -64,6 +68,17 @@ public class GuessTheWord {
             }
             return true;
         }
+    }
+
+    private static List<List<String>> divideByMatches(List<String> words, String chosen) {
+        final List<List<String>> map = new ArrayList<>();
+        for (int i = 0; i <= STR_LENGTH; i++) {
+            map.add(new ArrayList<>());
+        }
+        for (final String word : words) {
+            map.get(countMatches(word, chosen)).add(word);
+        }
+        return map;
     }
 
     private static List<String> filterByMatch(List<String> words, String chosen, int matches) {
