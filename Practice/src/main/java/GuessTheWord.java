@@ -1,14 +1,7 @@
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Problem #843
@@ -20,56 +13,48 @@ public class GuessTheWord {
     private static final int STR_LENGTH = 6;
     private static final int MAX_DEPTH = 10;
 
-    private Map<String, Map<Integer, Set<String>>> matchMap;
+    private String[] words;
+    private int[][] matches;
 
     public void findSecretWord(String[] wordList, Master master) {
-        initMatchMap(wordList);
+        init(wordList);
         int depth = 0;
-        Set<String> currWords = Arrays.stream(wordList)
-                .collect(Collectors.toSet());
-
-        // pick first
-//        for (int i = 0; i < 0; i++) {
-//            final String chosen = currWords.get(0);
-//            final int matches = master.guess(chosen);
-//            if (matches == 6) {
-//                return;
-//            } else {
-//                currWords = filterByMatch(currWords, chosen, matches);
-//                depth++;
-//            }
-//        }
-
+        List<Integer> currWords = allWords();
         while (depth < MAX_DEPTH) {
-            final String chosen = chooseWord(currWords, depth);
-            final int matches = master.guess(chosen);
+            final Integer chosen = chooseWord(currWords, depth);
+            final int matches = master.guess(words[chosen]);
             if (matches == 6) {
                 return;
             } else {
-                currWords = cachedDivideByMatches(currWords, chosen, matches);
+                currWords = filterByMatches(currWords, chosen, matches);
                 depth++;
             }
         }
     }
 
-    private void initMatchMap(String[] wordList) {
-        matchMap = new HashMap<>();
-        for (final String word : wordList) {
-            matchMap.put(word, divideByMatches(wordList, word));
+    private void init(String[] words) {
+        this.words = words;
+        this.matches = new int[words.length][words.length];
+        for (int i = 0; i < words.length; i++) {
+            this.matches[i][i] = STR_LENGTH;
+            for (int j = i + 1; j < words.length; j++) {
+                final int ijMatches = countMatches(words[i], words[j]);
+                this.matches[i][j] = ijMatches;
+                this.matches[j][i] = ijMatches;
+            }
         }
     }
 
-    private static Map<Integer, Set<String>> divideByMatches(String[] words, String chosen) {
-        final Map<Integer, Set<String>> map = new HashMap<>();
-        for (final String word : words) {
-            map.computeIfAbsent(countMatches(word, chosen), key -> new HashSet<>())
-                    .add(word);
+    private List<Integer> allWords() {
+        final List<Integer> currWords = new ArrayList<>();
+        for (int i = 0; i < words.length; i++) {
+            currWords.add(i);
         }
-        return map;
+        return currWords;
     }
 
-    private String chooseWord(Set<String> words, int depth) {
-        for (final String word : words) {
+    private Integer chooseWord(List<Integer> words, int depth) {
+        for (final Integer word : words) {
             if (goodToGo(words, word, depth + 1)) {
                 return word;
             }
@@ -77,15 +62,14 @@ public class GuessTheWord {
         return null;
     }
 
-    private boolean goodToGo(Set<String> words, String chosen, int depth) {
+    private boolean goodToGo(List<Integer> currWords, Integer chosen, int depth) {
         if (depth > MAX_DEPTH) {
             return false;
         } else {
-            final Map<Integer, Set<String>> map = cachedDivideByMatches(words, chosen);
-            for (int matches = 0; matches < STR_LENGTH; matches++) {
-                final Set<String> filteredWords = map.get(matches);
+            for (int match = 0; match < STR_LENGTH; match++) {
+                final List<Integer> filteredWords = filterByMatches(currWords, chosen, match);
                 if (!filteredWords.isEmpty()) {
-                    final String nextChosen = chooseWord(filteredWords, depth);
+                    final Integer nextChosen = chooseWord(filteredWords, depth);
                     if (nextChosen == null) {
                         return false;
                     }
@@ -95,29 +79,14 @@ public class GuessTheWord {
         }
     }
 
-    private Map<Integer, Set<String>> cachedDivideByMatches(Set<String> currWords, String chosen) {
-        return IntStream.range(0, STR_LENGTH + 1)
-                .boxed()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        matches -> cachedDivideByMatches(currWords, chosen, matches)));
-
-//        final Map<Integer, Set<String>> unfiltered = matchMap.get(chosen);
-//        final Map<Integer, Set<String>> filtered = new HashMap<>();
-//        for (final Integer matches : unfiltered.keySet()) {
-//            filtered.put(matches, unfiltered.get(matches).stream()
-//                    .filter(currWords::contains)
-//                    .collect(Collectors.toSet()));
-//        }
-//        return filtered;
-    }
-
-    private Set<String> cachedDivideByMatches(Set<String> currWords, String chosen, int matches) {
-        return matchMap.get(chosen)
-                .getOrDefault(matches, Collections.emptySet())
-                .stream()
-                .filter(currWords::contains)
-                .collect(Collectors.toSet());
+    private List<Integer> filterByMatches(List<Integer> currWords, Integer chosen, int match) {
+        final List<Integer> filtered = new ArrayList<>();
+        for (final Integer word : currWords) {
+            if (matches[word][chosen] == match) {
+                filtered.add(word);
+            }
+        }
+        return filtered;
     }
 
     private static int countMatches(String s1, String s2) {
@@ -127,14 +96,15 @@ public class GuessTheWord {
         }
         return count;
     }
-    
+
     public static void main(final String[] args) {
-        final String[] words = { "wichbx","oahwep","tpulot","eqznzs","vvmplb","eywinm","dqefpt","kmjmxr","ihkovg","trbzyb","xqulhc","bcsbfw","rwzslk","abpjhw","mpubps","viyzbc","kodlta","ckfzjh","phuepp","rokoro","nxcwmo","awvqlr","uooeon","hhfuzz","sajxgr","oxgaix","fnugyu","lkxwru","mhtrvb","xxonmg","tqxlbr","euxtzg","tjwvad","uslult","rtjosi","hsygda","vyuica","mbnagm","uinqur","pikenp","szgupv","qpxmsw","vunxdn","jahhfn","kmbeok","biywow","yvgwho","hwzodo","loffxk","xavzqd","vwzpfe","uairjw","itufkt","kaklud","jjinfa","kqbttl","zocgux","ucwjig","meesxb","uysfyc","kdfvtw","vizxrv","rpbdjh","wynohw","lhqxvx","kaadty","dxxwut","vjtskm","yrdswc","byzjxm","jeomdc","saevda","himevi","ydltnu","wrrpoc","khuopg","ooxarg","vcvfry","thaawc","bssybb","ccoyyo","ajcwbj","arwfnl","nafmtm","xoaumd","vbejda","kaefne","swcrkh","reeyhj","vmcwaf","chxitv","qkwjna","vklpkp","xfnayl","ktgmfn","xrmzzm","fgtuki","zcffuv","srxuus","pydgmq" };
-        final Master master = new Master("ccoyyo");
+        final String[] words = { "gaxckt","trlccr","jxwhkz","ycbfps","peayuf","yiejjw","ldzccp","nqsjoa","qrjasy","pcldos","acrtag","buyeia","ubmtpj","drtclz","zqderp","snywek","caoztp","ibpghw","evtkhl","bhpfla","ymqhxk","qkvipb","tvmued","rvbass","axeasm","qolsjg","roswcb","vdjgxx","bugbyv","zipjpc","tamszl","osdifo","dvxlxm","iwmyfb","wmnwhe","hslnop","nkrfwn","puvgve","rqsqpq","jwoswl","tittgf","evqsqe","aishiv","pmwovj","sorbte","hbaczn","coifed","hrctvp","vkytbw","dizcxz","arabol","uywurk","ppywdo","resfls","tmoliy","etriev","oanvlx","wcsnzy","loufkw","onnwcy","novblw","mtxgwe","rgrdbt","ckolob","kxnflb","phonmg","egcdab","cykndr","lkzobv","ifwmwp","jqmbib","mypnvf","lnrgnj","clijwa","kiioqr","syzebr","rqsmhg","sczjmz","hsdjfp","mjcgvm","ajotcx","olgnfv","mjyjxj","wzgbmg","lpcnbj","yjjlwn","blrogv","bdplzs","oxblph","twejel","rupapy","euwrrz","apiqzu","ydcroj","ldvzgq","zailgu","xgqpsr","wxdyho","alrplq","brklfk" };
+        final Master master = new Master("hbaczn");
         final Instant start = Instant.now();
         new GuessTheWord().findSecretWord(words, master);
         System.out.println("Time taken: " + Duration.between(start, Instant.now()));
         System.out.println("Guesses: " + master.guesses);
+        System.out.println("Guessed: " + master.guessed);
 	}
 
 	private static class Master {
