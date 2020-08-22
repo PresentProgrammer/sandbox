@@ -1,9 +1,9 @@
-import javafx.util.Pair;
-
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * Problem #56
@@ -14,7 +14,7 @@ public class MergeIntervals {
 
     public int[][] merge(int[][] intervals) {
 		Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
-		final List<Pair<Integer, Integer>> result = new ArrayList<>();
+		final List<Entry<Integer, Integer>> result = new ArrayList<>();
         int i = 0, left = 0, right = 0;
         boolean processing = false;
         while (i < intervals.length) {
@@ -26,7 +26,7 @@ public class MergeIntervals {
                     i++;
                 } else {
                     processing = false;
-                    result.add(new Pair<>(left, right));
+                    result.add(new SimpleEntry<>(left, right));
                 }
             } else {
                 left = intervals[i][0];
@@ -36,7 +36,7 @@ public class MergeIntervals {
             }
         }
         if (processing) {
-            result.add(new Pair<>(left, right));
+            result.add(new SimpleEntry<>(left, right));
         }
 		return result.stream()
                 .map(pair -> new int[]{ pair.getKey(), pair.getValue() })

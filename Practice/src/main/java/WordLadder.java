@@ -1,12 +1,6 @@
-import javafx.util.Pair;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.*;
+import java.util.Map.Entry;
 
 import static java.util.Arrays.asList;
 
@@ -39,16 +33,16 @@ public class WordLadder {
 		beginVisited.put(beginWord, 1);
 		final Map<String, Integer> endVisited = new HashMap<>();
 		endVisited.put(endWord, 1);
-		final Queue<Pair<String, Integer>> beginQueue = new ArrayDeque<>();
-		final Queue<Pair<String, Integer>> endQueue = new ArrayDeque<>();
-		beginQueue.add(new Pair<>(beginWord, 1));
-		endQueue.add(new Pair<>(endWord, 1));
+		final Queue<Entry<String, Integer>> beginQueue = new ArrayDeque<>();
+		final Queue<Entry<String, Integer>> endQueue = new ArrayDeque<>();
+		beginQueue.add(new SimpleEntry<>(beginWord, 1));
+		endQueue.add(new SimpleEntry<>(endWord, 1));
 		Map<String, Integer> activeVisited = endVisited;
-		Queue<Pair<String, Integer>> activeQueue = endQueue;
+		Queue<Entry<String, Integer>> activeQueue = endQueue;
 		while (!beginQueue.isEmpty() && !endQueue.isEmpty()) {
 			activeVisited = activeVisited == beginVisited ? endVisited : beginVisited;
 			activeQueue = activeQueue == beginQueue ? endQueue : beginQueue;
-			final Pair<String, Integer> curr = activeQueue.poll();
+			final Entry<String, Integer> curr = activeQueue.poll();
 			final String currWord = curr.getKey();
 			final Integer currLength = curr.getValue();
 			for (final String currGenericWord : genericWordsOf(currWord)) {
@@ -59,7 +53,7 @@ public class WordLadder {
 							return currLength + inactiveVisited.get(nextWord);
 						} else {
 							activeVisited.put(nextWord, currLength + 1);
-							activeQueue.offer(new Pair<>(nextWord, currLength + 1));
+							activeQueue.offer(new SimpleEntry<>(nextWord, currLength + 1));
 						}
 					}
 				}

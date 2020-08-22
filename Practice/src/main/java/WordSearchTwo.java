@@ -1,9 +1,9 @@
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Map.Entry;
 
 /**
  * Problem #212
@@ -20,13 +20,13 @@ public class WordSearchTwo {
         final Set<String> result = new HashSet<>();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                findWords(board, new Pair<>(i, j), new HashSet<>(), trie, result);
+                findWords(board, new SimpleEntry<>(i, j), new HashSet<>(), trie, result);
             }
         }
         return new ArrayList<>(result);
     }
 
-    private static void findWords(char[][] board, Pair<Integer, Integer> cell, Set<Pair<Integer, Integer>> visited,
+    private static void findWords(char[][] board, Entry<Integer, Integer> cell, Set<Entry<Integer, Integer>> visited,
             Trie trie, Set<String> result) {
         final int i = cell.getKey();
         final int j = cell.getValue();
@@ -36,11 +36,11 @@ public class WordSearchTwo {
                 if (nextTrie.isKey()) {
                     result.add(nextTrie.getWord());
                 }
-                final Set<Pair<Integer, Integer>> visitedWithCurr = newWithElement(visited, cell);
-                findWords(board, new Pair<>(i - 1, j), visitedWithCurr, nextTrie, result);
-                findWords(board, new Pair<>(i + 1, j), visitedWithCurr, nextTrie, result);
-                findWords(board, new Pair<>(i, j - 1), visitedWithCurr, nextTrie, result);
-                findWords(board, new Pair<>(i, j + 1), visitedWithCurr, nextTrie, result);
+                final Set<Entry<Integer, Integer>> visitedWithCurr = newWithElement(visited, cell);
+                findWords(board, new SimpleEntry<>(i - 1, j), visitedWithCurr, nextTrie, result);
+                findWords(board, new SimpleEntry<>(i + 1, j), visitedWithCurr, nextTrie, result);
+                findWords(board, new SimpleEntry<>(i, j - 1), visitedWithCurr, nextTrie, result);
+                findWords(board, new SimpleEntry<>(i, j + 1), visitedWithCurr, nextTrie, result);
             }
         }
     }
