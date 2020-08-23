@@ -2,8 +2,10 @@ import present.programmer.util.InputReader;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.TreeMap;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -21,28 +23,19 @@ public class MinimumCostToHireWorkers {
                         .reversed())
                 .toArray(Worker[]::new);
 
-        final TreeMap<Integer, Integer> leftQualities = new TreeMap<>();
-        for (final int quality : qualities) {
-            leftQualities.put(quality, leftQualities.getOrDefault(quality, 0) + 1);
-        }
+        final List<Integer> leftQualities = IntStream.of(qualities)
+                .sorted()
+                .boxed()
+                .collect(Collectors.toList());
 
         double minCost = Double.POSITIVE_INFINITY;
         for (int i = 0; i <= N - K; i++) {
             final Worker iWorker = workers[i];
-            if (leftQualities.get(iWorker.quality) == 1) {
-                leftQualities.remove(iWorker.quality);
-            } else {
-                leftQualities.put(iWorker.quality, leftQualities.get(iWorker.quality) - 1);
-            }
+            leftQualities.remove(Collections.binarySearch(leftQualities, iWorker.quality));
 
             double iMinCost = iWorker.wage;
-            int leftToHire = K - 1;
-            int minPossibleQuality = 0;
-            while (leftToHire > 0) {
-                minPossibleQuality = leftQualities.higherKey(minPossibleQuality);
-                final int minPossibleQualityCount = leftQualities.get(minPossibleQuality);
-                iMinCost += iWorker.ratio * minPossibleQuality * Math.min(minPossibleQualityCount, leftToHire);
-                leftToHire -= minPossibleQualityCount;
+            for (int j = 0; j < K - 1; j++) {
+                iMinCost += iWorker.ratio * leftQualities.get(j);
             }
 
             minCost = Math.min(minCost, iMinCost);
@@ -66,7 +59,7 @@ public class MinimumCostToHireWorkers {
         final int[] qualities = new InputReader().readIntArray("/input/538.qualities.txt");
         final int[] wages = new InputReader().readIntArray("/input/538.qualities.txt");
         Instant start = Instant.now();
-        System.out.println("? == " + new MinimumCostToHireWorkers().mincostToHireWorkers(qualities, wages, 3));
+        System.out.println("? == " + new MinimumCostToHireWorkers().mincostToHireWorkers(qualities, wages, 7933));
         System.out.println("Execution took " + Duration.between(start, Instant.now()));
 	}
 }
