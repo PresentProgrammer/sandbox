@@ -9,9 +9,9 @@ import java.util.List;
 public class GenerateUniqueStrings {
 
     private static final char FIRST_CHAR = 'A';
-    
+
     public List<String> generateStrings(int n) {
-		return gen(new ArrayList<>(), n, "", 0);
+        return gen(new ArrayList<>(), n, "", 0);
     }
 
     private static List<String> gen(List<String> result, int n, String stringSoFar, int maxStep) {
@@ -24,8 +24,8 @@ public class GenerateUniqueStrings {
         }
         return result;
     }
-    
+
     public static void main(final String[] args) {
         System.out.println(new GenerateUniqueStrings().generateStrings(4));
-	}
+    }
 }
