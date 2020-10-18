@@ -1,59 +1,76 @@
+import java.util.Arrays;
+
 /**
  * Problem #493
- * Time complexity: O()
- * Space complexity: O()
+ * Time complexity: O(N log N)
+ * Space complexity: O(N)
  **/
 public class ReversePairs {
 
+    private int[] nums;
+    private int[] aux;
+
     public int reversePairs(int[] nums) {
-        if (nums == null || nums.length == 0) {
+        this.nums = Arrays.copyOf(nums, nums.length);
+        this.aux = new int[nums.length];
+        return mergeSortWithCount(0, nums.length - 1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("2 == " + new ReversePairs().reversePairs(new int[]{ 1, 3, 2, 3, 1 }));
+    }
+
+    private int mergeSortWithCount(int start, int endIncl) {
+        if (start >= endIncl) {
             return 0;
         }
 
-        final Node root = new Node(nums[0]);
+        final int mid = mid(start, endIncl);
+        final int count = mergeSortWithCount(start, mid) + mergeSortWithCount(mid + 1, endIncl)
+                + countImportantReversePairs(start, endIncl);
+        merge(start, endIncl);
+        return count;
+    }
+
+    private void merge(int start, int endIncl) {
+        System.arraycopy(nums, start, aux, start, endIncl - start + 1);
+        final int mid = mid(start, endIncl);
+        int i = start;
+        int j = mid + 1;
+        int k = start;
+        while (i <= mid && j <= endIncl) {
+            if (aux[i] <= aux[j]) {
+                nums[k++] = aux[i++];
+            } else {
+                nums[k++] = aux[j++];
+            }
+        }
+        while (i <= mid) {
+            nums[k++] = aux[i++];
+        }
+        // commented out since right part is copied from nums
+        // while (j <= endIncl) {
+        //     nums[k++] = aux[j++];
+        // }
+    }
+
+    private int countImportantReversePairs(int start, int endIncl) {
         int count = 0;
-        for (int i = 1; i < nums.length; i++) {
-            count += root.countGreater(((long) nums[i]) * 2);
-            root.insert(nums[i]);
+        final int mid = mid(start, endIncl);
+        int i = start;
+        int j = mid + 1;
+        while (i <= mid && j <= endIncl) {
+            if (nums[i] <= (long) nums[j] * 2) {
+                i++;
+            } else {
+                count += mid - i + 1;
+                j++;
+            }
         }
         return count;
     }
 
-    private static class Node {
-        private final int val;
-        private int countGE = 1;
-        private Node left = null;
-        private Node right = null;
-
-        Node(int val) {
-            this.val = val;
-        }
-
-        void insert(int newVal) {
-            if (newVal >= this.val) {
-                this.countGE++;
-            }
-            if (newVal > this.val) {
-                if (this.right == null) {
-                    this.right = new Node(newVal);
-                } else {
-                    this.right.insert(newVal);
-                }
-            } else if (newVal < this.val) {
-                if (this.left == null) {
-                    this.left = new Node(newVal);
-                } else {
-                    this.left.insert(newVal);
-                }
-            }
-        }
-
-        int countGreater(long other) {
-            if (other < this.val) {
-                return this.countGE + (this.left == null ? 0 : this.left.countGreater(other));
-            } else {
-                return this.right == null ? 0 : this.right.countGreater(other);
-            }
-        }
+    private static int mid(int start, int endIncl) {
+        return (start + endIncl) >>> 1;
     }
 }
