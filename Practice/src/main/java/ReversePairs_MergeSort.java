@@ -2,10 +2,11 @@ import java.util.Arrays;
 
 /**
  * Problem #493
+ * Solved with modified Merge Sort.
  * Time complexity: O(N log N)
  * Space complexity: O(N)
  **/
-public class ReversePairs {
+public class ReversePairs_MergeSort {
 
     private int[] nums;
     private int[] aux;
@@ -17,7 +18,7 @@ public class ReversePairs {
     }
 
     public static void main(String[] args) {
-        System.out.println("2 == " + new ReversePairs().reversePairs(new int[]{ 1, 3, 2, 3, 1 }));
+        System.out.println("2 == " + new ReversePairs_MergeSort().reversePairs(new int[]{ 1, 3, 2, 3, 1 }));
     }
 
     private int mergeSortWithCount(int start, int endIncl) {
