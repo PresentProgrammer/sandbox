@@ -41,7 +41,7 @@ public class ReversePairs_BinarySearchTree {
         private final Node root;
 
         CustomBinarySearchTree(int[] nums) {
-            this.root = toCustomBinarySearchTree(nums);
+            this.root = toBalancedBST(nums);
         }
 
         void insert(int newVal) {
@@ -52,22 +52,22 @@ public class ReversePairs_BinarySearchTree {
             return root.countGreater(other);
         }
 
-        private static Node toCustomBinarySearchTree(int[] nums) {
+        private static Node toBalancedBST(int[] nums) {
             final int[] arr = Arrays.stream(nums)
                     .sorted()
                     .distinct()
                     .toArray();
-            return toBST(arr, 0, arr.length - 1);
+            return buildBalancedBST(arr, 0, arr.length - 1);
         }
 
-        private static Node toBST(int[] arr, int start, int endIncl) {
+        private static Node buildBalancedBST(int[] arr, int start, int endIncl) {
             if (start > endIncl) {
                 return null;
             }
             final int mid = (start + endIncl) >>> 1;
             final Node root = new Node(arr[mid]);
-            root.left = toBST(arr, start, mid - 1);
-            root.right = toBST(arr, mid + 1, endIncl);
+            root.left = buildBalancedBST(arr, start, mid - 1);
+            root.right = buildBalancedBST(arr, mid + 1, endIncl);
             return root;
         }
 
