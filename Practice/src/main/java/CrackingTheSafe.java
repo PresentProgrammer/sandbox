@@ -3,7 +3,9 @@ import java.util.Map;
 
 /**
  * Problem #753
- * Solved with Eulerian Path approach.
+ * Solved with Eulerian Path approach. For reference:
+ * - Existence of Eulerian Paths and Circuits: https://www.youtube.com/watch?v=xR4sGgwtR2I
+ * - Eulerian Path/Circuit algorithm (Hierholzer's algorithm): https://www.youtube.com/watch?v=8MpoO2zA2l4
  * Time complexity: O(|E|) = O(k ^ n), as |V| = k ^ (n - 1), and |E| = |V| * k
  * Space complexity: O(|V| + |E|) = O(k ^ n)
  **/
