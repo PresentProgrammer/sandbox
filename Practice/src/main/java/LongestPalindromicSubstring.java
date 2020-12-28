@@ -1,9 +1,17 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Time complexity: O(n^2)
  * Space complexity: O(1).
  **/
 public class LongestPalindromicSubstring {
-    
+
+    /**
+     * Expand around center solution.
+     */
     public String longestPalindrome(String s) {
         final int midIndex = (s.length() - 1);
         final int maxIndex = (s.length() - 1) * 2;
@@ -27,6 +35,41 @@ public class LongestPalindromicSubstring {
             rightRealIndex++;
         }
         return rightRealIndex - leftRealIndex == 1 ? "" : s.substring(leftRealIndex + 1, rightRealIndex);
+    }
+
+    // ========================== //
+
+    /**
+     * Try to optimize with Map, but not faster for given test cases on LeetCode.
+     */
+    public String longestPalindromeV2(String s) {
+        final char[] chars = s.toCharArray();
+        final Map<Character, List<Integer>> map = new HashMap<>();
+        for (int i = chars.length - 1; i >= 0; i--) {
+            map.computeIfAbsent(chars[i], unused -> new ArrayList<>())
+                    .add(i);
+        }
+
+        String longest = "";
+        for (int left = 0; left < chars.length - longest.length(); left++) {
+            for (final int right : map.get(chars[left])) {
+                if (right - left + 1 < longest.length()) {
+                    break;
+                } else if (isPalindrome(chars, left, right)) {
+                    longest = new String(chars, left, right - left + 1);
+                }
+            }
+        }
+        return longest;
+    }
+
+    private static boolean isPalindrome(char[] chars, int left, int rightIncl) {
+        while (left < rightIncl) {
+            if (chars[left++] != chars[rightIncl--]) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public static void main(final String[] args) {
