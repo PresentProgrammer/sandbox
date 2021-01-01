@@ -72,7 +72,7 @@ public class MaxPointsOnLine {
         System.out.println("3 == " + new MaxPointsOnLine().maxPoints(new int[][]{{1, 1}, {2, 2}, {3, 3}}));
         System.out.println("4 == " + new MaxPointsOnLine().maxPoints(new int[][]{{1, 1}, {3, 2}, {5, 3}, {4, 1}, {2, 3}, {1, 4}}));
         System.out.println("3 == " + new MaxPointsOnLine().maxPoints(new int[][]{{1, 1}, {1, 1}, {2, 3}}));
-        System.out.println("2 == " + new MaxPointsOnLine().maxPoints(new int[][]{{0,0},{94911151,94911150},{94911152,94911151}}));
-        System.out.println("4 == " + new MaxPointsOnLine().maxPoints(new int[][]{{1,1},{1,1},{2,2},{2,2}}));
+        System.out.println("2 == " + new MaxPointsOnLine().maxPoints(new int[][]{{0, 0}, {94911151, 94911150}, {94911152, 94911151}}));
+        System.out.println("4 == " + new MaxPointsOnLine().maxPoints(new int[][]{{1, 1}, {1, 1}, {2, 2}, {2, 2}}));
     }
 }

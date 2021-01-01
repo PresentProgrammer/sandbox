@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 public class TheSkylineProblem {
 
     public List<int[]> getSkyline(int[][] buildings) {
-		final TreeMap<Integer, Integer> keyPoints = new TreeMap<>();
-		for (final int[] building : buildings) {
-		    final int left = building[0];
-		    final int right = building[1];
-		    final int h = building[2];
+        final TreeMap<Integer, Integer> keyPoints = new TreeMap<>();
+        for (final int[] building : buildings) {
+            final int left = building[0];
+            final int right = building[1];
+            final int h = building[2];
 
-		    int last = keyPoints.lowerEntry(left) == null ? 0 : keyPoints.lowerEntry(left).getValue();
+            int last = keyPoints.lowerEntry(left) == null ? 0 : keyPoints.lowerEntry(left).getValue();
 
-		    if (keyPoints.containsKey(left)) {
-		        last = keyPoints.get(left);
+            if (keyPoints.containsKey(left)) {
+                last = keyPoints.get(left);
                 if (keyPoints.get(left) < h) {
                     final Map.Entry<Integer, Integer> prev = keyPoints.lowerEntry(left);
                     if (prev != null && prev.getValue() == h) {
@@ -32,19 +32,19 @@ public class TheSkylineProblem {
                     }
                 }
             } else {
-		        final Map.Entry<Integer, Integer> prev = keyPoints.lowerEntry(left);
-		        if (prev == null || prev.getValue() < h) {
-		            keyPoints.put(left, h);
+                final Map.Entry<Integer, Integer> prev = keyPoints.lowerEntry(left);
+                if (prev == null || prev.getValue() < h) {
+                    keyPoints.put(left, h);
                 }
             }
 
-		    final Iterator<Map.Entry<Integer, Integer>> leftToRightIter = keyPoints.subMap(left + 1, right)
+            final Iterator<Map.Entry<Integer, Integer>> leftToRightIter = keyPoints.subMap(left + 1, right)
                     .entrySet()
                     .iterator();
-		    while (leftToRightIter.hasNext()) {
-		        final Map.Entry<Integer, Integer> curr = leftToRightIter.next();
-		        last = curr.getValue();
-		        final int prevH = keyPoints.lowerEntry(curr.getKey()).getValue();
+            while (leftToRightIter.hasNext()) {
+                final Map.Entry<Integer, Integer> curr = leftToRightIter.next();
+                last = curr.getValue();
+                final int prevH = keyPoints.lowerEntry(curr.getKey()).getValue();
                 if (curr.getValue() == h) {
                     if (prevH >= h) {
                         leftToRightIter.remove();
@@ -58,16 +58,16 @@ public class TheSkylineProblem {
                 }
             }
 
-		    if (!keyPoints.containsKey(right) && last < h) {
-		        keyPoints.put(right, last);
+            if (!keyPoints.containsKey(right) && last < h) {
+                keyPoints.put(right, last);
             }
         }
 
         return keyPoints.entrySet().stream()
-                .map(entry -> new int[]{ entry.getKey(), entry.getValue() })
+                .map(entry -> new int[]{entry.getKey(), entry.getValue()})
                 .collect(Collectors.toList());
     }
-    
+
     public static void main(final String[] args) {
         final List<int[]> keyPoints = new TheSkylineProblem().getSkyline(new int[][]{
                 {2, 9, 10},
@@ -91,5 +91,5 @@ public class TheSkylineProblem {
             System.out.println(Arrays.toString(keyPoint));
         }
         System.out.println();
-	}
+    }
 }

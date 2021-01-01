@@ -38,8 +38,8 @@ public class CrackingTheSafe {
         }
         return strBuilder.toString();
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("01100 == " + new CrackingTheSafe().crackSafe(2, 2));
-	}
+    }
 }

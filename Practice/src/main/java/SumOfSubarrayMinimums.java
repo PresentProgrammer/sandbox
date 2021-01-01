@@ -13,7 +13,7 @@ public class SumOfSubarrayMinimums {
 
     /**
      * Alternative Left / right array solution, based on https://leetcode.com/problems/sum-of-subarray-minimums/discuss/170750/C++JavaPython-Stack-Solution
-     *
+     * <p>
      * See interesting formula about number of sub-arrays containing A[i] in above reference, and https://lh3.googleusercontent.com/-GyygvrTJ3GY/XRlvmDTxEHI/AAAAAAAAO4E/yDc-Xvo3isgM8QFOSiVp6yUK_j9E8cwGACK8BGAs/s0/2019-06-30.jpg
      */
     public int sumSubarrayMinsLeftRight(int[] a) {
@@ -87,8 +87,8 @@ public class SumOfSubarrayMinimums {
 //        System.out.println("17 == " + new SumOfSubarrayMinimums().sumSubarrayMins(new int[] { 3, 1, 2, 4 }));
 //        System.out.println("17 == " + new SumOfSubarrayMinimums().sumSubarrayMins(new int[] { 3, 2, 1, 4 }));
 
-        System.out.println("17 == " + new SumOfSubarrayMinimums().sumSubarrayMinsLeftRight(new int[] { 3, 1, 2, 4 }));
-        System.out.println("17 == " + new SumOfSubarrayMinimums().sumSubarrayMinsLeftRight(new int[] { 3, 2, 1, 4 }));
-        System.out.println("593 == " + new SumOfSubarrayMinimums().sumSubarrayMinsLeftRight(new int[] { 71, 55, 82, 55 }));
-	}
+        System.out.println("17 == " + new SumOfSubarrayMinimums().sumSubarrayMinsLeftRight(new int[]{3, 1, 2, 4}));
+        System.out.println("17 == " + new SumOfSubarrayMinimums().sumSubarrayMinsLeftRight(new int[]{3, 2, 1, 4}));
+        System.out.println("593 == " + new SumOfSubarrayMinimums().sumSubarrayMinsLeftRight(new int[]{71, 55, 82, 55}));
+    }
 }

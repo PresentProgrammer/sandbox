@@ -9,7 +9,7 @@ import java.util.List;
 public class LargestRectangleInHistogram {
 
     public int largestRectangleArea(int[] heights) {
-		return largestRectangleArea(heights, 0, heights.length);
+        return largestRectangleArea(heights, 0, heights.length);
     }
 
     private int largestRectangleArea(final int[] heights, final int left, final int rightExcl) {
@@ -39,10 +39,10 @@ public class LargestRectangleInHistogram {
             return maxArea;
         }
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println("10 == " + new LargestRectangleInHistogram().largestRectangleArea(new int[]{2,1,5,6,2,3}));
+        System.out.println("10 == " + new LargestRectangleInHistogram().largestRectangleArea(new int[]{2, 1, 5, 6, 2, 3}));
         System.out.println("0 == " + new LargestRectangleInHistogram().largestRectangleArea(new int[]{}));
         System.out.println(Integer.MAX_VALUE + " == " + new LargestRectangleInHistogram().largestRectangleArea(new int[]{Integer.MAX_VALUE}));
-	}
+    }
 }

@@ -13,21 +13,21 @@ public class SurroundedRegions {
         }
         this.board = board;
 
-		for (int i = 0; i < board.length; i++) {
-		    saveRegion(i, 0);
-		    saveRegion(i, board[i].length - 1);
+        for (int i = 0; i < board.length; i++) {
+            saveRegion(i, 0);
+            saveRegion(i, board[i].length - 1);
         }
-		for (int j = 1; j < board[0].length - 1; j++) {
-		    saveRegion(0, j);
-		    saveRegion(board.length - 1, j);
+        for (int j = 1; j < board[0].length - 1; j++) {
+            saveRegion(0, j);
+            saveRegion(board.length - 1, j);
         }
 
-		for (int i = 0; i < board.length; i++) {
-		    for (int j = 0; j < board[i].length; j++) {
-		        if (board[i][j] == 'Y') {
-		            board[i][j] = 'O';
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == 'Y') {
+                    board[i][j] = 'O';
                 } else {
-		            board[i][j] = 'X';
+                    board[i][j] = 'X';
                 }
             }
         }
@@ -44,5 +44,5 @@ public class SurroundedRegions {
     }
 
     public static void main(final String[] args) {
-	}
+    }
 }

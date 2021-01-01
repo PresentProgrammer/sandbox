@@ -11,14 +11,14 @@ public class RotateArray {
         if (nums == null || nums.length < 1 || k == 0) {
             return;
         }
-		for (int i = 0; i < greatestCommonDivisor(k, nums.length); i++) {
-		    int j = i, prevTemp = nums[j], temp;
-		    do {
-		        final int next = j + k;
-		        j = next >= nums.length ? next % nums.length : next;
-		        temp = nums[j];
-		        nums[j] = prevTemp;
-		        prevTemp = temp;
+        for (int i = 0; i < greatestCommonDivisor(k, nums.length); i++) {
+            int j = i, prevTemp = nums[j], temp;
+            do {
+                final int next = j + k;
+                j = next >= nums.length ? next % nums.length : next;
+                temp = nums[j];
+                nums[j] = prevTemp;
+                prevTemp = temp;
             } while (j != i);
         }
     }
@@ -30,10 +30,10 @@ public class RotateArray {
     private static int gcd(final int a, final int b) {
         return b == 0 ? a : gcd(b, a % b);
     }
-    
+
     public static void main(final String[] args) {
-        final int[] nums = {1,2,3,4,5,6};
+        final int[] nums = {1, 2, 3, 4, 5, 6};
         new RotateArray().rotate(nums, 4);
         System.out.println(Arrays.toString(nums));
-	}
+    }
 }

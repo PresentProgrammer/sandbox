@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * Space complexity: O(n)
  **/
 public class StackMin {
-    
+
     private final Deque<Integer> elements = new ArrayDeque<>();
     private final Deque<Integer> mins = new ArrayDeque<>();
 
@@ -30,7 +30,7 @@ public class StackMin {
     public Integer min() {
         return mins.peek();
     }
-    
+
     public static void main(final String[] args) {
         final StackMin stackMin = new StackMin();
         System.out.println("null == " + stackMin.min());
@@ -56,5 +56,5 @@ public class StackMin {
         } catch (final NoSuchElementException e) {
             System.out.println("Threw NoSuchElementException as expected");
         }
-	}
+    }
 }

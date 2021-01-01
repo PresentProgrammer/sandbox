@@ -4,10 +4,10 @@
  * Space complexity: O(1)
  **/
 public class RotateMatrix {
-    
+
     public void rotate90(final int[][] m) {
-		transpose(m);
-		verticalSymmetry(m);
+        transpose(m);
+        verticalSymmetry(m);
     }
 
     private static void transpose(final int[][] m) {
@@ -31,14 +31,14 @@ public class RotateMatrix {
         m[i1][j1] = m[i2][j2];
         m[i2][j2] = temp;
     }
-    
+
     public static void main(final String[] args) {
         final int[][] matrix = {
-                { 1, 2, 3, 4, 5 },
-                { 6, 7, 8, 9, 10 },
-                { 11, 12, 13, 14, 15 },
-                { 16, 17, 18, 19, 20, },
-                { 21, 22, 23, 24, 25, },
+                {1, 2, 3, 4, 5},
+                {6, 7, 8, 9, 10},
+                {11, 12, 13, 14, 15},
+                {16, 17, 18, 19, 20,},
+                {21, 22, 23, 24, 25,},
         };
         new RotateMatrix().rotate90(matrix);
         for (final int[] row : matrix) {
@@ -47,5 +47,5 @@ public class RotateMatrix {
             }
             System.out.println();
         }
-	}
+    }
 }

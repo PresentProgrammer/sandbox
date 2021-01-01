@@ -10,9 +10,9 @@ public class TechLeadGridTask {
     private static final char EMPTY = ' ';
 
     public int maxAdjacentSameColours(final char[][] input) {
-		final char[][] grid = copy(input);
-		int max = 0;
-		for (int i = 0; i < grid.length; i++) {
+        final char[][] grid = copy(input);
+        int max = 0;
+        for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] != EMPTY) {
                     final AdjacentCounter counter = new AdjacentCounter(grid, grid[i][j]);
@@ -21,7 +21,7 @@ public class TechLeadGridTask {
                 }
             }
         }
-		return max;
+        return max;
     }
 
     private static class AdjacentCounter {
@@ -58,12 +58,12 @@ public class TechLeadGridTask {
         }
         return copy;
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println("5 == " + new TechLeadGridTask().maxAdjacentSameColours(new char[][] {
-                { 'g', 'g', 'b', 'r' },
-                { 'g', 'b', 'r', 'b' },
-                { 'r', 'b', 'b', 'b' },
+        System.out.println("5 == " + new TechLeadGridTask().maxAdjacentSameColours(new char[][]{
+                {'g', 'g', 'b', 'r'},
+                {'g', 'b', 'r', 'b'},
+                {'r', 'b', 'b', 'b'},
         }));
-	}
+    }
 }

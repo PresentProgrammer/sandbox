@@ -8,21 +8,21 @@ import java.util.Arrays;
 public class FindFirstAndLastPositionOfElementInSortedArray {
 
     public int[] searchRange(int[] nums, int target) {
-		int left = 0, right = nums == null ? -1 : nums.length - 1;
-		while (left <= right) {
-		    final int mid = left + (right - left) / 2;
-		    if (nums[mid] < target) {
-		        left = mid + 1;
+        int left = 0, right = nums == null ? -1 : nums.length - 1;
+        while (left <= right) {
+            final int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
             } else if (nums[mid] > target) {
-		        right = mid - 1;
+                right = mid - 1;
             } else {
-		        left = mid;
-		        right = mid;
-		        break;
+                left = mid;
+                right = mid;
+                break;
             }
         }
-		if (left > right) {
-		    return new int[]{ -1, -1 };
+        if (left > right) {
+            return new int[]{-1, -1};
         } else {
             int start = left, end = left;
             {
@@ -49,24 +49,24 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
                     }
                 }
             }
-            return new int[]{ start, end };
+            return new int[]{start, end};
         }
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("-1, -1 == " + Arrays.toString(
-                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{5,7,7,8,8,10}, 6)));
+                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{5, 7, 7, 8, 8, 10}, 6)));
         System.out.println("1, 1 == " + Arrays.toString(
-                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{1,2,3}, 2)));
+                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{1, 2, 3}, 2)));
         System.out.println("3, 4 == " + Arrays.toString(
-                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{5,7,7,8,8,10}, 8)));
+                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
         System.out.println("-1, -1 == " + Arrays.toString(
-                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{5,7,7,8,8,10}, 6)));
+                new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{5, 7, 7, 8, 8, 10}, 6)));
         System.out.println("-1, -1 == " + Arrays.toString(
                 new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{}, 6)));
         System.out.println("-1, -1 == " + Arrays.toString(
                 new FindFirstAndLastPositionOfElementInSortedArray().searchRange(null, 6)));
         System.out.println("0, 0 == " + Arrays.toString(
                 new FindFirstAndLastPositionOfElementInSortedArray().searchRange(new int[]{6}, 6)));
-	}
+    }
 }

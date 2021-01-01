@@ -6,26 +6,26 @@
 public class IntegerToRoman {
 
     public String intToRoman(final int num) {
-		final StringBuilder strBuilder = new StringBuilder();
+        final StringBuilder strBuilder = new StringBuilder();
         int x = num;
-		while (x / 1000 != 0) {
+        while (x / 1000 != 0) {
             strBuilder.append('M');
             x -= 1000;
         }
-		if (x / 900 != 0) {
-		    strBuilder.append("CM");
-		    x -= 900;
+        if (x / 900 != 0) {
+            strBuilder.append("CM");
+            x -= 900;
         } else if (x / 500 != 0) {
-		    strBuilder.append('D');
-		    x -= 500;
+            strBuilder.append('D');
+            x -= 500;
         } else if (x / 400 != 0) {
-		    strBuilder.append("CD");
-		    x -= 400;
+            strBuilder.append("CD");
+            x -= 400;
         }
 
-		while (x / 100 != 0) {
-		    strBuilder.append('C');
-		    x -= 100;
+        while (x / 100 != 0) {
+            strBuilder.append('C');
+            x -= 100;
         }
         if (x / 90 != 0) {
             strBuilder.append("XC");
@@ -58,14 +58,14 @@ public class IntegerToRoman {
             x -= 1;
         }
 
-		return strBuilder.toString();
+        return strBuilder.toString();
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("III == " + new IntegerToRoman().intToRoman(3));
         System.out.println("IV == " + new IntegerToRoman().intToRoman(4));
         System.out.println("IX == " + new IntegerToRoman().intToRoman(9));
         System.out.println("LVIII == " + new IntegerToRoman().intToRoman(58));
         System.out.println("MCMXCIV == " + new IntegerToRoman().intToRoman(1994));
-	}
+    }
 }

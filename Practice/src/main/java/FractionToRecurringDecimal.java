@@ -33,7 +33,7 @@ public class FractionToRecurringDecimal {
         }
         return builder.toString();
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("0.5 == " + new FractionToRecurringDecimal().fractionToDecimal(1, 2));
         System.out.println("2 == " + new FractionToRecurringDecimal().fractionToDecimal(2, 1));
@@ -43,5 +43,5 @@ public class FractionToRecurringDecimal {
         System.out.println("-0.58(3) == " + new FractionToRecurringDecimal().fractionToDecimal(7, -12));
         System.out.println("0.0000000004656612873077392578125 == " + new FractionToRecurringDecimal().fractionToDecimal(-1, -2147483648));
         System.out.println("5.8(144) == " + new FractionToRecurringDecimal().fractionToDecimal(3227, 555));
-	}
+    }
 }

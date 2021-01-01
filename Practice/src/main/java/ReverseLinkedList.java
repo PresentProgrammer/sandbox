@@ -22,15 +22,15 @@ public class ReverseLinkedList {
     }
 
     public ListNode m(final ListNode head) {
-		if (head == null) {
-		    return null;
+        if (head == null) {
+            return null;
         } else if (head.next == null) {
-		    return head;
+            return head;
         } else {
-		    final ListNode reversedList = reverseList(head.next);
+            final ListNode reversedList = reverseList(head.next);
             head.next.next = head;
-		    head.next = null;
-		    return reversedList;
+            head.next = null;
+            return reversedList;
         }
     }
 
@@ -42,7 +42,7 @@ public class ReverseLinkedList {
             val = x;
         }
     }
-    
+
     public static void main(final String[] args) {
     }
 }

@@ -13,8 +13,8 @@ import java.util.Map.Entry;
 public class MergeIntervals {
 
     public int[][] merge(int[][] intervals) {
-		Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
-		final List<Entry<Integer, Integer>> result = new ArrayList<>();
+        Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
+        final List<Entry<Integer, Integer>> result = new ArrayList<>();
         int i = 0, left = 0, right = 0;
         boolean processing = false;
         while (i < intervals.length) {
@@ -38,12 +38,12 @@ public class MergeIntervals {
         if (processing) {
             result.add(new SimpleEntry<>(left, right));
         }
-		return result.stream()
-                .map(pair -> new int[]{ pair.getKey(), pair.getValue() })
+        return result.stream()
+                .map(pair -> new int[]{pair.getKey(), pair.getValue()})
                 .toArray(int[][]::new);
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println(Arrays.deepToString(new MergeIntervals().merge(new int[][]{ {2,6},{8,10},{1,3},{15,18} })));
-	}
+        System.out.println(Arrays.deepToString(new MergeIntervals().merge(new int[][]{{2, 6}, {8, 10}, {1, 3}, {15, 18}})));
+    }
 }

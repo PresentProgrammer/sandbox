@@ -18,8 +18,8 @@ public class JumpGame {
     }
 
     public static void main(final String[] args) {
-        System.out.println("true == " + new JumpGame().canJump(new int[]{ 2,3,1,1,4 }));
-        System.out.println("false == " + new JumpGame().canJump(new int[]{ 3,2,1,0,4 }));
-        System.out.println("true == " + new JumpGame().canJump(new int[]{ 0 }));
-	}
+        System.out.println("true == " + new JumpGame().canJump(new int[]{2, 3, 1, 1, 4}));
+        System.out.println("false == " + new JumpGame().canJump(new int[]{3, 2, 1, 0, 4}));
+        System.out.println("true == " + new JumpGame().canJump(new int[]{0}));
+    }
 }

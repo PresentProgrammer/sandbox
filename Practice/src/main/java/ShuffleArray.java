@@ -16,12 +16,16 @@ public class ShuffleArray {
             this.original = Arrays.copyOf(nums, nums.length);
         }
 
-        /** Resets the array to its original configuration and return it. */
+        /**
+         * Resets the array to its original configuration and return it.
+         */
         public int[] reset() {
             return Arrays.copyOf(original, original.length);
         }
 
-        /** Returns a random shuffling of the array. */
+        /**
+         * Returns a random shuffling of the array.
+         */
         public int[] shuffle() {
             final int[] copy = Arrays.copyOf(original, original.length);
             final Random rand = new Random();

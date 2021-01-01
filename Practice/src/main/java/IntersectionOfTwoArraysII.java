@@ -10,11 +10,11 @@ import java.util.List;
 public class IntersectionOfTwoArraysII {
 
     public int[] intersect(int[] nums1, int[] nums2) {
-		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) {
-		    return new int[]{};
+        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) {
+            return new int[]{};
         }
-		final int[] a = Arrays.copyOf(nums1, nums1.length);
-		Arrays.sort(a);
+        final int[] a = Arrays.copyOf(nums1, nums1.length);
+        Arrays.sort(a);
         final int[] b = Arrays.copyOf(nums2, nums2.length);
         Arrays.sort(b);
 
@@ -35,7 +35,7 @@ public class IntersectionOfTwoArraysII {
                 .mapToInt(Integer::intValue)
                 .toArray();
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

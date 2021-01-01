@@ -34,10 +34,10 @@ public class ColoringBorder {
     }
 
     public static void main(final String[] args) {
-        new ColoringBorder().colorBorder(new int[][] {
-                {1,1,1},
-                {1,1,1},
-                {1,1,1}
+        new ColoringBorder().colorBorder(new int[][]{
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
         }, 1, 1, 2);
-	}
+    }
 }

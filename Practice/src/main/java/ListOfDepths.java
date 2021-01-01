@@ -10,7 +10,7 @@ import static java.util.Collections.singletonList;
  * Space complexity: O(1)
  **/
 public class ListOfDepths {
-    
+
     public List<List<MinimalTree.Node>> generateLists(final MinimalTree.Node root) {
         if (root == null) {
             return emptyList();
@@ -38,5 +38,5 @@ public class ListOfDepths {
         System.out.println(new ListOfDepths().generateLists(new MinimalTree().construct(new int[]{1, 2, 3, 4, 5, 6, 7, 8})));
         System.out.println(new ListOfDepths().generateLists(new MinimalTree().construct(new int[]{1})));
         System.out.println(new ListOfDepths().generateLists(new MinimalTree().construct(new int[]{})));
-	}
+    }
 }

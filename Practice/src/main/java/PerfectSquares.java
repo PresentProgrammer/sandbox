@@ -39,7 +39,7 @@ public class PerfectSquares {
         }
         return 0;
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

@@ -6,25 +6,25 @@
 public class RemoveDuplicatesFromSortedArray {
 
     public int removeDuplicates(int[] nums) {
-		if (nums.length == 0) {
-		    return 0;
+        if (nums.length == 0) {
+            return 0;
         }
-		int left = 0;
-		while (left + 1 < nums.length && nums[left] != nums[left + 1]) {
-		    left++;
+        int left = 0;
+        while (left + 1 < nums.length && nums[left] != nums[left + 1]) {
+            left++;
         }
-		left++;
-		int right = left + 1;
-		while (right < nums.length) {
-		    if (nums[right] != nums[right - 1]) {
-		        nums[left] = nums[right];
-		        left++;
+        left++;
+        int right = left + 1;
+        while (right < nums.length) {
+            if (nums[right] != nums[right - 1]) {
+                nums[left] = nums[right];
+                left++;
             }
-		    right++;
+            right++;
         }
-		return left;
+        return left;
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

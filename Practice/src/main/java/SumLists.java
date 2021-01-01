@@ -7,26 +7,26 @@ import java.util.Deque;
  * Space complexity: O(n)
  **/
 public class SumLists {
-    
+
     public LinkedListNode<Integer> sum(final LinkedListNode<Integer> l1, final LinkedListNode<Integer> l2) {
-		final Deque<Integer> s1 = toStack(l1);
-		final Deque<Integer> s2 = toStack(l2);
-		final Deque<Integer> resultStack = new ArrayDeque<>();
-		int rem = 0;
-		while (!s1.isEmpty() && !s2.isEmpty()) {
+        final Deque<Integer> s1 = toStack(l1);
+        final Deque<Integer> s2 = toStack(l2);
+        final Deque<Integer> resultStack = new ArrayDeque<>();
+        int rem = 0;
+        while (!s1.isEmpty() && !s2.isEmpty()) {
             final int sum = s1.pop() + s2.pop() + rem;
             resultStack.push(sum % 10);
             rem = sum / 10;
         }
-		final Deque<Integer> largerStack = s1.isEmpty() ? s2 : s1;
-		while (!largerStack.isEmpty()) {
-		    resultStack.push(largerStack.pop() + rem);
-		    rem = 0;
+        final Deque<Integer> largerStack = s1.isEmpty() ? s2 : s1;
+        while (!largerStack.isEmpty()) {
+            resultStack.push(largerStack.pop() + rem);
+            rem = 0;
         }
-		if (rem != 0) {
-		    resultStack.push(rem);
+        if (rem != 0) {
+            resultStack.push(rem);
         }
-		return toList(resultStack);
+        return toList(resultStack);
     }
 
     private static Deque<Integer> toStack(final LinkedListNode<Integer> head) {
@@ -51,7 +51,7 @@ public class SumLists {
         }
         return handle.next;
     }
-    
+
     public static void main(final String[] args) {
         final LinkedListNode<Integer> l1 = new LinkedListNode<>(6);
         LinkedListNode.add(l1, 1);
@@ -62,5 +62,5 @@ public class SumLists {
         LinkedListNode.add(l2, 9);
         LinkedListNode.add(l2, 5);
         System.out.println(LinkedListNode.print(new SumLists().sum(l1, l2)));
-	}
+    }
 }

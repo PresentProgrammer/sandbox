@@ -11,7 +11,7 @@ public class LoggerRateLimiter {
     private final Trie trie = new Trie();
 
     public boolean shouldPrintMessage(int timestamp, String message) {
-		return trie.shouldPrintMessage(timestamp, message);
+        return trie.shouldPrintMessage(timestamp, message);
     }
 
     private static class Trie {

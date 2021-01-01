@@ -39,5 +39,5 @@ public class EditDistance {
         System.out.println("5 == " + new EditDistance().minDistance("intention", "execution"));
         System.out.println("2 == " + new EditDistance().minDistance("sea", "eat"));
         System.out.println("6 == " + new EditDistance().minDistance("dinitrophenylhydrazine", "acetylphenylhydrazine"));
-	}
+    }
 }

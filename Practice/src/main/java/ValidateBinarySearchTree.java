@@ -29,7 +29,7 @@ public class ValidateBinarySearchTree {
             val = x;
         }
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

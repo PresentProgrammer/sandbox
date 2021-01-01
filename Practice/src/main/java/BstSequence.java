@@ -13,9 +13,9 @@ import static java.util.Collections.singletonList;
  * Space complexity: O((V / 2)! * V)
  **/
 public class BstSequence {
-    
+
     public List<List<Integer>> allPossibleArrays(final Node root) {
-		return root == null ? emptyList() : allPossibleArrays(singleton(root), emptyList());
+        return root == null ? emptyList() : allPossibleArrays(singleton(root), emptyList());
     }
 
     private static List<List<Integer>> allPossibleArrays(final Set<Node> openNodes, final List<Integer> arraySoFar) {
@@ -54,7 +54,7 @@ public class BstSequence {
             this.right = right;
         }
     }
-    
+
     public static void main(final String[] args) {
         System.out.println(new BstSequence().allPossibleArrays(
                 new Node(4,
@@ -65,5 +65,5 @@ public class BstSequence {
                                 new Node(7, null, null),
                                 new Node(8, null, null)))
         ));
-	}
+    }
 }

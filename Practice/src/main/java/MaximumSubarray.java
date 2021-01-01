@@ -15,10 +15,10 @@ public class MaximumSubarray {
     }
 
     public static void main(final String[] args) {
-        System.out.println("-1 == " + new MaximumSubarray().maxSubArray(new int[]{ -1, -2 }));
-        System.out.println("6 == " + new MaximumSubarray().maxSubArray(new int[]{ -2,1,-3,4,-1,2,1,-5,4 }));
-        System.out.println("33 == " + new MaximumSubarray().maxSubArray(new int[]{ -9,-2,1,8,7,-6,4,9,-9,-5,0,5,-2,5,9,7 }));
-        System.out.println("16 == " + new MaximumSubarray().maxSubArray(new int[]{ -5,8,-5,1,1,-3,5,5,-3,-3,6,4,-7,-4,-8,0,-1,-6 }));
-        System.out.println("3 == " + new MaximumSubarray().maxSubArray(new int[]{ -1,1,-3,-2,2,-1,-2,1,2,-3 }));
-	}
+        System.out.println("-1 == " + new MaximumSubarray().maxSubArray(new int[]{-1, -2}));
+        System.out.println("6 == " + new MaximumSubarray().maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        System.out.println("33 == " + new MaximumSubarray().maxSubArray(new int[]{-9, -2, 1, 8, 7, -6, 4, 9, -9, -5, 0, 5, -2, 5, 9, 7}));
+        System.out.println("16 == " + new MaximumSubarray().maxSubArray(new int[]{-5, 8, -5, 1, 1, -3, 5, 5, -3, -3, 6, 4, -7, -4, -8, 0, -1, -6}));
+        System.out.println("3 == " + new MaximumSubarray().maxSubArray(new int[]{-1, 1, -3, -2, 2, -1, -2, 1, 2, -3}));
+    }
 }

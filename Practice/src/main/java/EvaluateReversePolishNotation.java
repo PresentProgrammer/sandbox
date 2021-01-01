@@ -14,8 +14,8 @@ public class EvaluateReversePolishNotation {
     private static final String DIVIDE = "/";
 
     public int evalRPN(final String[] tokens) {
-		final Deque<Integer> st = new ArrayDeque<>();
-		for (final String token : tokens) {
+        final Deque<Integer> st = new ArrayDeque<>();
+        for (final String token : tokens) {
             final int left;
             final int right;
             switch (token) {
@@ -42,16 +42,16 @@ public class EvaluateReversePolishNotation {
         }
         return st.pop();
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("9 == " + new EvaluateReversePolishNotation().evalRPN(
-                new String[]{ "2", "1", "+", "3", "*" }
+                new String[]{"2", "1", "+", "3", "*"}
         ));
         System.out.println("6 == " + new EvaluateReversePolishNotation().evalRPN(
-                new String[]{ "4", "13", "5", "/", "+" }
+                new String[]{"4", "13", "5", "/", "+"}
         ));
         System.out.println("22 == " + new EvaluateReversePolishNotation().evalRPN(
-                new String[]{ "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" }
+                new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}
         ));
-	}
+    }
 }

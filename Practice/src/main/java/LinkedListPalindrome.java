@@ -7,37 +7,37 @@ import java.util.Deque;
  * Space complexity: O(n)
  **/
 public class LinkedListPalindrome {
-    
+
     public boolean isPalindrome(final LinkedListNode<Integer> head) {
-		if (head == null) {
-		    return false;
+        if (head == null) {
+            return false;
         }
 
-		int size = 0;
-		LinkedListNode<Integer> curr = head;
-		while (curr != null) {
-		    size++;
-		    curr = curr.next;
+        int size = 0;
+        LinkedListNode<Integer> curr = head;
+        while (curr != null) {
+            size++;
+            curr = curr.next;
         }
 
-		final Deque<Integer> stack = new ArrayDeque<>();
-		curr = head;
-		for (int i = 0; i < size / 2; i++) {
-		    stack.push(curr.val);
-		    curr = curr.next;
+        final Deque<Integer> stack = new ArrayDeque<>();
+        curr = head;
+        for (int i = 0; i < size / 2; i++) {
+            stack.push(curr.val);
+            curr = curr.next;
         }
-		if (size % 2 == 1) {
-		    curr = curr.next;
+        if (size % 2 == 1) {
+            curr = curr.next;
         }
-		while (curr != null) {
-		    if (!curr.val.equals(stack.pop())) {
-		        return false;
+        while (curr != null) {
+            if (!curr.val.equals(stack.pop())) {
+                return false;
             }
-		    curr = curr.next;
+            curr = curr.next;
         }
-		return true;
+        return true;
     }
-    
+
     public static void main(final String[] args) {
         final LinkedListNode<Integer> l1 = new LinkedListNode<>(1);
         LinkedListNode.add(l1, 2);

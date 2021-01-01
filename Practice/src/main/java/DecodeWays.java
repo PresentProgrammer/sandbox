@@ -11,10 +11,10 @@ public class DecodeWays {
     private int[] waysFrom;
 
     public int numDecodings(final String s) {
-		this.s = s;
-		this.waysFrom = new int[s.length()];
-		Arrays.fill(this.waysFrom, -1);
-		return numDecodings(0);
+        this.s = s;
+        this.waysFrom = new int[s.length()];
+        Arrays.fill(this.waysFrom, -1);
+        return numDecodings(0);
     }
 
     private int numDecodings(final int left) {
@@ -35,7 +35,7 @@ public class DecodeWays {
             return ways;
         }
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("2 == " + new DecodeWays().numDecodings("12"));
         System.out.println("3 == " + new DecodeWays().numDecodings("226"));
@@ -43,5 +43,5 @@ public class DecodeWays {
         System.out.println("0 == " + new DecodeWays().numDecodings("0"));
         System.out.println("0 == " + new DecodeWays().numDecodings("300"));
         System.out.println("1 == " + new DecodeWays().numDecodings("20"));
-	}
+    }
 }

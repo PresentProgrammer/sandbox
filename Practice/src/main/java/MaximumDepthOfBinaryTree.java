@@ -20,5 +20,5 @@ public class MaximumDepthOfBinaryTree {
     }
 
     public static void main(final String[] args) {
-	}
+    }
 }

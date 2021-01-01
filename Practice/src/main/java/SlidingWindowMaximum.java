@@ -10,8 +10,8 @@ import java.util.Deque;
 public class SlidingWindowMaximum {
 
     public int[] maxSlidingWindow(int[] nums, int k) {
-		if (nums == null || nums.length == 0) {
-		    return new int[]{};
+        if (nums == null || nums.length == 0) {
+            return new int[]{};
         }
         final DecreasingMonotonicQueue queue = new DecreasingMonotonicQueue();
         for (int i = 0; i < k - 1; i++) {
@@ -37,7 +37,7 @@ public class SlidingWindowMaximum {
             while (!deque.isEmpty() && deque.peekLast()[0] <= val) {
                 countPopped += deque.pollLast()[1] + 1;
             }
-            deque.offerLast(new int[]{ val, countPopped });
+            deque.offerLast(new int[]{val, countPopped});
         }
 
         int poll() {
@@ -49,9 +49,9 @@ public class SlidingWindowMaximum {
             return max[0];
         }
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println(Arrays.toString(new SlidingWindowMaximum().maxSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7}, 3)));
-        System.out.println(Arrays.toString(new SlidingWindowMaximum().maxSlidingWindow(new int[]{1,-1}, 1)));
-	}
+        System.out.println(Arrays.toString(new SlidingWindowMaximum().maxSlidingWindow(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3)));
+        System.out.println(Arrays.toString(new SlidingWindowMaximum().maxSlidingWindow(new int[]{1, -1}, 1)));
+    }
 }

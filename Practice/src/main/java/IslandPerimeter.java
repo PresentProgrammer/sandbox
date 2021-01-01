@@ -8,7 +8,7 @@ public class IslandPerimeter {
     private static final int[][] DIRS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
     public int islandPerimeter(int[][] grid) {
-		int perimeter = 0;
+        int perimeter = 0;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == 1) {
@@ -24,7 +24,7 @@ public class IslandPerimeter {
         }
         return perimeter;
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

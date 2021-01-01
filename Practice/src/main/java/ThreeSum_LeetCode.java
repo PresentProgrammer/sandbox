@@ -36,9 +36,9 @@ public class ThreeSum_LeetCode {
         }
         return result;
     }
-	
-	public static void main(final String[] args) {
-        System.out.println("[[-1, 0, 1], [-1, -1, 2]] == " + new ThreeSum_LeetCode().threeSum(new int[] { -1, 0, 1, 2, -1, -4 }));
-        System.out.println("[[1, 1, -2]] == " + new ThreeSum_LeetCode().threeSum(new int[] { 1, 1, -2 }));
-	}
+
+    public static void main(final String[] args) {
+        System.out.println("[[-1, 0, 1], [-1, -1, 2]] == " + new ThreeSum_LeetCode().threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
+        System.out.println("[[1, 1, -2]] == " + new ThreeSum_LeetCode().threeSum(new int[]{1, 1, -2}));
+    }
 }

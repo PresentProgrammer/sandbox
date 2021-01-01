@@ -51,5 +51,5 @@ public class LongestConsecutiveSequence {
     }
 
     public static void main(final String[] args) {
-	}
+    }
 }

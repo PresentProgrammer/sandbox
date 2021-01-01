@@ -5,7 +5,7 @@
  **/
 public class LongestIncreasingPathinMatrix {
 
-    private static final int[][] DIRECTIONS = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
+    private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     private int[][] matrix;
     private int[][] cellLongestPath;
@@ -14,15 +14,15 @@ public class LongestIncreasingPathinMatrix {
         if (matrix.length == 0 || matrix[0].length == 0) {
             return 0;
         }
-		this.matrix = matrix;
+        this.matrix = matrix;
         this.cellLongestPath = new int[matrix.length][matrix[0].length];
-		int result = 0;
-		for (int i = 0; i < matrix.length; i++) {
-		    for (int j = 0; j < matrix[i].length; j++) {
-		        result = Math.max(result, longestPath(i, j));
+        int result = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                result = Math.max(result, longestPath(i, j));
             }
         }
-		return result;
+        return result;
     }
 
     private int longestPath(final int i, final int j) {
@@ -45,7 +45,7 @@ public class LongestIncreasingPathinMatrix {
     private boolean isIncreasingCell(final int i, final int j, final int prevVal) {
         return 0 <= i && i < matrix.length && 0 <= j && j < matrix[i].length && prevVal < matrix[i][j];
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

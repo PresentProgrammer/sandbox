@@ -51,8 +51,8 @@ public class NumberOfIslands {
 
     private static class Pair {
 
-        private int i;
-        private int j;
+        private final int i;
+        private final int j;
 
         private Pair(int i, int j) {
             this.i = i;
@@ -62,16 +62,16 @@ public class NumberOfIslands {
 
     public static void main(final String[] args) {
         System.out.println("1 == " + new NumberOfIslands().numIslands(new char[][]{
-                new char[] { '1', '1', '1', '1' , '0' },
-                new char[] { '1', '1', '0', '1' , '0' },
-                new char[] { '1', '1', '0', '0' , '0' },
-                new char[] { '0', '0', '0', '0' , '0' },
+                new char[]{'1', '1', '1', '1', '0'},
+                new char[]{'1', '1', '0', '1', '0'},
+                new char[]{'1', '1', '0', '0', '0'},
+                new char[]{'0', '0', '0', '0', '0'},
         }));
         System.out.println("3 == " + new NumberOfIslands().numIslands(new char[][]{
-                new char[] { '1', '1', '0', '0' , '0' },
-                new char[] { '1', '1', '0', '0' , '0' },
-                new char[] { '0', '0', '1', '0' , '0' },
-                new char[] { '0', '0', '0', '1' , '1' },
+                new char[]{'1', '1', '0', '0', '0'},
+                new char[]{'1', '1', '0', '0', '0'},
+                new char[]{'0', '0', '1', '0', '0'},
+                new char[]{'0', '0', '0', '1', '1'},
         }));
-	}
+    }
 }

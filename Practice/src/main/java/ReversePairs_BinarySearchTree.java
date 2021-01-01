@@ -25,7 +25,7 @@ public class ReversePairs_BinarySearchTree {
     }
 
     public static void main(String[] args) {
-        System.out.println("4 == " + new ReversePairs_BinarySearchTree().reversePairs(new int[]{5,4,3,2,1}));
+        System.out.println("4 == " + new ReversePairs_BinarySearchTree().reversePairs(new int[]{5, 4, 3, 2, 1}));
         System.out.println("0 == " + new ReversePairs_BinarySearchTree().reversePairs(
                 IntStream.range(0, 50_000).toArray()));
         System.out.println("??? == " + new ReversePairs_BinarySearchTree().reversePairs(

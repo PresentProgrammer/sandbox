@@ -12,26 +12,26 @@ public class HappyNumber {
         if (n < 1) {
             return false;
         }
-		final Set<Integer> seen = new HashSet<>();
-		while (n != 1) {
-		    if (seen.contains(n)) {
-		        return false;
+        final Set<Integer> seen = new HashSet<>();
+        while (n != 1) {
+            if (seen.contains(n)) {
+                return false;
             } else {
-		        seen.add(n);
+                seen.add(n);
             }
-		    int digitSquareSum = 0;
-		    int rem = n;
-		    while (rem > 0) {
-		        final int digit = rem % 10;
-		        digitSquareSum += digit * digit;
-		        rem /= 10;
+            int digitSquareSum = 0;
+            int rem = n;
+            while (rem > 0) {
+                final int digit = rem % 10;
+                digitSquareSum += digit * digit;
+                rem /= 10;
             }
-		    n = digitSquareSum;
+            n = digitSquareSum;
         }
-		return true;
+        return true;
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("true == " + new HappyNumber().isHappy(19));
-	}
+    }
 }

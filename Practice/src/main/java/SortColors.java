@@ -30,7 +30,7 @@ public class SortColors {
         nums[i] = nums[j];
         nums[j] = temp;
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

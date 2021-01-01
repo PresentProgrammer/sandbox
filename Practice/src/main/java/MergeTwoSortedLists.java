@@ -49,6 +49,7 @@ public class MergeTwoSortedLists {
     private static class ListNode {
         int val;
         ListNode next;
+
         ListNode(int x) {
             val = x;
         }
@@ -64,7 +65,7 @@ public class MergeTwoSortedLists {
             return builder.toString();
         }
     }
-    
+
     public static void main(final String[] args) {
         final ListNode l1 = new ListNode(1);
         l1.next = new ListNode(2);
@@ -73,5 +74,5 @@ public class MergeTwoSortedLists {
         l2.next = new ListNode(3);
         l2.next.next = new ListNode(4);
         System.out.println("443211 == " + new MergeTwoSortedLists().mergeTwoLists(l1, l2));
-	}
+    }
 }

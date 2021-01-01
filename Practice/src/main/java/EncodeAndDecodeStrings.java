@@ -52,5 +52,5 @@ public class EncodeAndDecodeStrings {
         System.out.println(parseNum(formatNum(10), 0));
         System.out.println(parseNum(formatNum(1000), 0));
         System.out.println(parseNum(formatNum(Integer.MAX_VALUE), 0));
-	}
+    }
 }

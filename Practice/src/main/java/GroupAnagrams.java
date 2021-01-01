@@ -11,7 +11,7 @@ import java.util.Map;
 public class GroupAnagrams {
 
     public List<List<String>> groupAnagrams(final String[] strs) {
-		final Map<List<Integer>, List<String>> groups = new HashMap<>();
+        final Map<List<Integer>, List<String>> groups = new HashMap<>();
         for (final String str : strs) {
             final List<Integer> countsOfStr = countsOf(str);
             final List<String> group = groups.getOrDefault(countsOfStr, new ArrayList<>());
@@ -32,8 +32,8 @@ public class GroupAnagrams {
         }
         return list;
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println(new GroupAnagrams().groupAnagrams(new String[]{ "eat", "tea", "tan", "ate", "nat", "bat" }));
-	}
+        System.out.println(new GroupAnagrams().groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));
+    }
 }

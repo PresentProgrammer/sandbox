@@ -10,7 +10,7 @@ import java.util.Deque;
 public class MaximumProductSubarray {
 
     public int maxProduct(int[] nums) {
-		return Math.max(oneWayMaxProduct(nums), oneWayMaxProduct(reverse(nums)));
+        return Math.max(oneWayMaxProduct(nums), oneWayMaxProduct(reverse(nums)));
     }
 
     private static int oneWayMaxProduct(final int[] nums) {
@@ -51,10 +51,10 @@ public class MaximumProductSubarray {
         }
         return reversed;
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println("6 == " + new MaximumProductSubarray().maxProduct(new int[]{2,3,-2,4}));
-        System.out.println("0 == " + new MaximumProductSubarray().maxProduct(new int[]{-2,0,-1}));
-        System.out.println("24 == " + new MaximumProductSubarray().maxProduct(new int[]{2,-5,-2,-4,3}));
-	}
+        System.out.println("6 == " + new MaximumProductSubarray().maxProduct(new int[]{2, 3, -2, 4}));
+        System.out.println("0 == " + new MaximumProductSubarray().maxProduct(new int[]{-2, 0, -1}));
+        System.out.println("24 == " + new MaximumProductSubarray().maxProduct(new int[]{2, -5, -2, -4, 3}));
+    }
 }

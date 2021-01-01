@@ -41,5 +41,5 @@ public class RotateImage {
     }
 
     public static void main(final String[] args) {
-	}
+    }
 }

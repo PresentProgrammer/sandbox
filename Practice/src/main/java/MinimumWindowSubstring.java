@@ -55,12 +55,12 @@ public class MinimumWindowSubstring {
                 break;
             }
         }
-		return s.substring(resultLeft, resultRight);
+        return s.substring(resultLeft, resultRight);
     }
 
     public static void main(final String[] args) {
         System.out.println("BANC == " + new MinimumWindowSubstring().minWindow("ADOBECODEBANC", "ABC"));
         System.out.println("BECODEBA == " + new MinimumWindowSubstring().minWindow("ADXOBECODEBANC", "ABCB"));
         System.out.println("(empty) == " + new MinimumWindowSubstring().minWindow("ADOBECODEBANC", "ZZ"));
-	}
+    }
 }

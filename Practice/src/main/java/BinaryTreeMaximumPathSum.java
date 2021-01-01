@@ -8,7 +8,7 @@ public class BinaryTreeMaximumPathSum {
     private int max;
 
     public int maxPathSum(final TreeNode root) {
-		max = root.val;
+        max = root.val;
         maxOf(root);
         return max;
     }
@@ -37,7 +37,7 @@ public class BinaryTreeMaximumPathSum {
             val = x;
         }
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

@@ -46,12 +46,12 @@ public class MinimumCostToHireWorkers {
             this.ratio = ((double) wage) / quality;
         }
     }
-    
+
     public static void main(final String[] args) {
         final int[] qualities = new InputReader().readIntArray("/input/538.qualities.txt");
         final int[] wages = new InputReader().readIntArray("/input/538.wages.txt");
         Instant start = Instant.now();
         System.out.println("? == " + new MinimumCostToHireWorkers().mincostToHireWorkers(qualities, wages, 2));
         System.out.println("Execution took " + Duration.between(start, Instant.now()));
-	}
+    }
 }

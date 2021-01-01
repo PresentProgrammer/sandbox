@@ -14,13 +14,13 @@ import java.util.stream.IntStream;
 public class Permutations {
 
     public List<List<Integer>> permute(int[] nums) {
-		final List<List<Integer>> result = new ArrayList<>();
-		final Set<Integer> remaining = new HashSet<>();
-		for (final int num : nums) {
-		    remaining.add(num);
+        final List<List<Integer>> result = new ArrayList<>();
+        final Set<Integer> remaining = new HashSet<>();
+        for (final int num : nums) {
+            remaining.add(num);
         }
-		permute(result, new ArrayList<>(), remaining);
-		return result;
+        permute(result, new ArrayList<>(), remaining);
+        return result;
     }
 
     private static void permute(List<List<Integer>> result, List<Integer> temp, Set<Integer> remaining) {
@@ -41,5 +41,5 @@ public class Permutations {
         Instant start = Instant.now();
         new Permutations().permute(IntStream.range(1, 10).toArray());
         System.out.println("Execution took " + Duration.between(start, Instant.now()));
-	}
+    }
 }

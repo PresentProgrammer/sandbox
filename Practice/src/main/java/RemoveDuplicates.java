@@ -4,7 +4,7 @@
  * Space complexity: O(1)
  **/
 public class RemoveDuplicates {
-    
+
     public void removeDuplicates(LinkedListNode<Integer> head) {
         LinkedListNode<Integer> left = head;
         while (left != null) {
@@ -19,7 +19,7 @@ public class RemoveDuplicates {
             left = left.next;
         }
     }
-    
+
     public static void main(final String[] args) {
         LinkedListNode<Integer> head = new LinkedListNode<>(1);
         head = LinkedListNode.add(head, 3);
@@ -36,5 +36,5 @@ public class RemoveDuplicates {
         LinkedListNode<Integer> head2 = null;
         new RemoveDuplicates().removeDuplicates(head2);
         System.out.println("[] == " + LinkedListNode.print(head2));
-	}
+    }
 }

@@ -4,7 +4,7 @@ import java.util.Map;
 
 @SuppressWarnings("Duplicates")
 public class LongestSubstringWithoutRepeatingCharacters {
-    
+
     public int lengthOfLongestSubstring(String s) {
         final int length = s.length();
         if (length < 2) {
@@ -28,7 +28,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
         }
         return Math.max(max, j - i);
     }
-    
+
     public int lengthOfLongestSubstring_usingHashMap(String s) {
         final int length = s.length();
         if (length < 2) {
@@ -36,7 +36,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
         }
         int i = 0;
         int j = 0;
-        int max = 0;        
+        int max = 0;
         final Map<Character, Integer> map = new HashMap<>(32);
         while (j < length) {
             final char jthChar = s.charAt(j);
@@ -50,7 +50,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
         }
         return Math.max(max, j - i);
     }
-    
+
     public static void main(final String[] args) {
         final LongestSubstringWithoutRepeatingCharacters testedObject = new LongestSubstringWithoutRepeatingCharacters();
         System.out.println("For \"abcabcbb\": " + testedObject.lengthOfLongestSubstring("abcabcbb"));

@@ -24,10 +24,10 @@ public class ToLowerCase {
         }
         return builder.toString();
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("hello == " + new ToLowerCase().toLowerCase("Hello"));
         System.out.println("here == " + new ToLowerCase().toLowerCase("here"));
         System.out.println("LOVELY == " + new ToLowerCase().toLowerCase("LOVELY"));
-	}
+    }
 }

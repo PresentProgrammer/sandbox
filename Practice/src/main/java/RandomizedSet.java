@@ -44,7 +44,7 @@ public class RandomizedSet {
     public int getRandom() {
         return values.get(rand.nextInt(values.size()));
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

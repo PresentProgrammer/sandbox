@@ -6,24 +6,25 @@
 public class LinkedListCycle {
 
     public boolean hasCycle(ListNode head) {
-		ListNode fast = head, slow = head;
-		while (fast != null) {
-		    fast = fast.next;
-		    if (fast != null) {
-		        if (fast == slow) {
-		            return true;
+        ListNode fast = head, slow = head;
+        while (fast != null) {
+            fast = fast.next;
+            if (fast != null) {
+                if (fast == slow) {
+                    return true;
                 } else {
-		            fast = fast.next;
-		            slow = slow.next;
+                    fast = fast.next;
+                    slow = slow.next;
                 }
             }
         }
-		return false;
+        return false;
     }
 
     private static class ListNode {
         int val;
         ListNode next;
+
         ListNode(int x) {
             val = x;
             next = null;

@@ -6,15 +6,15 @@
 public class FactorialTrailingZeroes {
 
     public int trailingZeroes(int n) {
-		int result = 0;
-		while (n > 0) {
-		    n /= 5;
-		    result += n;
+        int result = 0;
+        while (n > 0) {
+            n /= 5;
+            result += n;
         }
-		return result;
+        return result;
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("7 == " + new FactorialTrailingZeroes().trailingZeroes(30));
-	}
+    }
 }

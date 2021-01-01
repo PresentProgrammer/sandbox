@@ -6,9 +6,9 @@ import static java.util.Optional.ofNullable;
  * Space complexity: O(log n)
  **/
 public class MinimalTree {
-    
+
     public Node construct(final int[] array) {
-		return array == null || array.length == 0 ? null : construct(array, 0, array.length);
+        return array == null || array.length == 0 ? null : construct(array, 0, array.length);
     }
 
     private static Node construct(final int[] array, final int left, final int rightExcl) {
@@ -50,12 +50,12 @@ public class MinimalTree {
             return Integer.toString(val);
         }
     }
-    
+
     public static void main(final String[] args) {
         System.out.println(new MinimalTree().construct(new int[]{1, 2, 3, 4, 5, 6, 7}).inOrderWithDepth());
         System.out.println(new MinimalTree().construct(new int[]{1, 2, 3, 4, 5, 6, 7, 8}).inOrderWithDepth());
         System.out.println(new MinimalTree().construct(new int[]{1}).inOrderWithDepth());
         System.out.println(new MinimalTree().construct(new int[]{1, 2}).inOrderWithDepth());
         System.out.println(ofNullable(new MinimalTree().construct(new int[]{})).map(Node::inOrderWithDepth).orElse(null));
-	}
+    }
 }

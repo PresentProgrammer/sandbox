@@ -10,10 +10,10 @@ public class WildcardMatching {
     private Boolean[][] memo;
 
     public boolean isMatch(String str, String pattern) {
-		this.str = str;
-		this.pattern = pattern;
-		this.memo = new Boolean[str.length() + 1][pattern.length()];
-		return isMatch(0, 0);
+        this.str = str;
+        this.pattern = pattern;
+        this.memo = new Boolean[str.length() + 1][pattern.length()];
+        return isMatch(0, 0);
     }
 
     private boolean isMatch(final int i, final int j) {
@@ -34,7 +34,7 @@ public class WildcardMatching {
             return isMatch;
         }
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("false == " + new WildcardMatching().isMatch("aa", "a"));
         System.out.println("true == " + new WildcardMatching().isMatch("aa", "*"));
@@ -42,5 +42,5 @@ public class WildcardMatching {
         System.out.println("true == " + new WildcardMatching().isMatch("adceb", "a*b"));
         System.out.println("false == " + new WildcardMatching().isMatch("acdcb", "a*c?b"));
         System.out.println("true == " + new WildcardMatching().isMatch("", "*"));
-	}
+    }
 }

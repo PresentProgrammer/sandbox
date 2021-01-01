@@ -58,9 +58,9 @@ public class LongestAbsoluteFilePath {
             return value;
         }
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("20 == " + new LongestAbsoluteFilePath().lengthLongestPath("dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"));
         System.out.println("32 == " + new LongestAbsoluteFilePath().lengthLongestPath("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"));
-	}
+    }
 }

@@ -9,15 +9,15 @@ public class ExcelSheetColumnNumber {
 
     public int titleToNumber(String s) {
         int result = 0;
-		for (int i = 0; i < s.length(); i++) {
-		    result = result * BASE + (s.charAt(i) - 'A' + 1);
+        for (int i = 0; i < s.length(); i++) {
+            result = result * BASE + (s.charAt(i) - 'A' + 1);
         }
-		return result;
+        return result;
     }
 
     public static void main(final String[] args) {
         System.out.println("1 == " + new ExcelSheetColumnNumber().titleToNumber("A"));
         System.out.println("28 == " + new ExcelSheetColumnNumber().titleToNumber("AB"));
         System.out.println("701 == " + new ExcelSheetColumnNumber().titleToNumber("ZY"));
-	}
+    }
 }

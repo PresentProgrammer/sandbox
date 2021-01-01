@@ -1,11 +1,11 @@
 /**
  * Time: O(n): one pass over n for copying elements, one pass for setting random,
- *       and one pass for separating original from copy.
+ * and one pass for separating original from copy.
  * Space: O(1): no additional space required.
  **/
 @SuppressWarnings("Duplicates")
 public class CopyListWithRandomPointer_Interweaving {
-    
+
     public RandomListNode copyRandomList(RandomListNode head) {
         if (head == null) {
             return null;
@@ -16,7 +16,7 @@ public class CopyListWithRandomPointer_Interweaving {
         separateOriginalFromCopy(head);
         return copyHead;
     }
-    
+
     private void interweaveCopies(final RandomListNode head) {
         RandomListNode curr = head;
         while (curr != null) {
@@ -34,7 +34,7 @@ public class CopyListWithRandomPointer_Interweaving {
             curr = curr.next.next;
         }
     }
-    
+
     private void separateOriginalFromCopy(final RandomListNode head) {
         RandomListNode curr = head;
         while (curr != null) {
@@ -45,7 +45,7 @@ public class CopyListWithRandomPointer_Interweaving {
             curr = currNext;
         }
     }
-    
+
     public static void main(final String... args) {
         final RandomListNode head = new RandomListNode(1);
         head.next = new RandomListNode(2);

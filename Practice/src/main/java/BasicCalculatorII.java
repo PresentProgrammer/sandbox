@@ -49,7 +49,7 @@ public class BasicCalculatorII {
         }
         return operandQ.poll();
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("7 == " + new BasicCalculatorII().calculate("3+2*2"));
         System.out.println("5 == " + new BasicCalculatorII().calculate(" 3+5 / 2 "));
@@ -57,5 +57,5 @@ public class BasicCalculatorII {
         System.out.println("5 == " + new BasicCalculatorII().calculate(" 5 "));
         System.out.println("1 == " + new BasicCalculatorII().calculate("1-1+1"));
         System.out.println("-2147483647 == " + new BasicCalculatorII().calculate("0-2147483647"));
-	}
+    }
 }

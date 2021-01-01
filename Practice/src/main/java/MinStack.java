@@ -8,8 +8,8 @@ import java.util.Deque;
  **/
 public class MinStack {
 
-    private Deque<Integer> elements = new ArrayDeque<>();
-    private Deque<Integer> mins = new ArrayDeque<>();
+    private final Deque<Integer> elements = new ArrayDeque<>();
+    private final Deque<Integer> mins = new ArrayDeque<>();
 
     public void push(int x) {
         elements.push(x);
@@ -33,5 +33,5 @@ public class MinStack {
     }
 
     public static void main(final String[] args) {
-	}
+    }
 }

@@ -6,12 +6,12 @@
 public class SetMatrixZeroes {
 
     public void setZeroes(int[][] matrix) {
-		boolean firstRowShouldBeZeroes = false;
-		boolean firstColumnShouldBeZeroes = false;
-		for (int i = 0; i < matrix.length; i++) {
-		    if (matrix[i][0] == 0) {
-		        firstColumnShouldBeZeroes = true;
-		        break;
+        boolean firstRowShouldBeZeroes = false;
+        boolean firstColumnShouldBeZeroes = false;
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                firstColumnShouldBeZeroes = true;
+                break;
             }
         }
         for (int j = 0; j < matrix[0].length; j++) {
@@ -56,7 +56,7 @@ public class SetMatrixZeroes {
             }
         }
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

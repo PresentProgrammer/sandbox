@@ -8,12 +8,12 @@ public class CheckSubtree {
     private boolean subtreeFound = false;
     private TreeNode t2;
     private int t2Size;
-    
+
     public boolean isSubtree(final TreeNode t1, final TreeNode t2) {
         this.t2 = t2;
         this.t2Size = size(t2);
-		searchSubtree(t1);
-		return subtreeFound;
+        searchSubtree(t1);
+        return subtreeFound;
     }
 
     private Integer searchSubtree(final TreeNode node) {

@@ -9,11 +9,11 @@ public class ReturnKthToLast {
     private int k;
 
     public LinkedListNode<Integer> kthToLast(final LinkedListNode<Integer> head, final int k) {
-		if (head != null) {
-		    this.k = k;
-		    backTrack(head);
+        if (head != null) {
+            this.k = k;
+            backTrack(head);
         }
-		return result;
+        return result;
     }
 
     private int backTrack(final LinkedListNode<Integer> node) {
@@ -23,7 +23,7 @@ public class ReturnKthToLast {
         }
         return toLast;
     }
-    
+
     public static void main(final String[] args) {
         LinkedListNode<Integer> head = new LinkedListNode<>(1);
         head = LinkedListNode.add(head, 2);
@@ -38,5 +38,5 @@ public class ReturnKthToLast {
         System.out.println("7 == " + new ReturnKthToLast().kthToLast(head, 3).val);
         System.out.println("1 == " + new ReturnKthToLast().kthToLast(head, 9).val);
         System.out.println("null == " + new ReturnKthToLast().kthToLast(head, 10));
-	}
+    }
 }

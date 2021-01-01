@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 public class BinaryTreeZigzagLevelOrderTraversal {
 
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-		if (root == null) {
-		    return Collections.emptyList();
+        if (root == null) {
+            return Collections.emptyList();
         } else {
-		    final List<List<TreeNode>> result = new ArrayList<>();
-		    result.add(Collections.singletonList(root));
-		    while (true) {
-		        final List<TreeNode> nextLevel = new ArrayList<>();
-		        for (final TreeNode node: result.get(result.size() - 1)) {
-		            if (node.left != null) {
-		                nextLevel.add(node.left);
+            final List<List<TreeNode>> result = new ArrayList<>();
+            result.add(Collections.singletonList(root));
+            while (true) {
+                final List<TreeNode> nextLevel = new ArrayList<>();
+                for (final TreeNode node : result.get(result.size() - 1)) {
+                    if (node.left != null) {
+                        nextLevel.add(node.left);
                     }
-		            if (node.right != null) {
-		                nextLevel.add(node.right);
+                    if (node.right != null) {
+                        nextLevel.add(node.right);
                     }
                 }
                 if (nextLevel.isEmpty()) {
@@ -53,7 +53,7 @@ public class BinaryTreeZigzagLevelOrderTraversal {
             val = x;
         }
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

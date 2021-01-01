@@ -8,9 +8,9 @@ import static java.util.Arrays.fill;
  * Space complexity: O(n)
  **/
 public class ThreeStacksInOne {
-    
-    private Node[] array;
-    private int[] tops;
+
+    private final Node[] array;
+    private final int[] tops;
     private int top;
 
     public ThreeStacksInOne(final int size) {
@@ -102,7 +102,7 @@ public class ThreeStacksInOne {
             this.nextInd = nextInd;
         }
     }
-    
+
     public static void main(final String[] args) {
         final ThreeStacksInOne threeStack = new ThreeStacksInOne(8);
         System.out.println(threeStack.pushFirst(1));
@@ -132,5 +132,5 @@ public class ThreeStacksInOne {
         System.out.println(threeStack.popThird());
         System.out.println(threeStack.popThird());
         System.out.println(threeStack.popThird());
-	}
+    }
 }

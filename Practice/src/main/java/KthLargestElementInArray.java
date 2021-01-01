@@ -8,7 +8,7 @@ import java.util.Random;
 public class KthLargestElementInArray {
 
     public int findKthLargest(int[] nums, int k) {
-		return partitionUntilKLargestFound(shuffle(nums), k - 1);
+        return partitionUntilKLargestFound(shuffle(nums), k - 1);
     }
 
     private static int partitionUntilKLargestFound(final int[] nums, final int k) {
@@ -44,7 +44,7 @@ public class KthLargestElementInArray {
         return nums[left];
     }
 
-    private static int[] shuffle(final int [] original) {
+    private static int[] shuffle(final int[] original) {
         final Random rand = new Random();
         for (int i = 1; i < original.length; i++) {
             swap(original, i, rand.nextInt(i + 1));
@@ -57,9 +57,9 @@ public class KthLargestElementInArray {
         nums[i] = nums[j];
         nums[j] = temp;
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println("5 == " + new KthLargestElementInArray().findKthLargest(new int[]{3,2,1,5,6,4}, 2));
-        System.out.println("4 == " + new KthLargestElementInArray().findKthLargest(new int[]{3,2,3,1,2,4,5,5,6}, 4));
-	}
+        System.out.println("5 == " + new KthLargestElementInArray().findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2));
+        System.out.println("4 == " + new KthLargestElementInArray().findKthLargest(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
+    }
 }

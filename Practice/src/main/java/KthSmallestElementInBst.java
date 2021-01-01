@@ -35,7 +35,7 @@ public class KthSmallestElementInBst {
             val = x;
         }
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

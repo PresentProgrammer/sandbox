@@ -22,9 +22,9 @@ public class ReverseVowelsOfString {
     }
 
     public String reverseVowels(String s) {
-		final StringBuilder builder = new StringBuilder(s.length());
-		int right = s.length() - 1;
-		for (int i = 0; i < s.length(); i++) {
+        final StringBuilder builder = new StringBuilder(s.length());
+        int right = s.length() - 1;
+        for (int i = 0; i < s.length(); i++) {
             final char currChar = s.charAt(i);
             if (IS_VOVEL[currChar]) {
                 while (!IS_VOVEL[s.charAt(right)]) {
@@ -36,11 +36,11 @@ public class ReverseVowelsOfString {
                 builder.append(currChar);
             }
         }
-		return builder.toString();
+        return builder.toString();
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("hello == " + new ReverseVowelsOfString().reverseVowels("holle"));
         System.out.println("leetcode == " + new ReverseVowelsOfString().reverseVowels("leotcede"));
-	}
+    }
 }

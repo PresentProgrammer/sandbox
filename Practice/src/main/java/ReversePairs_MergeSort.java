@@ -18,7 +18,7 @@ public class ReversePairs_MergeSort {
     }
 
     public static void main(String[] args) {
-        System.out.println("2 == " + new ReversePairs_MergeSort().reversePairs(new int[]{ 1, 3, 2, 3, 1 }));
+        System.out.println("2 == " + new ReversePairs_MergeSort().reversePairs(new int[]{1, 3, 2, 3, 1}));
     }
 
     private int mergeSortWithCount(int start, int endIncl) {

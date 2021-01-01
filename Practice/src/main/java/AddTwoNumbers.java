@@ -29,6 +29,7 @@ public class AddTwoNumbers {
     private static class ListNode {
         int val;
         ListNode next;
+
         ListNode(int x) {
             val = x;
         }
@@ -44,7 +45,7 @@ public class AddTwoNumbers {
             return builder.toString();
         }
     }
-    
+
     public static void main(final String[] args) {
         final ListNode ln342 = new ListNode(2);
         ln342.next = new ListNode(4);

@@ -16,10 +16,10 @@ public class GenerateParentheses {
         if (n <= 0) {
             return Collections.emptyList();
         }
-		result = new ArrayList<>();
-		this.combination = new int[n];
-		generateCombinations(n, 0);
-		return result;
+        result = new ArrayList<>();
+        this.combination = new int[n];
+        generateCombinations(n, 0);
+        return result;
     }
 
     private void generateCombinations(final int rem, final int i) {
@@ -59,12 +59,12 @@ public class GenerateParentheses {
         }
         return true;
     }
-    
+
     public static void main(final String[] args) {
         System.out.println(new GenerateParentheses().generateParenthesis(0));
         System.out.println(new GenerateParentheses().generateParenthesis(1));
         System.out.println(new GenerateParentheses().generateParenthesis(2));
         System.out.println(new GenerateParentheses().generateParenthesis(3));
         System.out.println(new GenerateParentheses().generateParenthesis(4));
-	}
+    }
 }

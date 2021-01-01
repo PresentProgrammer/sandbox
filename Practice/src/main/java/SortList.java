@@ -5,7 +5,7 @@
  **/
 public class SortList {
 
-    private ListNode mergeHead = new ListNode(0);
+    private final ListNode mergeHead = new ListNode(0);
 
     public ListNode sortList(ListNode head) {
         return head == null ? null : mergeSort(head);
@@ -50,6 +50,7 @@ public class SortList {
     private static class ListNode {
         int val;
         ListNode next;
+
         ListNode(int x) {
             val = x;
         }

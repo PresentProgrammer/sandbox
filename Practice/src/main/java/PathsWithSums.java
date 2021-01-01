@@ -9,12 +9,12 @@ import java.util.List;
 public class PathsWithSums {
 
     private int pathCount = 0;
-    private List<TreeNode> onPath = new ArrayList<>();
+    private final List<TreeNode> onPath = new ArrayList<>();
     private int interestingSum;
 
     public int pathSum(final TreeNode root, final int interestingSum) {
         this.interestingSum = interestingSum;
-		searchPaths(root);
+        searchPaths(root);
         return pathCount;
     }
 

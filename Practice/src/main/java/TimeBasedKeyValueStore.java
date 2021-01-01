@@ -5,8 +5,8 @@ import java.util.List;
 /**
  * Problem #981
  * Time complexity:
- *   For set: O(key.length())
- *   For get: O(key.length() + log(duplicate keys number)
+ * For set: O(key.length())
+ * For get: O(key.length() + log(duplicate keys number)
  * Space complexity: O(number of keys * key.length() + duplicate key number)
  **/
 public class TimeBasedKeyValueStore {
@@ -89,5 +89,5 @@ public class TimeBasedKeyValueStore {
         store.set("love", "high", 10);
         store.set("love", "low", 20);
         store.get("love", 10);
-	}
+    }
 }

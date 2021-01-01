@@ -47,7 +47,7 @@ public class Trie {
         }
         return curr;
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

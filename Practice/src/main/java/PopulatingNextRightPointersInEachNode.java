@@ -4,7 +4,7 @@
  * Space complexity: O(1)
  **/
 public class PopulatingNextRightPointersInEachNode {
-    
+
     public Node connect(final Node root) {
         if (root != null) {
             connect(root, null);
@@ -26,7 +26,8 @@ public class PopulatingNextRightPointersInEachNode {
         Node right;
         Node next;
 
-        Node() {}
+        Node() {
+        }
 
         Node(int _val, Node _left, Node _right, Node _next) {
             val = _val;

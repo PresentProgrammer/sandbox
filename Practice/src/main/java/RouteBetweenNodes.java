@@ -12,14 +12,14 @@ import static java.util.Collections.singletonList;
 /**
  * Problem #4.1
  * Time complexity: O(v * k ^ (d / 2) + e) in case there is path:
- *     O(e): to create adj. matrix (e — number of edges);
- *     O(k ^ (d / 2)): how many nodes will be visited (k — average successor count, d — distance between nodes of interest);
- *     O(v): we go through the column or row of matrix for each visited node.
+ * O(e): to create adj. matrix (e — number of edges);
+ * O(k ^ (d / 2)): how many nodes will be visited (k — average successor count, d — distance between nodes of interest);
+ * O(v): we go through the column or row of matrix for each visited node.
  * O(v ^ 2 + e) in case there is no path, and this is the worst case.
  * Space complexity: O(v ^ 2)).
  **/
 public class RouteBetweenNodes {
-    
+
     public List<Integer> findPath(final int[][] edges, final int start, final int end) {
         if (start == end) {
             return singletonList(start);
@@ -100,20 +100,20 @@ public class RouteBetweenNodes {
 
     public static void main(final String[] args) {
         final int[][] edges = {
-                { 1, 2 }, { 1, 3 }, { 1, 4 },
-                { 2, 5 },
-                { 4, 5 }, { 4, 6 }, { 4, 7 }, { 4, 8 },
-                { 5, 6 },
-                { 8, 9 }, { 8, 12 },
-                { 9, 10 },
-                { 10, 11 }, { 10, 11 }, { 10, 12 }, { 10, 15 },
-                { 11, 12 },
-                { 13, 14 }
+                {1, 2}, {1, 3}, {1, 4},
+                {2, 5},
+                {4, 5}, {4, 6}, {4, 7}, {4, 8},
+                {5, 6},
+                {8, 9}, {8, 12},
+                {9, 10},
+                {10, 11}, {10, 11}, {10, 12}, {10, 15},
+                {11, 12},
+                {13, 14}
         };
         System.out.println("[1, 4, 8, 9/12, 10] == " + new RouteBetweenNodes().findPath(edges, 1, 10));
         System.out.println("[1, 4, 8, 12] == " + new RouteBetweenNodes().findPath(edges, 1, 12));
         System.out.println("[1] == " + new RouteBetweenNodes().findPath(edges, 1, 1));
         System.out.println("[13, 14] == " + new RouteBetweenNodes().findPath(edges, 13, 14));
         System.out.println("[] == " + new RouteBetweenNodes().findPath(edges, 1, 14));
-	}
+    }
 }

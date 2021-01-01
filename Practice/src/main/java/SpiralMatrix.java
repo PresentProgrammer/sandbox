@@ -35,7 +35,7 @@ public class SpiralMatrix {
         }
         return result;
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

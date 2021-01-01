@@ -28,7 +28,7 @@ public class KthSmallestElementInSortedMatrix {
         }
         return lo;
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

@@ -5,19 +5,19 @@
  **/
 public class WordSearch {
 
-    private static final int[][] DIRECTIONS = new int[][]{ {1, 0}, {-1, 0}, {0, 1}, {0, -1}, };
+    private static final int[][] DIRECTIONS = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1},};
 
     private char[][] board;
     private String word;
     private boolean[][] visited;
 
     public boolean exist(char[][] board, String word) {
-		if (board == null || board.length == 0 || board[0].length == 0 || word == null) {
-		    return false;
+        if (board == null || board.length == 0 || board[0].length == 0 || word == null) {
+            return false;
         }
-		this.board = board;
-		this.word = word;
-		this.visited = new boolean[board.length][board[0].length];
+        this.board = board;
+        this.word = word;
+        this.visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < this.board.length; i++) {
             for (int j = 0; j < this.board[i].length; j++) {
                 if (exist(0, i, j)) {

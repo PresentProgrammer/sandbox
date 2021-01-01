@@ -1,4 +1,8 @@
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
 
 /**
  * Problem #17
@@ -28,5 +32,5 @@ public class LetterCombinationsOfPhoneNumber {
 
     public static void main(final String[] args) {
         System.out.println("[ad, ae, af, bd, be, bf, cd, ce, cf] == " + new LetterCombinationsOfPhoneNumber().letterCombinations("23"));
-	}
+    }
 }

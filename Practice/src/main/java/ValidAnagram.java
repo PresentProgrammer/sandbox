@@ -10,8 +10,8 @@ public class ValidAnagram {
             return false;
         }
         final int[] count = new int[26];
-		for (int i = 0; i < s.length(); i++) {
-		    count[s.charAt(i) - 'a']++;
+        for (int i = 0; i < s.length(); i++) {
+            count[s.charAt(i) - 'a']++;
         }
         for (int i = 0; i < t.length(); i++) {
             final int index = t.charAt(i) - 'a';
@@ -22,9 +22,9 @@ public class ValidAnagram {
         }
         return true;
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println("true == " + new ValidAnagram().isAnagram("anagram","nagaram"));
-        System.out.println("false == " + new ValidAnagram().isAnagram("rat","car"));
-	}
+        System.out.println("true == " + new ValidAnagram().isAnagram("anagram", "nagaram"));
+        System.out.println("false == " + new ValidAnagram().isAnagram("rat", "car"));
+    }
 }

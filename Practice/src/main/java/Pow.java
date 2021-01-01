@@ -17,10 +17,10 @@ public class Pow {
         }
         return pow >= 0 ? res : 1.0 / res;
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("1024.0 == " + new Pow().myPow(2.0, 10));
         System.out.println("9.26100 == " + new Pow().myPow(2.10000, 3));
         System.out.println("0.25000 == " + new Pow().myPow(2.00000, -2));
-	}
+    }
 }

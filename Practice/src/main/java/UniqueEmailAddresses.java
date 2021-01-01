@@ -9,17 +9,17 @@ import java.util.Set;
 public class UniqueEmailAddresses {
 
     public int numUniqueEmails(String[] emails) {
-		final Set<String> uniqueEmails = new HashSet<>();
-		for (final String email : emails) {
-		    final int atIndex = email.indexOf('@');
-		    final String localName = email.substring(0, atIndex);
-		    final int plusIndex = localName.indexOf('+');
-		    final int localNameLastExclIndex = plusIndex == -1 ? localName.length() : plusIndex;
-		    final String refinedLocalName = removeDots(localName.substring(0, localNameLastExclIndex));
-		    final String hostName = email.substring(atIndex);
+        final Set<String> uniqueEmails = new HashSet<>();
+        for (final String email : emails) {
+            final int atIndex = email.indexOf('@');
+            final String localName = email.substring(0, atIndex);
+            final int plusIndex = localName.indexOf('+');
+            final int localNameLastExclIndex = plusIndex == -1 ? localName.length() : plusIndex;
+            final String refinedLocalName = removeDots(localName.substring(0, localNameLastExclIndex));
+            final String hostName = email.substring(atIndex);
             uniqueEmails.add(refinedLocalName + hostName);
         }
-		return uniqueEmails.size();
+        return uniqueEmails.size();
     }
 
     private static String removeDots(final String s) {
@@ -31,7 +31,7 @@ public class UniqueEmailAddresses {
         }
         return builder.toString();
     }
-    
+
     public static void main(final String[] args) {
-	}
+    }
 }

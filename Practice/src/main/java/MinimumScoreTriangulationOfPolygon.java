@@ -19,10 +19,10 @@ public class MinimumScoreTriangulationOfPolygon {
     }
 
     public static void main(final String[] args) {
-        System.out.println("6 == " + new MinimumScoreTriangulationOfPolygon().minScoreTriangulation(new int[]{1,2,3}));
-        System.out.println("144 == " + new MinimumScoreTriangulationOfPolygon().minScoreTriangulation(new int[]{3,7,4,5}));
-        System.out.println("13 == " + new MinimumScoreTriangulationOfPolygon().minScoreTriangulation(new int[]{1,3,1,4,1,5}));
+        System.out.println("6 == " + new MinimumScoreTriangulationOfPolygon().minScoreTriangulation(new int[]{1, 2, 3}));
+        System.out.println("144 == " + new MinimumScoreTriangulationOfPolygon().minScoreTriangulation(new int[]{3, 7, 4, 5}));
+        System.out.println("13 == " + new MinimumScoreTriangulationOfPolygon().minScoreTriangulation(new int[]{1, 3, 1, 4, 1, 5}));
         System.out.println("140295 == " + new MinimumScoreTriangulationOfPolygon()
-                .minScoreTriangulation(new int[]{35,73,90,27,71,80,21,33,33,13,48,12,68,70,80,36,66,3,70,58}));
-	}
+                .minScoreTriangulation(new int[]{35, 73, 90, 27, 71, 80, 21, 33, 33, 13, 48, 12, 68, 70, 80, 36, 66, 3, 70, 58}));
+    }
 }

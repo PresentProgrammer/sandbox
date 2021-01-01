@@ -7,9 +7,9 @@ import java.util.Map;
  **/
 @SuppressWarnings("Duplicates")
 public class CopyListWithRandomPointer {
-    
+
     private final Map<RandomListNode, RandomListNode> originalToCopy = new HashMap<>();
-    
+
     public RandomListNode copyRandomList(RandomListNode head) {
         RandomListNode originalCurrent = head;
         RandomListNode copyCurrent = getKnownOrCreateNewNode(originalCurrent);
@@ -22,11 +22,11 @@ public class CopyListWithRandomPointer {
         }
         return copyHead;
     }
-    
+
     private RandomListNode getKnownOrCreateNewNode(final RandomListNode originalNode) {
         return originalNode == null ? null : originalToCopy.computeIfAbsent(originalNode, k -> new RandomListNode(k.label));
     }
-    
+
     public static void main(final String... args) {
         final RandomListNode head = new RandomListNode(1);
         head.next = new RandomListNode(2);

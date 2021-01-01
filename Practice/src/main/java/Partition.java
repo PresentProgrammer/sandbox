@@ -4,29 +4,29 @@
  * Space complexity: O(1)
  **/
 public class Partition {
-    
+
     public LinkedListNode<Integer> partition(final LinkedListNode<Integer> head, final int x) {
-		if (head == null) {
-		    return null;
+        if (head == null) {
+            return null;
         }
         LinkedListNode<Integer> lo = head;
-		LinkedListNode<Integer> hi = head;
-		LinkedListNode<Integer> curr = head.next;
-		while (curr != null) {
-		    final LinkedListNode<Integer> next = curr.next;
-		    if (curr.val < x) {
-		        curr.next = lo;
-		        lo = curr;
+        LinkedListNode<Integer> hi = head;
+        LinkedListNode<Integer> curr = head.next;
+        while (curr != null) {
+            final LinkedListNode<Integer> next = curr.next;
+            if (curr.val < x) {
+                curr.next = lo;
+                lo = curr;
             } else {
-		        hi.next = curr;
-		        hi = curr;
+                hi.next = curr;
+                hi = curr;
             }
-		    curr = next;
+            curr = next;
         }
-		hi.next = null;
-		return lo;
+        hi.next = null;
+        return lo;
     }
-    
+
     public static void main(final String[] args) {
         LinkedListNode<Integer> head = new LinkedListNode<>(3);
         head = LinkedListNode.add(head, 5);
@@ -40,5 +40,5 @@ public class Partition {
         System.out.println(LinkedListNode.print(new Partition().partition(new LinkedListNode<>(3), 5)));
         System.out.println(LinkedListNode.print(new Partition().partition(new LinkedListNode<>(5), 5)));
         System.out.println(LinkedListNode.print(new Partition().partition(new LinkedListNode<>(10), 5)));
-	}
+    }
 }

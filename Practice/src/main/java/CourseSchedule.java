@@ -52,10 +52,10 @@ public class CourseSchedule {
         list.add(elem);
         return list;
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println("true == " + new CourseSchedule().canFinish(2, new int[][] {{ 1, 0 }} ));
-        System.out.println("false == " + new CourseSchedule().canFinish(2, new int[][] {{ 1, 0 }, { 0, 1 }} ));
-        System.out.println("true == " + new CourseSchedule().canFinish(3, new int[][] {{ 0, 1 }, { 0, 2 }, { 1, 2 }} ));
-	}
+        System.out.println("true == " + new CourseSchedule().canFinish(2, new int[][]{{1, 0}}));
+        System.out.println("false == " + new CourseSchedule().canFinish(2, new int[][]{{1, 0}, {0, 1}}));
+        System.out.println("true == " + new CourseSchedule().canFinish(3, new int[][]{{0, 1}, {0, 2}, {1, 2}}));
+    }
 }

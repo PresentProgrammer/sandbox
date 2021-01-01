@@ -55,9 +55,9 @@ public class LRUCache {
         iter.remove();
         q.offer(key);
     }
-    
+
     public static void main(final String[] args) {
-        LRUCache cache = new LRUCache( 2 /* capacity */ );
+        LRUCache cache = new LRUCache(2 /* capacity */);
         cache.put(1, 1);
         cache.put(2, 2);
         System.out.println("1 == " + cache.get(1));       // returns 1
@@ -67,5 +67,5 @@ public class LRUCache {
         System.out.println("-1 == " + cache.get(1));       // returns -1
         System.out.println("3 == " + cache.get(3));       // returns 3
         System.out.println("4 == " + cache.get(4));       // returns 4
-	}
+    }
 }

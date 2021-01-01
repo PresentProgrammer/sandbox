@@ -19,9 +19,9 @@ public class UniquePaths {
         }
         return (int) res;
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("3 == " + new UniquePaths().uniquePaths(3, 2));
         System.out.println("28 == " + new UniquePaths().uniquePaths(3, 7));
-	}
+    }
 }

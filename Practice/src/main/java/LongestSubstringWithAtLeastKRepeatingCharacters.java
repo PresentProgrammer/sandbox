@@ -9,9 +9,9 @@ public class LongestSubstringWithAtLeastKRepeatingCharacters {
     private int k;
 
     public int longestSubstring(final String s, final int k) {
-		this.s = s;
-		this.k = k;
-		return longestSubstring(0, s.length());
+        this.s = s;
+        this.k = k;
+        return longestSubstring(0, s.length());
     }
 
     private int longestSubstring(final int left, final int rightExcl) {
@@ -44,9 +44,9 @@ public class LongestSubstringWithAtLeastKRepeatingCharacters {
         }
         return max;
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("3 == " + new LongestSubstringWithAtLeastKRepeatingCharacters().longestSubstring("aaabb", 3));
         System.out.println("5 == " + new LongestSubstringWithAtLeastKRepeatingCharacters().longestSubstring("ababbc", 2));
-	}
+    }
 }

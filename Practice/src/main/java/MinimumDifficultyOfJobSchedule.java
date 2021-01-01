@@ -43,9 +43,9 @@ public class MinimumDifficultyOfJobSchedule {
         }
         return memo[firstDay][daysRemaining];
     }
-    
+
     public static void main(final String[] args) {
         System.out.println("7 == " + new MinimumDifficultyOfJobSchedule()
                 .minDifficulty(new int[]{6, 5, 4, 3, 2, 1}, 2));
-	}
+    }
 }

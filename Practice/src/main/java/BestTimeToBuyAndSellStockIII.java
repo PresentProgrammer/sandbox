@@ -23,10 +23,10 @@ public class BestTimeToBuyAndSellStockIII {
 
         return maxProfit;
     }
-    
+
     public static void main(final String[] args) {
-        System.out.println("6 == " + new BestTimeToBuyAndSellStockIII().maxProfit(new int[]{3,3,5,0,0,3,1,4}));
+        System.out.println("6 == " + new BestTimeToBuyAndSellStockIII().maxProfit(new int[]{3, 3, 5, 0, 0, 3, 1, 4}));
         System.out.println("0 == " + new BestTimeToBuyAndSellStockIII().maxProfit(new int[]{1}));
-        System.out.println("13 == " + new BestTimeToBuyAndSellStockIII().maxProfit(new int[]{1,2,4,2,5,7,2,4,9,0}));
-	}
+        System.out.println("13 == " + new BestTimeToBuyAndSellStockIII().maxProfit(new int[]{1, 2, 4, 2, 5, 7, 2, 4, 9, 0}));
+    }
 }

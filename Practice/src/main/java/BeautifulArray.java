@@ -42,11 +42,11 @@ public class BeautifulArray {
         }
         return array;
     }
-    
+
     public static void main(final String[] args) {
 //        for (int n = 1; n <= 1000; n++) {
 //            System.out.println(Arrays.toString(new BeautifulArray().beautifulArray(n)));
 //        }
         System.out.println(Arrays.toString(new BeautifulArray().beautifulArray(12)));
-	}
+    }
 }

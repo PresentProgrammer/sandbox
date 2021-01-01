@@ -149,8 +149,8 @@ public class RandomNodeBinaryTree {
         }
     }
 
-    private enum Direction { LEFT, RIGHT }
-    
+    private enum Direction {LEFT, RIGHT}
+
     private static class Node {
 
         int val;
