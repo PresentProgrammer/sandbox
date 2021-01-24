@@ -1,6 +1,9 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * Problem #85
- * Time complexity: O(N * M ^ 2), where N - rows, M - columns
+ * Time complexity: O(N * M), where N - rows, M - columns
  * Space complexity: O(N * M)
  **/
 public class MaximalRectangle {
@@ -29,30 +32,38 @@ public class MaximalRectangle {
         return subSums;
     }
 
-    private static int maxArea(int[] row) {
-        int result = 0;
-        for (int mid = 0; mid < row.length; mid++) {
-            if (row[mid] > 0) {
-                final int midElem = row[mid];
-                int accum = midElem;
-                for (int left = mid - 1; 0 <= left && row[left] >= midElem; left--) {
-                    accum += midElem;
-                }
-                for (int right = mid + 1; right < row.length && row[right] >= midElem; right++) {
-                    accum += midElem;
-                }
-                result = Math.max(result, accum);
-            }
+    /**
+     * Stack implementation takes O(M) time, O(M) space, where M = row.length.
+     */
+    public int maxArea(int[] row) {
+        final Deque<int[]> stack = new ArrayDeque<>();
+        stack.push(new int[]{-1, -1});
+        int maxArea = 0;
+        for (int i = 0; i < row.length; i++) {
+            maxArea = Math.max(maxArea, areaFromStack(stack, row[i]));
+            stack.push(new int[]{i, row[i]});
         }
-        return result;
+        maxArea = Math.max(maxArea, areaFromStack(stack, 0));
+        return maxArea;
+    }
+
+    private static int areaFromStack(Deque<int[]> stack, int limit) {
+        int maxArea = 0;
+        final int right = stack.peek()[0];
+        while (stack.peek()[1] >= limit) {
+            final int height = stack.pop()[1];
+            final int[] nextPoint = stack.peek();
+            maxArea = Math.max(maxArea, height * (right - nextPoint[0]));
+        }
+        return maxArea;
     }
 
     public static void main(final String[] args) {
         System.out.println("6 == " + new MaximalRectangle().maximalRectangle(new char[][]{
-                {'1','0','1','0','0'},
-                {'1','0','1','1','1'},
-                {'1','1','1','1','1'},
-                {'1','0','0','1','0'}
+                {'1', '0', '1', '0', '0'},
+                {'1', '0', '1', '1', '1'},
+                {'1', '1', '1', '1', '1'},
+                {'1', '0', '0', '1', '0'}
         }));
     }
 }
