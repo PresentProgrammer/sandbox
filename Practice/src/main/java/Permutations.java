@@ -1,45 +1,40 @@
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.IntStream;
 
 /**
  * Problem #46
- * Time complexity: O(n ^ 2)
- * Space complexity: O(n ^ 2)
+ * Time complexity: O(N!)
+ * Space complexity: O(N!)
  **/
 public class Permutations {
 
     public List<List<Integer>> permute(int[] nums) {
-        final List<List<Integer>> result = new ArrayList<>();
-        final Set<Integer> remaining = new HashSet<>();
-        for (final int num : nums) {
-            remaining.add(num);
-        }
-        permute(result, new ArrayList<>(), remaining);
-        return result;
+        return permute(nums, new ArrayList<>(nums.length), new boolean[nums.length], new ArrayList<>());
     }
 
-    private static void permute(List<List<Integer>> result, List<Integer> temp, Set<Integer> remaining) {
-        if (remaining.isEmpty()) {
-            result.add(new ArrayList<>(temp));
+    private static List<List<Integer>> permute(int[] nums, List<Integer> soFar, boolean[] visited, List<List<Integer>> result) {
+        if (soFar.size() == nums.length) {
+            result.add(new ArrayList<>(soFar));
         } else {
-            for (final Integer remainingEl : new ArrayList<>(remaining)) {
-                temp.add(remainingEl);
-                remaining.remove(remainingEl);
-                permute(result, temp, remaining);
-                temp.remove(temp.size() - 1);
-                remaining.add(remainingEl);
+            for (int i = 0; i < nums.length; i++) {
+                if (!visited[i]) {
+                    visited[i] = true;
+                    soFar.add(nums[i]);
+                    permute(nums, soFar, visited, result);
+                    soFar.remove(soFar.size() - 1);
+                    visited[i] = false;
+                }
             }
         }
+        return result;
     }
 
     public static void main(final String[] args) {
         Instant start = Instant.now();
-        new Permutations().permute(IntStream.range(1, 10).toArray());
+        final List<List<Integer>> permutations = new Permutations().permute(new int[] { 1, 2, 3 });
         System.out.println("Execution took " + Duration.between(start, Instant.now()));
+        System.out.println(permutations);
     }
 }
