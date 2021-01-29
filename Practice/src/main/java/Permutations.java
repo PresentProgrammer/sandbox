@@ -1,7 +1,8 @@
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Problem #46
@@ -31,10 +32,28 @@ public class Permutations {
         return result;
     }
 
+    public List<List<Integer>> permuteWithSwap(int[] nums) {
+        final List<Integer> original = Arrays.stream(nums)
+                .boxed()
+                .collect(Collectors.toCollection(ArrayList::new));
+        return permuteWithSwap(original, 0, new ArrayList<>());
+    }
+
+    private static List<List<Integer>> permuteWithSwap(List<Integer> soFar, int depth, List<List<Integer>> result) {
+        if (depth == soFar.size()) {
+            result.add(new ArrayList<>(soFar));
+        } else {
+            for (int i = depth; i < soFar.size(); i++) {
+                Collections.swap(soFar, i, depth);
+                permuteWithSwap(soFar, depth + 1, result);
+                Collections.swap(soFar, i, depth);
+            }
+        }
+        return result;
+    }
+
     public static void main(final String[] args) {
-        Instant start = Instant.now();
-        final List<List<Integer>> permutations = new Permutations().permute(new int[] { 1, 2, 3 });
-        System.out.println("Execution took " + Duration.between(start, Instant.now()));
-        System.out.println(permutations);
+        System.out.println(new Permutations().permute(new int[]{1, 2, 3}));
+        System.out.println(new Permutations().permuteWithSwap(new int[]{1, 2, 3}));
     }
 }
