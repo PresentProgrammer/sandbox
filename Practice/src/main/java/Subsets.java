@@ -1,5 +1,8 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Problem #78
@@ -22,6 +25,24 @@ public class Subsets {
         return result;
     }
 
+    /**
+     * ArrayList VS LinkedList performance:
+     *
+     * 20 nums:
+     * ArrayList: 0.091S, 0.083S, 0.08S
+     * LinkedList: 3.84S, 3.759S, 3.837S
+     *
+     *
+     * 23 nums:
+     * ArrayList: 7.472S, 5.89S, 6.632S, 6.991S, 5.582S
+     * ArrayList: 34.516S, 39.398S
+     */
     public static void main(final String[] args) {
+        final int[] nums = IntStream.range(0, 20).toArray();
+        final Instant start = Instant.now();
+        new Subsets().subsets(nums);
+        System.out.println("Time taken: " + Duration.between(start, Instant.now()));
+
+        System.out.println(new Subsets().subsets(new int[]{ 1, 2, 3 }));
     }
 }
