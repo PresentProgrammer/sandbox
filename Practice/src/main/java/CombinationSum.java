@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
 public class CombinationSum {
 
     /**
-     * Time complexity: O(N ^ (T / M + 1)), where N = candidates.length, T = target, M = min(candidates)
-     *     Explanation: N ^ (T / M) = number of nodes, * N for copying leaf elements.
+     * Time complexity: O(N ^ (T / M + 2)), where N = candidates.length, T = target, M = min(candidates)
+     *     Explanation: N ^ (T / M + 1) = number of nodes, * N for copying leaf elements.
      * Space complexity: O(T / M)
      */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
