@@ -3,7 +3,7 @@ import java.util.TreeMap;
 
 /**
  * Problem #715
- * Time complexity: O((A + R) * log(A + R) + Q * log(A + R)), where A - add, R - remove, Q - query operation count.
+ * Time complexity: O((A + R + Q) * log(A + R)), where A - add, R - remove, Q - query operation count.
  * Space complexity: O(A + R)
  **/
 public class RangeModule {
