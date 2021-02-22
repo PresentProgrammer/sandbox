@@ -1,79 +1,83 @@
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
  * Problem #843
- * Time complexity: O(? * N ^ 2)
+ * Time complexity: O(N ^ 2 * log(N))
  * Space complexity: O(N ^ 2)
  **/
 public class GuessTheWord {
 
-    private static final int STR_LENGTH = 6;
+    private static final int WORD_LENGTH = 6;
 
     public void findSecretWord(String[] wordList, Master master) {
-        final int[][] matches = initMatches(wordList);
-        List<Integer> currWords = IntStream.range(0, wordList.length)
-                .boxed()
-                .collect(Collectors.toList());
-        while (true) {
-            int maxChildren = Integer.MAX_VALUE;
-            int maxWord = -1;
-            List<List<Integer>> maxWordChildren = null;
-            for (final Integer currWord : currWords) {
-                List<List<Integer>> children = initEmptyChildren();
-                for (final Integer secondWord : currWords) {
-                    children.get(matches[currWord][secondWord]).add(secondWord);
-                }
-                final int currMaxChildren = children.stream()
-                        .map(List::size)
-                        .max(Comparator.naturalOrder())
-                        .orElseThrow(RuntimeException::new);
-                if (currMaxChildren < maxChildren) {
-                    maxChildren = currMaxChildren;
-                    maxWord = currWord;
-                    maxWordChildren = children;
-                }
-            }
-            final int guessed = master.guess(wordList[maxWord]);
-            if (guessed == STR_LENGTH) {
+        List<String> candidates = Stream.of(wordList).collect(Collectors.toUnmodifiableList());
+        while (candidates.size() > 1) {
+            final Map<String, Map<Integer, List<String>>> map = buildMap(candidates);
+            final String bestChoice = bestChoice(map);
+            final int guessResult = master.guess(bestChoice);
+            if (guessResult == WORD_LENGTH) {
                 return;
             } else {
-                currWords = maxWordChildren.get(guessed);
+                candidates = map.get(bestChoice).getOrDefault(guessResult, Collections.emptyList());
             }
+        }
+        if (candidates.size() == 1) {
+            master.guess(candidates.get(0));
         }
     }
 
-    private int[][] initMatches(String[] words) {
-        final int[][] matches = new int[words.length][words.length];
-        for (int i = 0; i < words.length; i++) {
-            matches[i][i] = STR_LENGTH;
-            for (int j = i + 1; j < words.length; j++) {
-                final int ijMatches = countMatches(words[i], words[j]);
-                matches[i][j] = ijMatches;
-                matches[j][i] = ijMatches;
+    private static Map<String, Map<Integer, List<String>>> buildMap(List<String> words) {
+        final Map<String, Map<Integer, List<String>>> map = new HashMap<>();
+        for (int i = 0; i < words.size(); i++) {
+            final String left = words.get(i);
+            for (int j = i + 1; j < words.size(); j++) {
+                final String right = words.get(j);
+                final int matches = countMatches(left, right);
+                addToMap(map, left, matches, right);
+                addToMap(map, right, matches, left);
             }
         }
-        return matches;
+        return map;
     }
 
-    private static int countMatches(String s1, String s2) {
+    private static int countMatches(String left, String right) {
         int count = 0;
-        for (int i = 0; i < STR_LENGTH; i++) {
-            count += s1.charAt(i) == s2.charAt(i) ? 1 : 0;
+        for (int i = 0; i < WORD_LENGTH; i++) {
+            if (left.charAt(i) == right.charAt(i)) {
+                count++;
+            }
         }
         return count;
     }
 
-    private static List<List<Integer>> initEmptyChildren() {
-        return Stream.generate(ArrayList<Integer>::new)
-                .limit(STR_LENGTH + 1)
-                .collect(Collectors.toList());
+    private static void addToMap(Map<String, Map<Integer, List<String>>> map, String key, int matches, String value) {
+        map.computeIfAbsent(key, ignored -> new HashMap<>())
+                .computeIfAbsent(matches, ignored -> new ArrayList<>())
+                .add(value);
+    }
+
+    private static String bestChoice(Map<String, Map<Integer, List<String>>> map) {
+        String best = null;
+        int maxSize = Integer.MAX_VALUE;
+        for (final String candidate : map.keySet()) {
+            int maxListSize = Integer.MIN_VALUE;
+            for (final List<String> list : map.get(candidate).values()) {
+                maxListSize = Math.max(maxListSize, list.size());
+            }
+            if (maxListSize < maxSize) {
+                maxSize = maxListSize;
+                best = candidate;
+            }
+        }
+        return best;
     }
 
     public static void main(final String[] args) {
