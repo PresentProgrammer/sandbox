@@ -1,37 +1,26 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Problem #300
- * Time complexity: O(n log n)
- * Space complexity: O(n)
+ * Time complexity: O(N * log(N))
+ * Space complexity: O(N)
  **/
 public class LongestIncreasingSubsequence {
 
     public int lengthOfLIS(int[] nums) {
-        final List<Integer> sequences = new ArrayList<>();
-        for (int i = nums == null ? -1 : nums.length - 1; i >= 0; i--) {
-            final int num = nums[i];
-            int left = 0, right = sequences.size() - 1;
-            while (left <= right) {
-                final int mid = (left + right) / 2;
-                final int midValue = sequences.get(mid);
-                if (midValue == num) {
-                    left = mid;
-                    right = mid - 1;
-                } else if (midValue < num) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            }
-            if (left == sequences.size()) {
-                sequences.add(num);
+        final List<Integer> list = new ArrayList<>();
+        for (final int num : nums) {
+            final int binIndex = Collections.binarySearch(list, num);
+            final int index = binIndex >= 0 ? binIndex : -binIndex - 1;
+            if (index == list.size()) {
+                list.add(num);
             } else {
-                sequences.set(left, num);
+                list.set(index, num);
             }
         }
-        return sequences.size();
+        return list.size();
     }
 
     public static void main(final String[] args) {
