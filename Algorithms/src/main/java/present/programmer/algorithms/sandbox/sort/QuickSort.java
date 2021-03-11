@@ -1,7 +1,5 @@
 package present.programmer.algorithms.sandbox.sort;
 
-import edu.princeton.cs.algs4.StdRandom;
-
 import java.util.Random;
 
 public class QuickSort<T extends Comparable<T>> extends SortMethod<T> {
