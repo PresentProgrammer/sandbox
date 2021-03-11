@@ -32,10 +32,10 @@ public class MergeSort<T extends Comparable<T>> extends SortMethod<T> {
                 return; // since right part is copied from arr
             } else if (j > hi) {
                 arr[k] = auxArr[i++];
-            } else if (less(auxArr[i], auxArr[j])) {
-                arr[k] = auxArr[i++];
-            } else {
+            } else if (less(auxArr[j], auxArr[i])) {
                 arr[k] = auxArr[j++];
+            } else {
+                arr[k] = auxArr[i++];
             }
         }
     }
