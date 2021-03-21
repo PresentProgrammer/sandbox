@@ -1,51 +1,53 @@
+import java.util.Optional;
+
 /**
  * Problem #208
- * Time complexity: O(n)
- * Space complexity: O(n)
+ * Time complexity: O(N) for each operation, where N is length of word
+ * Space complexity: O(N), where N is sum of lengths, but less, if words share prefixes.
  **/
 @SuppressWarnings("Duplicates")
 public class Trie {
 
-    private boolean key;
-    private final Trie[] children;
-
-    public Trie() {
-        this.key = false;
-        this.children = new Trie[26];
-    }
+    private final Trie[] children = new Trie['z' - 'a' + 1];
+    private boolean isKey;
 
     public void insert(String word) {
         Trie curr = this;
         for (int i = 0; i < word.length(); i++) {
-            final int letterInd = word.charAt(i) - 'a';
-            if (curr.children[letterInd] == null) {
-                curr.children[letterInd] = new Trie();
+            final int childIndex = toIndex(word.charAt(i));
+            if (curr.children[childIndex] == null) {
+                curr.children[childIndex] = new Trie();
             }
-            curr = curr.children[letterInd];
+            curr = curr.children[childIndex];
         }
-        curr.key = true;
+        curr.isKey = true;
     }
 
     public boolean search(String word) {
-        final Trie prefixTrie = getPrefixTrie(word);
-        return prefixTrie != null && prefixTrie.key;
+        return getPrefixTrie(word)
+                .map(prefix -> prefix.isKey)
+                .orElse(false);
     }
 
     public boolean startsWith(String prefix) {
-        return getPrefixTrie(prefix) != null;
+        return getPrefixTrie(prefix).isPresent();
     }
 
-    private Trie getPrefixTrie(final String prefix) {
+    private Optional<Trie> getPrefixTrie(String word) {
         Trie curr = this;
-        for (int i = 0; i < prefix.length(); i++) {
-            final int letterInd = prefix.charAt(i) - 'a';
-            if (curr.children[letterInd] == null) {
-                return null;
+        for (int i = 0; i < word.length(); i++) {
+            final int childIndex = toIndex(word.charAt(i));
+            if (curr.children[childIndex] == null) {
+                return Optional.empty();
             } else {
-                curr = curr.children[letterInd];
+                curr = curr.children[childIndex];
             }
         }
-        return curr;
+        return Optional.of(curr);
+    }
+
+    private static int toIndex(char ch) {
+        return ch - 'a';
     }
 
     public static void main(final String[] args) {
