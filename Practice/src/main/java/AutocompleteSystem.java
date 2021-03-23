@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Problem #642
  * Time complexity: O(N * K * log(K)) - where N is total length of sentences and input
- * because each non-# input takes O(1)
+ * because each non-# input takes O(K * log(K))
  * each # input takes O(sentenceBefore#.length() * K * log(K))
  * Space complexity: O(N)
  */
