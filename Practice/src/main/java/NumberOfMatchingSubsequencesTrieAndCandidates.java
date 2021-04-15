@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // TODO: Analize complexity
-// TODO: Go through alternatives: 1) Solution, 2) Binary search
+// TODO: Go through alternatives: 1) Solution
 
 /**
  * Problem #792
  * Time complexity: O()
  * Space complexity: O()
  **/
-public class NumberOfMatchingSubsequences {
+public class NumberOfMatchingSubsequencesTrieAndCandidates {
 
 	public int numMatchingSubseq(String s, String[] words) {
 		int result = 0;
@@ -84,11 +84,11 @@ public class NumberOfMatchingSubsequences {
 	}
 
 	public static void main(final String[] args) {
-		System.out.println("3 == " + new NumberOfMatchingSubsequences().numMatchingSubseq(
+		System.out.println("3 == " + new NumberOfMatchingSubsequencesTrieAndCandidates().numMatchingSubseq(
 				"abcde", new String[] { "a", "bb", "acd", "ace" }));
-		System.out.println("2 == " + new NumberOfMatchingSubsequences().numMatchingSubseq(
+		System.out.println("2 == " + new NumberOfMatchingSubsequencesTrieAndCandidates().numMatchingSubseq(
 				"dsahjpjauf", new String[] { "ahjpjau", "ja", "ahbwzgqnuk", "tnmlanowax" }));
-		System.out.println("2 == " + new NumberOfMatchingSubsequences().numMatchingSubseq(
+		System.out.println("2 == " + new NumberOfMatchingSubsequencesTrieAndCandidates().numMatchingSubseq(
 				"qlhxagxdqh", new String[] { "qlhxagxdq", "qlhxagxdq", "lhyiftwtut", "yfzwraahab" }));
 	}
 }
