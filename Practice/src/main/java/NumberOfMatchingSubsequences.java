@@ -1,6 +1,9 @@
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // TODO: Analize complexity
 // TODO: Go through alternatives: 1) Solution, 2) Binary search
@@ -14,11 +17,10 @@ public class NumberOfMatchingSubsequences {
 
 	public int numMatchingSubseq(String s, String[] words) {
 		int result = 0;
-		final Set<TrieNode> candidates = new HashSet<>();
-		candidates.add(buildTrie(words));
+		List<TrieNode> candidates = List.of(buildTrie(words));
 		for (int i = 0; i < s.length(); i++) {
 			final char currChar = s.charAt(i);
-			final Set<TrieNode> newCandidates = new HashSet<>();
+			final List<TrieNode> newCandidates = new ArrayList<>();
 			for (final TrieNode candidate : candidates) {
 				final Optional<TrieNode> optionalChild = candidate.pollChild(currChar);
 				if (optionalChild.isPresent()) {
@@ -27,8 +29,10 @@ public class NumberOfMatchingSubsequences {
 					newCandidates.add(child);
 				}
 			}
-			candidates.addAll(newCandidates);
-			candidates.removeIf(TrieNode::noChildren);
+			candidates = Stream.of(candidates, newCandidates)
+					.flatMap(Collection::stream)
+					.filter(TrieNode::hasChildren)
+					.collect(Collectors.toList());
 		}
 		return result;
 	}
@@ -70,8 +74,8 @@ public class NumberOfMatchingSubsequences {
 			return child;
 		}
 
-		boolean noChildren() {
-			return childCount <= 0;
+		boolean hasChildren() {
+			return childCount > 0;
 		}
 
 		private static int toChildIndex(char ch) {
