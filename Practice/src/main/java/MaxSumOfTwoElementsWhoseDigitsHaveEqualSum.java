@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,10 +9,13 @@ import java.util.Map;
 public class MaxSumOfTwoElementsWhoseDigitsHaveEqualSum {
 
     public int solve(int[] arr) {
-        final Map<Integer, LargestPair> map = new HashMap<>();
+        final Map<Integer, Integer> map = new HashMap<>();
         int max = -1;
         for (final int el : arr) {
-            max = Math.max(max, map.computeIfAbsent(toDigitSum(el), unused -> new LargestPair()).addAndSum(el));
+            final int key = toDigitSum(el);
+            final int value = map.getOrDefault(key, Integer.MIN_VALUE);
+            max = Math.max(max, value + el);
+            map.put(key, Math.max(value, el));
         }
         return max;
     }
@@ -28,20 +28,6 @@ public class MaxSumOfTwoElementsWhoseDigitsHaveEqualSum {
             rem /= 10;
         }
         return result;
-    }
-
-    private static class LargestPair {
-
-        private final List<Integer> list = new ArrayList<>(3);
-
-        int addAndSum(int el) {
-            list.add(el);
-            list.sort(Comparator.reverseOrder());
-            if (list.size() > 2) {
-                list.remove(2);
-            }
-            return list.size() == 2 ? list.get(0) + list.get(1) : -1;
-        }
     }
 
     public static void main(final String[] args) {
