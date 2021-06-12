@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>String data type</title>
+</head>
+<body>
+<p>JavaScript strings are immutable.</p>
+<p>There is no single character type in JavaScript — character is a one-length string.</p>
+<p>String operations:</p>
+<ul>
+    <li><em>substr(start, [length])</em></li>
+    <li><em>substring(start, [endExcl])</em> — same signature as in Java</li>
+    <li><em>+, +=, concat(...string)</em> — <em>+, +=</em> are strongly recommended for performance</li>
+    <li><em>[], charAt(index)</em></li>
+</ul>
+<div>
+    <h3>StringBuilder</h3>
+    <p>There is no StringBuilder in JavaScript. Options for building a String:</p>
+    <ul>
+        <li>Use concatenation +=</li>
+        <li>Push strings to array, and then <em>.join('')</em></li>
+    </ul>
+    <p><em>Note:</em> Depending on interpreter, += will outperform .push()...join() method! <a href="https://stackoverflow.com/questions/2087522/does-javascript-have-a-built-in-stringbuilder-class"> See discussion.</a></p>
+</div>
+<div>
+    <h3>String Objects</h3>
+    <p>JavaScript automatically converts primitives to String objects, so that it's possible to call String methods or access String fields (e.g., .length).</p>
+</div>
+<script>
+    console.log('Immutability:')
+    const immutableStr = 'hello'
+    immutableStr[1] = 'X'
+    console.log(immutableStr === 'hello')
+
+    console.log('')
+    console.log('Operators:')
+    console.log('"hello".substr(1, 2) === ' + "hello".substr(1, 2));
+    console.log('"hello".substr(1, 2) === ' + "hello".substring(1, 2));
+
+    console.log('')
+    console.log('String comparison:')
+    console.log('"a" == "a" is ' + ("a" == "a"));
+    console.log('"a" === "a" is ' + ("a" === "a"));
+    console.log('"a" < "b" is ' + ("a" < "b"));
+
+    console.log('')
+    console.log('String objects:')
+    console.log('"a" == new String("a") is ' + ("a" == new String("a")))
+    console.log('"a" === new String("a") is ' + ("a" === new String("a")))
+    console.log('new String("a") == new String("a") is ' + (new String("a") == new String("a")));
+    console.log('new String("a").valueOf() === new String("a").valueOf() is ' +
+        (new String("a").valueOf() === new String("a").valueOf()));
+    console.log('"a" === new String("a").valueOf() is ' + ("a" === new String("a").valueOf()));
+
+    console.log('')
+    const strObject = new String('a')
+    strObject.foo = 'foo'
+    console.log('const strObject = new String("a"); strObject.foo = "foo"; strObject.foo is ' + strObject.foo)
+    const primitiveStr = "a"
+    primitiveStr.foo = "foo"
+    console.log('const primitiveStr = "a"; primitiveStr.foo = "foo"; primitiveStr.foo is ' + primitiveStr.foo)
+    console.log('.foo field is lost from primitive string, because the temporary object, that was created for .foo assignment, was discarded.')
+</script>
+</body>
+</html>
