@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>for...in</title>
+</head>
+<body>
+<p>The <em>for...in</em> statement iterates over all enumerable properties (keys) of an object that are keyed by strings (ignoring ones keyed by Symbols), including inherited enumerable properties.</p>
+<p>Enumerable properties are those properties whose internal enumerable flag is set to true, which is the default for properties created via simple assignment or via a property initializer. Properties defined via Object.defineProperty and such default enumerable to false.</p>
+<p>A for...in loop iterates over the properties of an object in an <b>arbitrary</b> order! So <em>for...in</em> should not be used to iterate over an <em>Array</em> where the index order is important, as <em>Array</em> indexes are just enumerable properties with integer names. Instead, use one of:</p>
+<ul>
+    <li>Array.prototype.forEach()</li>
+    <li>for...of</li>
+    <li>for</li>
+</ul>
+<p>In general, it is best not to add, modify, or remove properties from the object during iteration, other than the property currently being visited. There is no guarantee whether an added property will be visited, whether a modified property (other than the current one) will be visited before or after it is modified, or whether a deleted property will be visited before it is deleted.</p>
+
+<script>
+    function executeForIn(data) {
+        console.log('Iterating over ' + JSON.stringify(data))
+        for (const field in data) {
+            console.log(`${field}: ${data[field]}`)
+        }
+        console.log('')
+    }
+
+    executeForIn({ a: 1, b: 2, c: 3 });
+    executeForIn('Artur');
+    executeForIn(new String('Artur'));
+    executeForIn(buildArr());
+    executeForIn(buildMap());
+    executeForIn(new Object());
+
+    const triangle = { area: 30 };
+    function ColoredTriangle() {
+        this.color = 'red'
+    }
+    ColoredTriangle.prototype = triangle;
+    const coloredTriangle = new ColoredTriangle();
+    console.log('Iterate over coloredTriangle without using .hasOwnProperty(prop):')
+    for (const prop in coloredTriangle) {
+        console.log(`${prop}: ${coloredTriangle[prop]}`)
+    }
+    console.log('')
+    console.log('Iterate over coloredTriangle with using .hasOwnProperty(prop):')
+    for (const prop in coloredTriangle) {
+        if (coloredTriangle.hasOwnProperty(prop)) {
+            console.log(`${prop}: ${coloredTriangle[prop]}`)
+        }
+    }
+
+    function buildArr() {
+        const arr = [10, 30, 'artik', null, undefined, true, false];
+        arr[10] = 'last';
+        return arr;
+    }
+
+    function buildMap() {
+        return new Map([
+            ["firstName", "Julia"],
+            ["lastName", "Jane"],
+            ["dateOfBirth", "October 28, 1967"],
+            ["nationality", "American"],
+            ["firstMovie", "Satisfaction"]
+        ]);
+    }
+</script>
+</body>
+</html>

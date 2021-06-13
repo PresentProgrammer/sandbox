@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>for...of</title>
+</head>
+<body>
+<p>The <em>for...of</em> loop iterates over iterable objects such as an Array, Map, Set, String, TypedArray, arguments object, etc. It essentially iterates over the <em>value</em> of each distinct property in the structure, such as each letter in a word or each element in an array. Cannot iterate over non-iterable object, e,g, { a: 'a' }.</p>
+<p>Note that gaps in arrays are also iterated over, unlike by <em>for...in</em></p>
+
+<script>
+    function executeForOf(iterable) {
+        console.log('Iterating over ' + JSON.stringify(iterable))
+        for (const el of iterable) {
+            console.log(el)
+        }
+        console.log('')
+    }
+
+    executeForOf('Artur');
+    executeForOf(new String('Artur'));
+    executeForOf(buildArr());
+    executeForOf(buildMap());
+
+    function buildArr() {
+        const arr = [10, 30, 'artik', null, undefined, true, false];
+        arr[10] = 'last';
+        return arr;
+    }
+
+    function buildMap() {
+        return new Map([
+            ["firstName", "Julia"],
+            ["lastName", "Jane"],
+            ["dateOfBirth", "October 28, 1967"],
+            ["nationality", "American"],
+            ["firstMovie", "Satisfaction"]
+        ]);
+    }
+</script>
+</body>
+</html>
