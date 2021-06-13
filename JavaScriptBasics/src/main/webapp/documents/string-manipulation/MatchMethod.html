@@ -6,9 +6,12 @@
 </head>
 <body>
 <script>
-    var myString = "1997, 1998, 2000, 2010, 2000, 0, 2000";
-    alert("myString: " + myString + "\nmyString.match('2000') == " + myString.match('2000') +
-            "\ntypeof myString.match('2000') == " + typeof myString.match('2000'));
+    const myString = "1997, 1998, 2000, 2010, 2000, 0, 2000";
+    const match = myString.match('2000');
+    console.log('match is ' + match)
+    console.log('typeof match is ' + typeof match)
+    console.log('match.index is ' + match.index)
+    console.log('match.input is ' + match.input)
 </script>
 </body>
 </html>

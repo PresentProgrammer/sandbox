@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Falsy Values</title>
+</head>
+<body>
+<p>The following 6 values are known as Falsy, meaning that they evaluate to `false`</p>
+<ul>
+    <li>null</li>
+    <li>undefined</li>
+    <li>false</li>
+    <li>0</li>
+    <li>''</li>
+    <li>NaN</li>
+</ul>
+<p>Other values are Truthy, including any Object</p>
+
+<script>
+    console.log('Falsy:')
+    console.log('Boolean(null) is ' + Boolean(null))
+    console.log('Boolean(undefined) is ' + Boolean(undefined))
+    console.log('Boolean(false) is ' + Boolean(false))
+    console.log('Boolean(0) is ' + Boolean(0))
+    console.log('Boolean("") is ' + Boolean(""))
+    console.log('Boolean(NaN) is ' + Boolean(NaN))
+
+    console.log('')
+    console.log('Truthy')
+    console.log('Boolean(true) is ' + Boolean(true))
+    console.log('Boolean(1) is ' + Boolean(1))
+    console.log('Boolean(-1) is ' + Boolean(-1))
+    console.log('Boolean(" ") is ' + Boolean(" "))
+    console.log('Boolean({}) is ' + Boolean({}))
+    console.log('Boolean(new Boolean(false)) is ' + Boolean(new Boolean(false)))
+    console.log('Boolean(new String("")) is ' + Boolean(new String("")))
+</script>
+</body>
+</html>

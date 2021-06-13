@@ -7,7 +7,12 @@
 <body>
 <p>JavaScript is a dynamically typed language, meaning you don't need to declare a variable's type ahead of time. The types are determined during the execution.</p>
 <p>You can re-assign a single variable to reference different types.</p>
-<p>Variable (<em>var</em>) declarations are <a href="https://developer.mozilla.org/en-US/docs/Glossary/Hoisting">hoisted.</a> <em>let</em> variable is not hoisted.</p>
+<h2><a href="https://stackoverflow.com/a/11444416/8217032">var VS let</a></h2>
+<p><b>Scoping:</b> var is scoped to the immediate function body. let is scoped to the immediate enclosing block.</p>
+<p><b>Hoisting:</b> Variable (<em>var</em>) declarations are <a href="https://developer.mozilla.org/en-US/docs/Glossary/Hoisting">hoisted.</a> <em>let</em> variable is not hoisted.</p>
+<p><b>Re-declaration: </b>var can be re-declared multiple times. let cannot.</p>
+<h2>const</h2>
+<p>Unlike in Java, <em>const</em> can not be left unitialized immediately: <em>const a;</em> will throw SyntaxError.</p>
 <script>
     console.log('Hoisted var a: ' + a);
     var a;
@@ -16,6 +21,39 @@
     console.log(a);
     a = 100;
     console.log(a);
+    var a = 50;
+    console.log(a);
+
+    console.log('')
+    console.log('var in function scope:')
+    function declareSameVarInBlock(input) {
+        var a = input;
+
+        if (a % 2 === 1) {
+            var a = input + 1; // same 'a' as in beginning of the function
+            console.log("if(a): " + a);
+        }
+        console.log("main(a): " + a);
+    }
+    console.log('calling declareSameVarInBlock(13):');
+    declareSameVarInBlock(13)
+
+    console.log('')
+    console.log('let in block scope:')
+    function declareSameLetInBlock(input) {
+        let  a = input;
+
+        if (a % 2 === 1) {
+            let a = input + 1; // same 'a' as in beginning of the function
+            console.log("if(a): " + a);
+        }
+        console.log("main(a): " + a);
+    }
+    console.log('calling declareSameLetInBlock(13):');
+    declareSameLetInBlock(13)
+
+    console.log('')
+    console.log('const')
 </script>
 </body>
 </html>

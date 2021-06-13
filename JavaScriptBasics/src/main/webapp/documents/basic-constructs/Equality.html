@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Equality</title>
+</head>
+<body>
+<h2>Equality ==</h2>
+<p>Type coercion takes place if operands are not of the same type.</p>
+<p>If both operands are objects, then the internal references are compared.</p>
+<p>Useful: to check whether value is null or undefined, use <em>null == val</em></p>
+<p>All rules of comparison are not worth to remember. See <a href="http://es5.github.io/#x11.9.3">11.9.3 The Abstract Equality Comparison Algorithm</a>. And see <a href="https://stackoverflow.com/a/27989332/8217032"> example</a>.</p>
+<h2>Identity or Strict Equality ===</h2>
+<p>If types are different, return false</p>
+<p>For numbers, if any operand is NaN, return false; +0 === -0</p>
+<p>null !=== undefined</p>
+<p>Objects are compared by reference</p>
+<p>Full set of rules: <a href="http://es5.github.io/#x11.9.6">11.9.6 The Strict Equality Comparison Algorithm</a>.</p>
+
+<script>
+    console.log('==')
+    console.log('1 == 1 is ' + (1 == 1));
+    console.log('1 == "1" is ' + (1 == "1"));
+    console.log('"1" == 1 is ' + ("1" == 1));
+    console.log('0 == false is ' + (0 == false));
+    console.log('0 == null is ' + (0 == null));
+    console.log('0 == undefined is ' + (0 == undefined));
+    console.log('null == undefined is ' + (null == undefined));
+    console.log('{} == {} is ' + ({} == {}));
+    console.log('{} == true is ' + ({} == true));
+    console.log('{} == false is ' + ({} == false));
+    const firstRef = {};
+    const secondRef = firstRef;
+    console.log('firstRef == secondRef is ' + (firstRef == secondRef))
+    console.log('NaN == NaN is ' + (NaN == NaN))
+
+    console.log('')
+    console.log('===')
+    console.log('1 === 1 is ' + (1 === 1));
+    console.log('1 === "1" is ' + (1 === "1"));
+    console.log('"1" === 1 is ' + ("1" === 1));
+    console.log('0 === false is ' + (0 === false));
+    console.log('0 === null is ' + (0 === null));
+    console.log('0 === undefined is ' + (0 === undefined));
+    console.log('null === undefined is ' + (null === undefined));
+    console.log('{} === {} is ' + ({} === {}));
+    console.log('{} === true is ' + ({} === true));
+    console.log('{} === false is ' + ({} === false));
+    console.log('firstRef === secondRef is ' + (firstRef === secondRef))
+    console.log('NaN === NaN is ' + (NaN === NaN))
+</script>
+</body>
+</html>

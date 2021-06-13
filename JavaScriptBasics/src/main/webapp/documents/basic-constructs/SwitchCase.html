@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Switch Case</title>
+</head>
+<body>
+<p>Cases are evaluated by Strict Equality ===</p>
+<ul>
+    <li>null</li>
+    <li>undefined</li>
+    <li>false</li>
+    <li>0</li>
+    <li>''</li>
+    <li>NaN</li>
+</ul>
+<p>Other values are Truthy, including any Object</p>
+
+<script>
+    const obj = {}
+
+    function testSwitch(input) {
+        switch (input) {
+            case 1:
+                return '1 as number';
+            case 2:
+                return '2 as number';
+            case '1':
+                return '1 as string';
+            case '2':
+                return '2 as string';
+            case true:
+                return 'true as boolean';
+            case false:
+                return 'false as boolean'
+            case null:
+                return 'null'
+            case undefined:
+                return 'undefined'
+            case NaN:
+                return 'NaN'
+            case obj:
+                return 'Known obj'
+            default:
+                return 'default'
+        }
+    }
+
+    console.log('testSwitch(1) is ' + testSwitch(1));
+    console.log('testSwitch(2) is ' + testSwitch(2));
+    console.log('testSwitch("1") is ' + testSwitch("1"));
+    console.log('testSwitch("2") is ' + testSwitch("2"));
+    console.log('testSwitch(true) is ' + testSwitch(true));
+    console.log('testSwitch(false) is ' + testSwitch(false));
+    console.log('testSwitch(null) is ' + testSwitch(null));
+    console.log('testSwitch() is ' + testSwitch());
+    console.log('testSwitch(NaN) is ' + testSwitch(NaN));
+    console.log('testSwitch({}) is ' + testSwitch({}));
+    console.log('testSwitch(obj) is ' + testSwitch(obj));
+</script>
+</body>
+</html>
