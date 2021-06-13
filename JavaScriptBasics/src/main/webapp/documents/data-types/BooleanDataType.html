@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>BooleanDataType</title>
+</head>
+<body>
+<p>A boolean represents a logical entity and can have one of two literal values: true, and false.</p>
+<p>The thing to be careful with is Boolean object: <em>new Boolean(false) === false</em> is false, because in JavaScript, non-null objects are always truthy</p>
+<script>
+    console.log('typeof new Boolean(false) is ' + typeof new Boolean(false))
+    console.log('new Boolean(false) == false is ' + (new Boolean(false) == false))
+    console.log('new Boolean(false) === false is ' + (new Boolean(false) === false))
+</script>
+</body>
+</html>

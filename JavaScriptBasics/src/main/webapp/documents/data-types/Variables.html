@@ -5,13 +5,17 @@
     <title>Variables</title>
 </head>
 <body>
+<p>JavaScript is a dynamically typed language, meaning you don't need to declare a variable's type ahead of time. The types are determined during the execution.</p>
+<p>You can re-assign a single variable to reference different types.</p>
+<p>Variable (<em>var</em>) declarations are <a href="https://developer.mozilla.org/en-US/docs/Glossary/Hoisting">hoisted.</a> <em>let</em> variable is not hoisted.</p>
 <script>
-    var variable;
-    console.log(variable);
-    variable = 'Hello!';
-    console.log(variable);
-    variable = 100;
-    console.log(variable);
+    console.log('Hoisted var a: ' + a);
+    var a;
+    console.log(a);
+    a = 'Hello!';
+    console.log(a);
+    a = 100;
+    console.log(a);
 </script>
 </body>
 </html>

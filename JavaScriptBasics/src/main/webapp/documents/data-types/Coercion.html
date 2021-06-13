@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Coercion</title>
+</head>
+<body>
+<p>In JavaScript, you can perform operations on values of different types without raising an exception. The JavaScript interpreter implicitly converts, or coerces, one of the data types to that of the other, then performs the operation. The rules of coercion are different for operators and operands involved:</p>
+<ul>
+    <li>If you add a number and a string, the number is coerced to a string.</li>
+    <li>If you subtract a number from a string, the string is coerced to a number.</li>
+    <li>If you add a boolean and a string, the boolean is coerced to a string.</li>
+    <li>If you add a number and a boolean, the boolean is coerced to a number.</li>
+</ul>
+<script>
+    console.log("11 + '23' is " + (11 + '23'))
+    console.log("11 - '23' is " + (11 - '23'))
+    console.log("true + '23' is " + (true + '23'))
+    console.log("true + 11 is " + (true + 11))
+</script>
+</body>
+</html>
