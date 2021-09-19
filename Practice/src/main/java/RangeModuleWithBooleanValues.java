@@ -6,7 +6,7 @@ import java.util.TreeMap;
  * Time complexity: O((A + R + Q) * log(A + R)), where A - add, R - remove, Q - query operation count.
  * Space complexity: O(A + R)
  **/
-public class RangeModule {
+public class RangeModuleWithBooleanValues {
 
     private static final boolean START = true;
     private static final boolean END = false;
@@ -58,7 +58,7 @@ public class RangeModule {
     }
 
     public static void main(final String[] args) {
-        final RangeModule rm = new RangeModule();
+        final RangeModuleWithBooleanValues rm = new RangeModuleWithBooleanValues();
         rm.addRange(10, 20);
         rm.removeRange(14, 16);
         System.out.println("true == " + rm.queryRange(10, 14));
