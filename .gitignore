@@ -2,6 +2,10 @@
 **/target/
 **/*.class
 
+### JavaScript ###
+**/node_modules/
+**/dist/main.js
+
 ### IntelliJ IDEA ###
 .idea
 *.iml
