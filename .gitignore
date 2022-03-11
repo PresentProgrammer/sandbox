@@ -4,7 +4,7 @@
 
 ### JavaScript ###
 **/node_modules/
-**/dist/main.js
+**/dist/
 
 ### IntelliJ IDEA ###
 .idea
