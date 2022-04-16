@@ -1,6 +1,3 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 /**
  * Problem #322
  * Time complexity: O(amount)
@@ -9,34 +6,18 @@ import java.util.Deque;
 public class CoinChange {
 
     public int coinChange(int[] coins, int amount) {
-        final boolean[] considered = new boolean[amount + 1];
-        final Deque<State> stateQueue = new ArrayDeque<>();
-        stateQueue.offer(new State(0, 0));
-        while (!stateQueue.isEmpty()) {
-            final State curr = stateQueue.poll();
-            if (curr.totalAmount == amount) {
-                return curr.depth;
-            } else {
-                for (final int coin : coins) {
-                    final int nextTotalAmount = curr.totalAmount + coin;
-                    if (nextTotalAmount > 0 && nextTotalAmount <= amount && !considered[nextTotalAmount]) {
-                        considered[nextTotalAmount] = true;
-                        stateQueue.offer(new State(curr.depth + 1, nextTotalAmount));
-                    }
+        final int[] dp = new int[amount + 1];
+        for (int currAmount = 1; currAmount <= amount; currAmount++) {
+            int currResult = -1;
+            for (final int coin : coins) {
+                if (currAmount >= coin && dp[currAmount - coin] != -1) {
+                    final int candidate = dp[currAmount - coin] + 1;
+                    currResult = currResult == -1 ? candidate : Math.min(currResult, candidate);
                 }
             }
+            dp[currAmount] = currResult;
         }
-        return -1;
-    }
-
-    private static class State {
-        private final int depth;
-        private final int totalAmount;
-
-        private State(int depth, int totalAmount) {
-            this.depth = depth;
-            this.totalAmount = totalAmount;
-        }
+        return dp[amount];
     }
 
     public static void main(final String[] args) {
