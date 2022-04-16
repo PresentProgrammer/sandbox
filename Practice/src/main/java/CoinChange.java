@@ -1,6 +1,6 @@
 /**
  * Problem #322
- * Time complexity: O(amount)
+ * Time complexity: O(amount * coins)
  * Space complexity: O(amount)
  **/
 public class CoinChange {
